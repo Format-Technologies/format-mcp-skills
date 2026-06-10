@@ -101,8 +101,8 @@ If the workspace has the topic, use it. If not, fall back to semantic queries ag
 ```
 search_insights(
   orgId,
-  topic: [best-cohort topic],
-  select: "analysis",
+  topicNames: [best-cohort topic],
+  select: "default",
   limit: 75
 )
 ```
@@ -111,22 +111,30 @@ search_insights(
 ```
 search_insights(
   orgId,
-  topic: [worst-cohort topic],
-  select: "analysis",
+  topicNames: [worst-cohort topic],
+  select: "default",
   limit: 75
 )
 ```
 
 Extract unique company names from each. Dedupe companies appearing in both.
 
-### Step 3: Firmographics and roles (2 calls)
+### Step 3: Resolve companies, firmographics and roles (2 calls)
 
 ```
-count_insights(orgId, filters: { company: [Best cohort] }, groupBy: "company.industry")
-count_insights(orgId, filters: { company: [Best cohort] }, groupBy: "person.role")
+list_companies(orgId, hasInsights: true, limit: 200)
+  → match Best/Worst cohort names to company records: IDs (needed for Step 4
+    filters) + the attributes array (CRM-mapped fields like industry, plan,
+    company size — whatever this org has mapped)
+
+list_persons(orgId, companyIds: [Best cohort company IDs], hasInsights: true, limit: 200)
+  → who actually shows up in the conversations; roles from titles/attributes
 ```
 
-Two calls. Enough to see dominant industry and dominant buyer role.
+Two calls. Enough to see dominant industry and dominant buyer role. If the org
+has no CRM attributes mapped (empty `attributes` arrays), don't fabricate
+firmographics — infer what you can from the conversation content pulled in
+Step 4 and say so in the document.
 
 ### Step 4: Core content extraction (4–5 calls)
 
@@ -136,9 +144,9 @@ Pull the substance for ICP snapshot, personas, in-market signals, competitive la
 ```
 search_insights(
   orgId,
-  topic: [competitive/in-market topic],
-  company: [Best cohort],
-  select: "analysis",
+  topicNames: [competitive/in-market topic],
+  companyIds: [Best cohort company IDs],
+  select: "default",
   limit: 40
 )
 ```
@@ -147,9 +155,9 @@ search_insights(
 ```
 search_insights(
   orgId,
-  topic: [product gaps topic],
-  company: [Best cohort],
-  select: "analysis",
+  topicNames: [product gaps topic],
+  companyIds: [Best cohort company IDs],
+  select: "default",
   limit: 40
 )
 ```
@@ -158,9 +166,9 @@ search_insights(
 ```
 search_insights(
   orgId,
-  topic: [best-cohort topic],
-  company: [Best cohort],
-  select: "analysis",
+  topicNames: [best-cohort topic],
+  companyIds: [Best cohort company IDs],
+  select: "default",
   limit: 40
 )
 ```
@@ -169,9 +177,9 @@ search_insights(
 ```
 search_insights(
   orgId,
-  topic: [onboarding topic, if available],
-  company: [Best cohort],
-  select: "analysis",
+  topicNames: [onboarding topic, if available],
+  companyIds: [Best cohort company IDs],
+  select: "default",
   limit: 30
 )
 ```
@@ -180,8 +188,8 @@ search_insights(
 ```
 search_insights(
   orgId,
-  topic: [worst-cohort topic],
-  select: "analysis",
+  topicNames: [worst-cohort topic],
+  select: "default",
   limit: 40
 )
 ```
@@ -211,7 +219,7 @@ All five sections built from the pool of extracted insights above. No additional
 **Two outputs every run:**
 
 1. **Inline in chat** — the full document rendered so the user can read it immediately.
-2. **A downloadable markdown file** — the same document saved as `[company-slug]-icp.md` and presented to the user with the `present_files` tool so they can download it.
+2. **A markdown file** — the same document saved as `[company-slug]-icp.md`, delivered however your environment shares files (a download link on claude.ai, a file written to the working directory in Claude Code or Cursor). If your environment can't produce files, skip this and deliver inline only.
 
 The markdown file is important. A GTM source-of-truth document needs to live somewhere — Notion, Coda, Google Docs, a shared drive — not buried in a chat history. Markdown pastes cleanly into every modern tool and preserves the tables.
 
@@ -219,9 +227,8 @@ The markdown file is important. A GTM source-of-truth document needs to live som
 
 After completing the analysis:
 
-1. Write the full document to `/mnt/user-data/outputs/[company-slug]-icp.md` — for example, `/mnt/user-data/outputs/kota-icp.md`.
+1. Save the full document as `[company-slug]-icp.md` using your environment's file mechanism (on claude.ai: write to the outputs directory and present the file; in Claude Code/Cursor: write it to the working directory).
 2. Use the same content for the inline chat response — do not abbreviate either version.
-3. Call `present_files` with the file path so the download link renders in chat.
 
 The company slug should be lowercase with hyphens — "Kota" becomes `kota`, "Acme Corp" becomes `acme-corp`.
 
@@ -462,13 +469,14 @@ One sentence. Do not follow it with a methodology note.
 
 ### Final step: present the file
 
-After the next-steps offer, call `present_files` with the saved `.md` file path so the user gets a download link. Example:
+After the next-steps offer, surface the saved `.md` file (download link or file path, per your environment). Example:
 
-```
-present_files(filepaths=["/mnt/user-data/outputs/kota-icp.md"])
-```
+On claude.ai: write the file to the outputs directory and present it so a
+download link renders. In Claude Code or Cursor: write `kota-icp.md` to the
+working directory and state the path in one line.
 
-No commentary around the file presentation. The download link appears, the user sees it, they can save the document to Notion or their shared drive.
+No commentary around the file presentation. The user sees the file, and can
+save the document to Notion or their shared drive.
 
 The run is complete after the file is presented. Nothing follows it.
 
@@ -493,4 +501,4 @@ The run is complete after the file is presented. Nothing follows it.
 - Personas usable by sales, marketing, and paid ads — not just SDRs
 - Competitive landscape has Displaceable? ratings
 - Closing line offers next steps from the standard menu
-- **Markdown file saved to `/mnt/user-data/outputs/[company-slug]-icp.md` and presented via `present_files` as the final action**
+- **Markdown file `[company-slug]-icp.md` saved and surfaced (download link or file path) as the final action — skipped only if the environment cannot produce files**

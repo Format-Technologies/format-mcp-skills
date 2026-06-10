@@ -40,11 +40,14 @@ By the time you get on a call with the customer, you're not fishing for a story.
 Format synthesizes insights across all your customer conversations — calls, emails, tickets, chat. Use it to surface customers who are already saying the right things.
 
 ```
-1. Format MCP → list_organizations
-   Pull your full customer list.
+1. Format MCP → list_companies
+   Pull your customer list (hasInsights: true
+   limits it to companies with conversation data).
 
 2. Format MCP → search_insights
-   Run searches for case-study signals:
+   Run searches for case-study signals
+   (keywordSearch for exact phrases,
+   semanticQuery for fuzzy matching):
 
    ROI signals:
    "saved us," "increased by," "cut our," "ROI,"

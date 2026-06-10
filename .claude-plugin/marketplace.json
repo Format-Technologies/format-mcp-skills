@@ -15,15 +15,15 @@
       "strict": false
     },
     {
-      "name": "defining-your-icp",
-      "description": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from.",
-      "source": "./skills/defining-your-icp",
+      "name": "cs-account-briefing",
+      "description": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
+      "source": "./skills/cs-account-briefing",
       "strict": false
     },
     {
-      "name": "format-cs-account-briefing",
-      "description": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
-      "source": "./skills/format-cs-account-briefing",
+      "name": "defining-your-icp",
+      "description": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from.",
+      "source": "./skills/defining-your-icp",
       "strict": false
     }
   ]

@@ -1,20 +1,32 @@
-# format-mcp-skills
+# Format Skills
 
-Ready-made **skills** for using [Format](https://useformat.ai) inside Claude,
-ChatGPT, Cursor, and other AI tools — powered by the Format MCP server.
+Ready-made skills for using [Format](https://useformat.ai) — your customer
+conversations, queryable from any AI tool — inside Claude, ChatGPT, Cursor,
+and anything else that speaks MCP.
 
-A skill is a **smart prompt**: a `SKILL.md` whose body is portable markdown
-instructions that drive Format's read-only MCP tools to do a concrete job —
-a CS account briefing, an evidence-backed ICP, a case-study draft. MCP
-standardised the *tools* layer, but every AI tool has its own idea of a
-"skill" — so this repo distributes the **content**, and each tool installs it
-its own way.
+Each skill is a portable prompt (`SKILL.md`) that drives Format's read-only
+MCP tools to do a real job: brief you on your accounts, define your ICP from
+what customers actually said, draft a case study before the interview.
 
-This repo is surfaced in-app at **Settings → MCP → Use it** (the gallery reads
-`index.json`), and doubles as a **Claude Code plugin marketplace**.
+## The skills
 
-> These skills require the Format MCP server to be connected:
-> `https://useformat.ai/api/mcp` — see [useformat.ai/mcp](https://useformat.ai/mcp).
+| Skill | For | What it does |
+|---|---|---|
+| [`cs-account-briefing`](skills/cs-account-briefing/SKILL.md) | Customer Success | Scan your book of business for risk, blocker, adoption, relationship, growth and commercial signals — per account, with verbatim evidence. Built for weekly briefs and QBR prep. |
+| [`defining-your-icp`](skills/defining-your-icp/SKILL.md) | Marketing · Sales · Leadership | Build an evidence-backed Ideal Customer Profile from real customer conversations — snapshot, personas, in-market language, target-account criteria. |
+| [`b2b-case-study`](skills/b2b-case-study/SKILL.md) | Marketing | Find your strongest case-study candidates and walk into the interview with a near-finished draft, built from what customers already said. |
+
+More skills land regularly — browse them with previews in the Format app
+under **Settings → MCP → Use it**.
+
+## Before you start
+
+Every skill needs the **Format MCP server** connected to your AI tool:
+`https://useformat.ai/api/mcp`. Setup guides for Claude, ChatGPT, Cursor and
+Microsoft Copilot: **[useformat.ai/mcp](https://useformat.ai/mcp)**.
+
+All skills are read-only — they query your Format workspace and never change
+anything in it.
 
 ## Install
 
@@ -25,96 +37,27 @@ This repo is surfaced in-app at **Settings → MCP → Use it** (the gallery rea
 /plugin install <skill-id>@format-mcp-skills                     # per skill
 ```
 
-Each skill is its own plugin — install only what you want. Updates flow
-automatically on every commit (`/plugin update`).
+Each skill is its own plugin — install only what you want. Updates arrive
+with `/plugin update`.
 
 ### claude.ai
 
-Download the skill's zip from the in-app gallery (Settings → MCP → Use it),
-then upload it at **Settings → Capabilities → Skills**. (Or zip a
-`skills/<id>/` folder from this repo yourself.)
+Zip a skill's folder (e.g. `skills/defining-your-icp/`) and upload it at
+**Settings → Capabilities → Skills** — or grab the ready-made download from
+the Format app's skill gallery.
 
-### Everywhere else (copy = install)
+### ChatGPT, Cursor, Copilot, and everything else
 
-Skills are mostly prompt, so the body travels. Open the skill's `SKILL.md`,
-copy everything below the frontmatter, and paste it into:
+Skills are mostly prompt, so the content travels: open the skill's
+`SKILL.md`, copy everything below the frontmatter, and paste it into a
+ChatGPT Project's instructions, a `.cursor/rules/*.mdc` file, a Copilot
+Studio agent — or just into the chat.
 
-- **ChatGPT** — a Project's / Custom GPT's instructions
-- **Cursor** — a `.cursor/rules/*.mdc` rule
-- **Microsoft Copilot** — a Copilot Studio agent's instructions
-- **Any MCP client** — the prompt, as-is
+## Contributing
 
-## Repo layout
+Want to improve a skill or understand how this repo is put together? See
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
-```
-.
-├── skills/                          ← the only thing maintainers touch
-│   └── <skill-id>/
-│       ├── SKILL.md                 ← single source of truth (frontmatter + body)
-│       ├── card.png                 ← gallery image (not part of the install)
-│       └── references/…             ← optional supporting files (installed with the skill)
-├── index.json                       ← GENERATED — gallery manifest (the app reads this)
-├── .claude-plugin/marketplace.json  ← GENERATED — one plugin per skill
-└── scripts/generate.mjs             ← frontmatter → both manifests
-```
+## License
 
-**Never edit `index.json` or `marketplace.json` by hand** — they are generated
-from `SKILL.md` frontmatter. CI rejects PRs where they're out of sync.
-
-## Adding a skill
-
-1. Create `skills/<skill-id>/SKILL.md`:
-
-   ```yaml
-   ---
-   name: <skill-id>                  # must equal the directory name; kebab-case
-   description: >                    # Claude's trigger description — when to invoke
-     Use when …
-   metadata:                         # gallery fields (the app's cards + drawer)
-     title: Display Name
-     personas: [marketing, sales]    # known set — see PERSONAS in scripts/generate.mjs
-     image: card.png
-     use_case: >-
-       What it's for, in customer language.
-     limitations: >-
-       What it won't do / what it needs.
-   ---
-   <body — written for Claude, generic enough to paste into any tool>
-   ```
-
-2. Add a `card.png` (and any `references/` the skill needs).
-3. Run `npm run generate`, commit everything, open a PR.
-
-CI validates the frontmatter (schema, id-matches-dir, image exists, known
-personas) and that the generated manifests are in sync — a malformed skill
-cannot merge. Merging to `main` is publishing: the app gallery and Claude Code
-marketplace both read `main`.
-
-## The manifest contract (`index.json`)
-
-What the in-app gallery consumes. Metadata for all skills loads upfront; each
-skill's body (`bodyPath`) is fetched lazily when its detail drawer opens;
-`files` lists everything the install zip should contain.
-
-```jsonc
-{
-  "version": 1,
-  "personas": ["customer-success", "marketing", "..."],   // union across skills
-  "skills": [
-    {
-      "id": "defining-your-icp",
-      "title": "Define Your ICP",
-      "description": "<Claude trigger description>",
-      "personas": ["marketing", "sales", "leadership"],
-      "image": "skills/defining-your-icp/card.png",
-      "useCase": "<card + drawer copy>",
-      "limitations": "<drawer copy>",
-      "bodyPath": "skills/defining-your-icp/SKILL.md",
-      "files": ["skills/defining-your-icp/SKILL.md"]      // contents of the install zip
-    }
-  ]
-}
-```
-
-Design rationale, decisions, and diagrams live in the Format workstream doc
-(`format` repo → `docs/plans/2026-06-10-format-2045-skills-repo-architecture.md`).
+[MIT](LICENSE) — copy, adapt, and use these skills freely.

@@ -29,6 +29,26 @@
       ]
     },
     {
+      "id": "cs-account-briefing",
+      "title": "CS Account Briefing",
+      "description": "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the cs-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides a list of accounts and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence, does not prescribe actions.",
+      "personas": [
+        "customer-success"
+      ],
+      "image": "skills/cs-account-briefing/card.png",
+      "useCase": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
+      "limitations": "You provide the account list and time window. Surfaces evidence only — it doesn't prescribe actions. Quality depends on how much call/email coverage those accounts have in Format.",
+      "prompts": [
+        "Using the CS account briefing skill, scan Acme, Globex and Initech over the last 30 days.",
+        "Prep me for the QBR with Acme — what's been said across their conversations lately?"
+      ],
+      "bodyPath": "skills/cs-account-briefing/SKILL.md",
+      "files": [
+        "skills/cs-account-briefing/SKILL.md",
+        "skills/cs-account-briefing/references/example-phrases.md"
+      ]
+    },
+    {
       "id": "defining-your-icp",
       "title": "Define Your ICP",
       "description": "Use when defining, refining, or analysing the Ideal Customer Profile (ICP), identifying best-fit buyers, extracting buyer personas, or building target account criteria from customer conversation data. Trigger phrases include \"define our ICP\", \"build an ICP\", \"who are our best customers\", \"who should we target\", \"build a persona\", \"what do our best buyers have in common\", \"win/loss from calls\", and \"build a target account list from customer data\". This skill uses the Format MCP to produce an ICP snapshot, prospect list criteria, persona breakdowns, in-market language cues, and a competitive landscape — a cross-functional document for sales, marketing, paid ads, product, and leadership. Runs end-to-end silently without asking the user to configure anything upfront. Does not produce cold email copy, ad creative, or landing page copy — those are downstream skills.",
@@ -47,26 +67,6 @@
       "bodyPath": "skills/defining-your-icp/SKILL.md",
       "files": [
         "skills/defining-your-icp/SKILL.md"
-      ]
-    },
-    {
-      "id": "format-cs-account-briefing",
-      "title": "CS Account Briefing",
-      "description": "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the format-cs-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides a list of accounts and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence, does not prescribe actions.",
-      "personas": [
-        "customer-success"
-      ],
-      "image": "skills/format-cs-account-briefing/card.png",
-      "useCase": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
-      "limitations": "You provide the account list and time window. Surfaces evidence only — it doesn't prescribe actions. Quality depends on how much call/email coverage those accounts have in Format.",
-      "prompts": [
-        "Using the CS account briefing skill, scan Acme, Globex and Initech over the last 30 days.",
-        "Prep me for the QBR with Acme — what's been said across their conversations lately?"
-      ],
-      "bodyPath": "skills/format-cs-account-briefing/SKILL.md",
-      "files": [
-        "skills/format-cs-account-briefing/SKILL.md",
-        "skills/format-cs-account-briefing/references/example-phrases.md"
       ]
     }
   ]

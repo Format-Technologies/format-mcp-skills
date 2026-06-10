@@ -33,6 +33,13 @@ const PERSONAS = [
   'research',
 ];
 
+/**
+ * Names a skill may never claim: persona ids are reserved for future
+ * persona-pack plugins (e.g. a "marketing" plugin installing all marketing
+ * skills at once), and "all" is the catalog's unfiltered view.
+ */
+const RESERVED_IDS = [...PERSONAS, 'all', ...PERSONAS.map((p) => `${p}-pack`)];
+
 const errors = [];
 const fail = (skill, msg) => errors.push(`  ${skill}: ${msg}`);
 
@@ -79,6 +86,9 @@ function loadSkill(id) {
 
   if (fm.name !== id) fail(id, `frontmatter name "${fm.name}" != directory name`);
   if (!KEBAB.test(id)) fail(id, 'directory name must be kebab-case');
+  if (RESERVED_IDS.includes(id)) {
+    fail(id, `"${id}" is reserved for persona packs — pick another id`);
+  }
   if (!fm.description?.trim()) fail(id, 'missing description');
 
   const meta = fm.metadata ?? {};

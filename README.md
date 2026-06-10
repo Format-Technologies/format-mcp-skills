@@ -60,4 +60,11 @@ Want to improve a skill or understand how this repo is put together? See
 
 ## License
 
-[MIT](LICENSE) — copy, adapt, and use these skills freely.
+The contents of **this repository** — the skill files and the tooling around
+them — are [MIT licensed](LICENSE): copy, adapt, and use them freely.
+
+The license covers this repository only. It does **not** apply to anything
+else Format-related: the Format product, the Format MCP server and its APIs,
+Format's trademarks and brand, and any data accessed through a Format
+workspace are not licensed here and remain governed by your agreement with
+Format.

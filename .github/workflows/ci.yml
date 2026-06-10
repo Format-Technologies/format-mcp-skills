@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  # PR gate: a malformed skill or out-of-sync manifest cannot merge.
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/generate.mjs --check
+
+  # Safety net on main: regenerate and bot-commit if anything slipped through
+  # (e.g. a direct push). [skip ci] guards against a commit loop.
+  regenerate:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/generate.mjs
+      - name: Commit regenerated manifests
+        run: |
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.json .claude-plugin/marketplace.json
+            git commit -m "chore: regenerate manifests [skip ci]"
+            git push
+          fi

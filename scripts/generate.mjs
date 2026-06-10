@@ -1,0 +1,175 @@
+// Generates index.json (gallery manifest) and .claude-plugin/marketplace.json
+// from the SKILL.md frontmatter of every skill under skills/.
+//
+// SKILL.md frontmatter is the single source of truth — never edit the
+// generated files by hand. See README.md for the contract.
+//
+// Usage:
+//   node scripts/generate.mjs           # write both files
+//   node scripts/generate.mjs --check   # exit 1 if files are out of sync (CI PR gate)
+
+import {
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+  existsSync,
+  mkdirSync,
+} from 'node:fs';
+import { join, relative, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import yaml from 'js-yaml';
+
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
+const SKILLS_DIR = join(ROOT, 'skills');
+const KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+
+/** Known personas — extend deliberately, the app's filter chips mirror this. */
+const PERSONAS = [
+  'customer-success',
+  'sales',
+  'marketing',
+  'product',
+  'leadership',
+  'research',
+];
+
+const errors = [];
+const fail = (skill, msg) => errors.push(`  ${skill}: ${msg}`);
+
+function parseFrontmatter(raw, skill) {
+  const m = raw.match(/^---\n([\s\S]*?)\n---\n/);
+  if (!m) {
+    fail(skill, 'SKILL.md has no frontmatter block');
+    return null;
+  }
+  try {
+    return yaml.load(m[1]);
+  } catch (e) {
+    fail(skill, `frontmatter is not valid YAML: ${e.message}`);
+    return null;
+  }
+}
+
+/** Every file in the skill dir except the card image — what the install zip contains. */
+function listFiles(dir, imageName) {
+  const out = [];
+  const walk = (d) => {
+    for (const entry of readdirSync(d, { withFileTypes: true })) {
+      if (entry.name.startsWith('.')) continue;
+      const p = join(d, entry.name);
+      if (entry.isDirectory()) walk(p);
+      else out.push(relative(ROOT, p));
+    }
+  };
+  walk(dir);
+  return out
+    .filter((p) => !p.endsWith(`/${imageName}`))
+    .sort();
+}
+
+function loadSkill(id) {
+  const dir = join(SKILLS_DIR, id);
+  const skillMd = join(dir, 'SKILL.md');
+  if (!existsSync(skillMd)) {
+    fail(id, 'missing SKILL.md');
+    return null;
+  }
+  const fm = parseFrontmatter(readFileSync(skillMd, 'utf8'), id);
+  if (!fm) return null;
+
+  if (fm.name !== id) fail(id, `frontmatter name "${fm.name}" != directory name`);
+  if (!KEBAB.test(id)) fail(id, 'directory name must be kebab-case');
+  if (!fm.description?.trim()) fail(id, 'missing description');
+
+  const meta = fm.metadata ?? {};
+  if (!meta.title?.trim()) fail(id, 'missing metadata.title');
+  if (!meta.use_case?.trim()) fail(id, 'missing metadata.use_case');
+  if (!meta.limitations?.trim()) fail(id, 'missing metadata.limitations');
+  if (!Array.isArray(meta.personas) || meta.personas.length === 0) {
+    fail(id, 'metadata.personas must be a non-empty array');
+  } else {
+    for (const p of meta.personas) {
+      if (!PERSONAS.includes(p)) {
+        fail(id, `unknown persona "${p}" (known: ${PERSONAS.join(', ')})`);
+      }
+    }
+  }
+  if (!meta.image?.trim()) fail(id, 'missing metadata.image');
+  else if (!existsSync(join(dir, meta.image))) fail(id, `image "${meta.image}" not found`);
+
+  return {
+    id,
+    title: meta.title,
+    description: fm.description,
+    personas: meta.personas ?? [],
+    image: `skills/${id}/${meta.image}`,
+    useCase: (meta.use_case ?? '').trim(),
+    limitations: (meta.limitations ?? '').trim(),
+    bodyPath: `skills/${id}/SKILL.md`,
+    files: listFiles(dir, meta.image),
+  };
+}
+
+const ids = readdirSync(SKILLS_DIR, { withFileTypes: true })
+  .filter((e) => e.isDirectory())
+  .map((e) => e.name)
+  .sort();
+
+const skills = ids.map(loadSkill).filter(Boolean);
+
+if (errors.length > 0) {
+  console.error('Validation failed:\n' + errors.join('\n'));
+  process.exit(1);
+}
+
+const indexJson = {
+  version: 1,
+  personas: [...new Set(skills.flatMap((s) => s.personas))].sort(),
+  skills,
+};
+
+const marketplaceJson = {
+  name: 'format-mcp-skills',
+  owner: {
+    name: 'Format Technologies',
+    email: 'engineering@useformat.ai',
+  },
+  metadata: {
+    description:
+      'Ready-made skills for using Format inside Claude, ChatGPT, and other AI tools — powered by the Format MCP server.',
+  },
+  plugins: skills.map((s) => ({
+    name: s.id,
+    description: s.useCase,
+    source: `./skills/${s.id}`,
+    strict: false,
+  })),
+};
+
+const OUTPUTS = [
+  ['index.json', indexJson],
+  ['.claude-plugin/marketplace.json', marketplaceJson],
+];
+
+const check = process.argv.includes('--check');
+let stale = false;
+
+for (const [rel, data] of OUTPUTS) {
+  const path = join(ROOT, rel);
+  const next = JSON.stringify(data, null, 2) + '\n';
+  const current = existsSync(path) ? readFileSync(path, 'utf8') : null;
+  if (current === next) continue;
+  if (check) {
+    console.error(`${rel} is out of sync — run: node scripts/generate.mjs`);
+    stale = true;
+  } else {
+    mkdirSync(dirname(path), { recursive: true });
+    writeFileSync(path, next);
+    console.log(`wrote ${rel}`);
+  }
+}
+
+if (check) {
+  if (stale) process.exit(1);
+  console.log(`ok — ${skills.length} skills, manifests in sync`);
+}

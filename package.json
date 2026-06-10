@@ -1,0 +1,12 @@
+{
+  "name": "format-mcp-skills",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "check": "node scripts/generate.mjs --check"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

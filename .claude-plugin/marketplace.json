@@ -5,15 +5,26 @@
     "email": "engineering@useformat.ai"
   },
   "metadata": {
-    "description": "Ready-made skills for using Format inside Claude, ChatGPT, and other AI tools — powered by the Format MCP server.",
-    "version": "0.1.0"
+    "description": "Ready-made skills for using Format inside Claude, ChatGPT, and other AI tools — powered by the Format MCP server."
   },
   "plugins": [
     {
-      "name": "format-skills",
-      "description": "Customer-intelligence skills powered by the Format MCP server — weekly digests, churn signals, competitor watch, and more.",
-      "source": "./plugins/format-skills",
-      "strict": true
+      "name": "b2b-case-study",
+      "description": "Find your strongest case-study candidates from customer conversation data and walk into the interview with a near-finished draft — built from what customers have already said, instead of starting from a blank page.",
+      "source": "./skills/b2b-case-study",
+      "strict": false
+    },
+    {
+      "name": "defining-your-icp",
+      "description": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from.",
+      "source": "./skills/defining-your-icp",
+      "strict": false
+    },
+    {
+      "name": "format-cs-account-briefing",
+      "description": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
+      "source": "./skills/format-cs-account-briefing",
+      "strict": false
     }
   ]
 }

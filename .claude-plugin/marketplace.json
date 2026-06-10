@@ -16,7 +16,7 @@
     },
     {
       "name": "company-context",
-      "description": "Turn your Format workspace into the team's shared foundation document: positioning, ICP, personas, pain points, competitive landscape, customer language, brand voice and proof points — every claim backed by a verbatim customer quote. The \"start here\" doc that downstream content work builds on. Re-run quarterly to keep it honest.",
+      "description": "Stop re-explaining your company in every chat. One run distills what customers actually say — who you serve, what they struggle with, the words they use — into a context doc your team's AI works from, every claim quote-backed. It won't invent your strategy or pricing; it flags those for you to fill.",
       "source": "./skills/company-context",
       "strict": false
     },

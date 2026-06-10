@@ -32,9 +32,19 @@ anything in it.
 
 ### Claude Code
 
+Run these one at a time — pasting both lines at once submits them as a
+single command, which fails with a confusing SSH error.
+
+Add the marketplace (once):
+
 ```
-/plugin marketplace add Format-Technologies/format-mcp-skills    # once
-/plugin install <skill-id>@format-mcp-skills                     # per skill
+/plugin marketplace add Format-Technologies/format-mcp-skills
+```
+
+Then install any skill:
+
+```
+/plugin install <skill-id>@format-mcp-skills
 ```
 
 Each skill is its own plugin — install only what you want. Updates arrive

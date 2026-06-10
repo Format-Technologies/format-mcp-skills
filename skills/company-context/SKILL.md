@@ -1,16 +1,16 @@
 ---
 name: company-context
-description: Use when a team wants to generate a shared company context document — the foundational brief on their positioning, ICP, personas, voice, and proof points — grounded in real customer conversations from their Format workspace. Trigger phrases include "build our company context", "generate our shared context", "create a company brief", "what's our positioning", "who are we really selling to", "extract our brand voice", "what do customers say about us", "build shared context for our team", "one source of truth for marketing", "generate our product marketing context", or "refresh our positioning doc". Uses the Format MCP to produce a single markdown document covering product overview, ICP, personas, pain points, competitive landscape, brand voice, and proof points — all backed by verbatim customer quotes. Runs end-to-end in one response. Re-run quarterly to refresh as the customer base evolves. Not for writing blog posts, emails, ads, or case studies — those are downstream skills that read this context. For a targeting-focused ICP deep-dive (prospect criteria, qualification filters), use defining-your-icp instead.
+description: Use when a team wants to generate a shared company context document — the foundational brief on their positioning, ICP, personas, voice, and proof points — grounded in real customer conversations from their Format workspace. Trigger phrases include "build our voice-of-customer doc", "build our company context", "generate our shared context", "create a company brief", "what's our positioning", "who are we really selling to", "extract our brand voice", "what do customers say about us", "build shared context for our team", "one source of truth for marketing", "generate our product marketing context", or "refresh our positioning doc". Uses the Format MCP to produce a single markdown document covering product overview, ICP, personas, pain points, competitive landscape, brand voice, and proof points — all backed by verbatim customer quotes. Runs end-to-end in one response. Re-run quarterly to refresh as the customer base evolves. Not for writing blog posts, emails, ads, or case studies — those are downstream skills that read this context. For a targeting-focused ICP deep-dive (prospect criteria, qualification filters), use defining-your-icp instead.
 metadata:
-  title: Company Context
-  personas: [marketing, sales, leadership]
+  title: Voice-of-Customer Context for AI
+  personas: [customer-success, sales, marketing, product, leadership, research]
   image: card.png
   use_case: >-
-    Turn your Format workspace into the team's shared foundation document:
-    positioning, ICP, personas, pain points, competitive landscape, customer
-    language, brand voice and proof points — every claim backed by a verbatim
-    customer quote. The "start here" doc that downstream content work builds
-    on. Re-run quarterly to keep it honest.
+    Stop re-explaining your company in every chat. One run distills what
+    customers actually say — who you serve, what they struggle with, the
+    words they use — into a context doc your team's AI works from, every
+    claim quote-backed. It won't invent your strategy or pricing; it flags
+    those for you to fill.
   limitations: >-
     Needs roughly 50+ customer conversations in Format for this depth. Some
     sections (pricing, business model, strategic positioning) can't come from

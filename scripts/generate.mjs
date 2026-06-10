@@ -96,6 +96,14 @@ function loadSkill(id) {
   }
   if (!meta.image?.trim()) fail(id, 'missing metadata.image');
   else if (!existsSync(join(dir, meta.image))) fail(id, `image "${meta.image}" not found`);
+  if (
+    meta.prompts !== undefined &&
+    (!Array.isArray(meta.prompts) ||
+      meta.prompts.length === 0 ||
+      meta.prompts.some((p) => typeof p !== 'string' || !p.trim()))
+  ) {
+    fail(id, 'metadata.prompts must be a non-empty array of strings when present');
+  }
 
   return {
     id,
@@ -105,6 +113,7 @@ function loadSkill(id) {
     image: `skills/${id}/${meta.image}`,
     useCase: (meta.use_case ?? '').trim(),
     limitations: (meta.limitations ?? '').trim(),
+    prompts: meta.prompts ?? [],
     bodyPath: `skills/${id}/SKILL.md`,
     files: listFiles(dir, meta.image),
   };

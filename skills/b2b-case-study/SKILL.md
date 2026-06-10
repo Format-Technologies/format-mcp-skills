@@ -13,6 +13,9 @@ metadata:
     Drafts are grounded in existing conversations — final quotes still need
     customer sign-off. Works best with rich call/transcript coverage for the
     featured account.
+  prompts:
+    - "Who are our strongest case-study candidates right now?"
+    - "Draft a case study for Acme from what they've already said."
 ---
 
 # Case Study Playbook

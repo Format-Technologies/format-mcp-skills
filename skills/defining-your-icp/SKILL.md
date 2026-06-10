@@ -14,6 +14,9 @@ metadata:
     Needs a meaningful base of conversations in Format to be representative.
     Doesn't produce cold-email copy, ad creative, or landing pages — those are
     downstream skills.
+  prompts:
+    - "Define our ICP from the last 6 months of customer conversations."
+    - "What do our best customers have in common?"
 ---
 
 # Defining Your ICP

@@ -14,6 +14,9 @@ metadata:
     You provide the account list and time window. Surfaces evidence only — it
     doesn't prescribe actions. Quality depends on how much call/email coverage
     those accounts have in Format.
+  prompts:
+    - "Using the CS account briefing skill, scan Acme, Globex and Initech over the last 30 days."
+    - "Prep me for the QBR with Acme — what's been said across their conversations lately?"
 ---
 
 # CS Account Briefing Skill

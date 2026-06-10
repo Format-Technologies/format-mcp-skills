@@ -15,6 +15,12 @@
       "strict": false
     },
     {
+      "name": "company-context",
+      "description": "Turn your Format workspace into the team's shared foundation document: positioning, ICP, personas, pain points, competitive landscape, customer language, brand voice and proof points — every claim backed by a verbatim customer quote. The \"start here\" doc that downstream content work builds on. Re-run quarterly to keep it honest.",
+      "source": "./skills/company-context",
+      "strict": false
+    },
+    {
       "name": "cs-account-briefing",
       "description": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
       "source": "./skills/cs-account-briefing",

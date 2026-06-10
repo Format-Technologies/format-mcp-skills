@@ -29,6 +29,28 @@
       ]
     },
     {
+      "id": "company-context",
+      "title": "Company Context",
+      "description": "Use when a team wants to generate a shared company context document — the foundational brief on their positioning, ICP, personas, voice, and proof points — grounded in real customer conversations from their Format workspace. Trigger phrases include \"build our company context\", \"generate our shared context\", \"create a company brief\", \"what's our positioning\", \"who are we really selling to\", \"extract our brand voice\", \"what do customers say about us\", \"build shared context for our team\", \"one source of truth for marketing\", \"generate our product marketing context\", or \"refresh our positioning doc\". Uses the Format MCP to produce a single markdown document covering product overview, ICP, personas, pain points, competitive landscape, brand voice, and proof points — all backed by verbatim customer quotes. Runs end-to-end in one response. Re-run quarterly to refresh as the customer base evolves. Not for writing blog posts, emails, ads, or case studies — those are downstream skills that read this context. For a targeting-focused ICP deep-dive (prospect criteria, qualification filters), use defining-your-icp instead.",
+      "personas": [
+        "marketing",
+        "sales",
+        "leadership"
+      ],
+      "image": "skills/company-context/card.png",
+      "useCase": "Turn your Format workspace into the team's shared foundation document: positioning, ICP, personas, pain points, competitive landscape, customer language, brand voice and proof points — every claim backed by a verbatim customer quote. The \"start here\" doc that downstream content work builds on. Re-run quarterly to keep it honest.",
+      "limitations": "Needs roughly 50+ customer conversations in Format for this depth. Some sections (pricing, business model, strategic positioning) can't come from conversations — the skill flags those as gaps for founder input rather than guessing.",
+      "prompts": [
+        "Build our company context from what customers actually say.",
+        "Refresh our positioning doc from the last six months of conversations."
+      ],
+      "bodyPath": "skills/company-context/SKILL.md",
+      "files": [
+        "skills/company-context/SKILL.md",
+        "skills/company-context/references/document-template.md"
+      ]
+    },
+    {
       "id": "cs-account-briefing",
       "title": "CS Account Briefing",
       "description": "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the cs-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides a list of accounts and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence, does not prescribe actions.",

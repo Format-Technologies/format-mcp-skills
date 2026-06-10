@@ -4,7 +4,7 @@ description: "Use when a Customer Success Manager wants to scan their book of bu
 metadata:
   title: CS Account Briefing
   personas: [customer-success]
-  image: card.jpg
+  image: card.png
   use_case: >-
     Scan your book of business for what's actually been said across customer
     conversations — risks, blockers, adoption, relationships, growth and

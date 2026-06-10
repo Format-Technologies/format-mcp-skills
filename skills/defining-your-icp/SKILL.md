@@ -4,7 +4,7 @@ description: Use when defining, refining, or analysing the Ideal Customer Profil
 metadata:
   title: Define Your ICP
   personas: [marketing, sales, leadership]
-  image: card.jpg
+  image: card.png
   use_case: >-
     Build an evidence-backed Ideal Customer Profile from real customer
     conversations: an ICP snapshot, buyer personas, in-market language cues,

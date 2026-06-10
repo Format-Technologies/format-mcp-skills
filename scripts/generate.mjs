@@ -15,7 +15,7 @@ import {
   existsSync,
   mkdirSync,
 } from 'node:fs';
-import { join, relative, dirname } from 'node:path';
+import { join, relative, dirname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import yaml from 'js-yaml';
 
@@ -44,7 +44,8 @@ const errors = [];
 const fail = (skill, msg) => errors.push(`  ${skill}: ${msg}`);
 
 function parseFrontmatter(raw, skill) {
-  const m = raw.match(/^---\n([\s\S]*?)\n---\n/);
+  // \r?\n: tolerate CRLF working trees (Windows contributors, autocrlf).
+  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
   if (!m) {
     fail(skill, 'SKILL.md has no frontmatter block');
     return null;
@@ -58,20 +59,21 @@ function parseFrontmatter(raw, skill) {
 }
 
 /** Every file in the skill dir except the card image — what the install zip contains. */
-function listFiles(dir, imageName) {
+function listFiles(dir, imageRepoPath) {
   const out = [];
   const walk = (d) => {
     for (const entry of readdirSync(d, { withFileTypes: true })) {
       if (entry.name.startsWith('.')) continue;
       const p = join(d, entry.name);
       if (entry.isDirectory()) walk(p);
-      else out.push(relative(ROOT, p));
+      // Manifest paths are always POSIX, whatever OS generated them.
+      else out.push(relative(ROOT, p).split(sep).join('/'));
     }
   };
   walk(dir);
-  return out
-    .filter((p) => !p.endsWith(`/${imageName}`))
-    .sort();
+  // Exact-path comparison — a basename match would also drop legitimate
+  // nested assets that happen to share the card image's filename.
+  return out.filter((p) => p !== imageRepoPath).sort();
 }
 
 function loadSkill(id) {
@@ -125,7 +127,7 @@ function loadSkill(id) {
     limitations: (meta.limitations ?? '').trim(),
     prompts: meta.prompts ?? [],
     bodyPath: `skills/${id}/SKILL.md`,
-    files: listFiles(dir, meta.image),
+    files: listFiles(dir, `skills/${id}/${meta.image}`),
   };
 }
 
@@ -166,7 +168,13 @@ const marketplaceJson = {
 };
 
 const OUTPUTS = [
+  // index.v1.json is the path deployed apps fetch — its shape is FROZEN:
+  // fields may be added under version 1, never renamed/removed/retyped. A
+  // breaking change must publish index.v2.json alongside, so app builds
+  // already in the field keep reading a contract that never moves.
+  // index.json is kept as an unversioned alias (humans, pre-v1 consumers).
   ['index.json', indexJson],
+  ['index.v1.json', indexJson],
   ['.claude-plugin/marketplace.json', marketplaceJson],
 ];
 

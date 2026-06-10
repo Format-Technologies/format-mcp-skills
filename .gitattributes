@@ -1,0 +1,6 @@
+# Keep working trees LF everywhere — scripts/generate.mjs parses SKILL.md
+# byte-wise, and the manifest contract assumes LF content.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.webp binary

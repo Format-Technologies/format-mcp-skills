@@ -12,12 +12,13 @@ and everything else is generated from it.**
 │       ├── SKILL.md                 ← the skill: frontmatter (metadata) + body (the prompt)
 │       ├── card.png                 ← gallery image (display only, not part of the install)
 │       └── references/…             ← optional supporting files, installed with the skill
-├── index.json                       ← GENERATED — gallery manifest (the Format app reads this)
+├── index.json                       ← GENERATED — gallery manifest
+├── index.v1.json                    ← GENERATED — frozen v1 twin (the Format app reads this)
 ├── .claude-plugin/marketplace.json  ← GENERATED — Claude Code marketplace, one plugin per skill
 └── scripts/generate.mjs             ← frontmatter → both manifests; also the CI validator
 ```
 
-**Never edit `index.json` or `.claude-plugin/marketplace.json` by hand.** They
+**Never edit `index.json`, `index.v1.json`, or `.claude-plugin/marketplace.json` by hand.** They
 are derived from `SKILL.md` frontmatter; CI rejects PRs where they're out of
 sync with the skills.
 
@@ -75,5 +76,5 @@ sync with the skills.
 ## How releases work
 
 There are none — merging to `main` is publishing. The Format app's gallery
-reads `index.json` from `main` (~5-minute cache), and Claude Code treats each
+reads `index.v1.json` from `main` (~5-minute cache), and Claude Code treats each
 new commit as an update.

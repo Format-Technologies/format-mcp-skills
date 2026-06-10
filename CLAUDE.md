@@ -1,12 +1,12 @@
 # CLAUDE.md
 
 Public skills library for the Format MCP server. Consumed by the Format app's
-skill gallery (via `index.json`) and by Claude Code as a plugin marketplace.
+skill gallery (via `index.v1.json`, the frozen-shape twin of `index.json`) and by Claude Code as a plugin marketplace.
 Full contract and authoring guide: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Hard rules
 
-1. **Never hand-edit `index.json` or `.claude-plugin/marketplace.json`** —
+1. **Never hand-edit `index.json`, `index.v1.json`, or `.claude-plugin/marketplace.json`** —
    both are generated from `SKILL.md` frontmatter.
 2. **After any change under `skills/`, run `npm run generate`** and commit the
    regenerated manifests with it. `npm run check` must pass before pushing.

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "personas": [
+    "Customer Success",
+    "Sales",
+    "Product",
+    "Marketing",
+    "Leadership",
+    "Research"
+  ],
+  "skills": [
+    {
+      "id": "weekly-customer-digest",
+      "name": "Weekly Customer Digest",
+      "description": "A Monday-morning TL;DR of every conversation, written for your team.",
+      "personas": ["Customer Success"],
+      "icon": "Newspaper",
+      "accent": "#7C3AED",
+      "bodyPath": "plugins/format-skills/skills/weekly-customer-digest/SKILL.md"
+    }
+  ]
+}

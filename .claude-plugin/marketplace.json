@@ -1,0 +1,19 @@
+{
+  "name": "format-mcp-skills",
+  "owner": {
+    "name": "Format Technologies",
+    "email": "engineering@useformat.ai"
+  },
+  "metadata": {
+    "description": "Ready-made skills for using Format inside Claude, ChatGPT, and other AI tools — powered by the Format MCP server.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "format-skills",
+      "description": "Customer-intelligence skills powered by the Format MCP server — weekly digests, churn signals, competitor watch, and more.",
+      "source": "./plugins/format-skills",
+      "strict": true
+    }
+  ]
+}

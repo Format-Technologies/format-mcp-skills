@@ -1,0 +1,19 @@
+{
+  "name": "format-skills",
+  "description": "Ready-made customer-intelligence skills powered by the Format MCP server.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Format Technologies",
+    "url": "https://useformat.ai"
+  },
+  "repository": "https://github.com/Format-Technologies/format-mcp-skills",
+  "license": "Proprietary",
+  "keywords": [
+    "format",
+    "mcp",
+    "customer-intelligence",
+    "voice-of-customer",
+    "digest",
+    "churn"
+  ]
+}

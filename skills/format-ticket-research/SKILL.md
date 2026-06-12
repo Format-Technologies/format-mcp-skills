@@ -134,6 +134,8 @@ Deliver to the destination the user named. When they named none, default to **ch
 
 **Write for scanning, not reading.** A wall of dense prose is the failure mode here. Let tables carry the structure and keep prose to quotes plus a line or two of commentary — the reader should get the whole picture from the at-a-glance line and the evidence map, then drill into only the groups they care about.
 
+**Caveats once, method never.** Every caveat gets said exactly once, in the one place it changes the reading — usually the "Read this with" block; the opener states the framing, and no other section re-explains it. And never narrate this skill's own method or rules ("demand grades are deliberately omitted", "these are surfaced examples, not a census") — the output should read as research, not as a description of how the research was done.
+
 Structure, regardless of destination:
 
 ```

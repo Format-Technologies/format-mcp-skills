@@ -8,11 +8,11 @@ metadata:
   image: card.jpg
   related: [format-roadmap-check]
   use_case: >-
-    Ground any ticket in customer reality before you build it. Paste a ticket
-    and get back what customers have actually said about the problem behind
-    it: the distinct asks grouped and linked to every supporting quote, who
-    raised them and when, and what the evidence implies that the ticket never
-    wrote down.
+    Ground a ticket in customer reality before you build it. Paste it (or
+    point at the tracker issue) and get back what customers have actually
+    said about the problem behind it: each distinct ask in their own words,
+    who raised it and when, every quote linked to its source — and the
+    requirements the evidence implies but the ticket doesn't spell out.
   limitations: >-
     Presents evidence; the conclusions are yours — it deliberately does not
     score or rank demand. Quality depends on conversation coverage in Format

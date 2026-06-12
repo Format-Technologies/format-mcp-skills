@@ -16,7 +16,7 @@
     },
     {
       "name": "format-ticket-research",
-      "description": "Ground any ticket in customer reality before you build it. Paste a ticket and get back what customers have actually said about the problem behind it: the distinct asks grouped and linked to every supporting quote, who raised them and when, and what the evidence implies that the ticket never wrote down.",
+      "description": "Ground a ticket in customer reality before you build it. Paste it (or point at the tracker issue) and get back what customers have actually said about the problem behind it: each distinct ask in their own words, who raised it and when, every quote linked to its source — and the requirements the evidence implies but the ticket doesn't spell out.",
       "source": "./skills/format-ticket-research",
       "strict": false
     },

@@ -127,41 +127,58 @@ Ask where the user wants the output if they haven't said — these are the desti
 - **Comment on the ticket** — when a tracker MCP is connected, post the evidence directly as a comment on the ticket: show the user the comment as it will appear, then post it on their go-ahead. Adapt formatting to what the tracker renders well. Without a tracker connection, provide the comment as copy-ready text instead.
 - **Format Brief** — if the workspace supports creating briefs via Format MCP, the user may ask for the output as a brief; if those tools aren't available, say so and fall back to one of the above.
 
+**Write for scanning, not reading.** A wall of dense prose is the failure mode here. Let tables carry the structure and keep prose to quotes plus a line or two of commentary — the reader should get the whole picture from the at-a-glance line and the evidence map, then drill into only the groups they care about.
+
 Structure, regardless of destination:
 
 ```
 # Customer evidence: [ticket title]
 
-**At a glance** — [N] relevant insights from [M] companies, spanning [earliest]–[latest].
-For scale: this workspace holds [total] insights from [total] companies over the same span.
+**At a glance:** [N] pieces of evidence · [M] companies · [earliest]–[latest].
+For scale: [workspace totals over the same span]. [One sentence on mechanism
+vs. area, if the distinction exists.]
 
-## What customers are asking for
+## Evidence map
 
-### [Need, in customer language]
-[N] companies — [list] · latest mention [date]
+| What customers are asking for | Companies | Mentions | Latest | Certainty |
+|---|---|---|---|---|
+| [need, customer language] | 2 ([names]) +1 unlinked | 8 | [date] | clear, source-verified |
+| [need, customer language] | 1 ([name]) | 3 | [date] | partly ambiguous |
+
+## [Need 1, named as in the table]
 > "[best verbatim quote]" — [name], [company], [date] ([link])
-> "[second quote if it adds something]" — ... ([link])
-[Cite speakers by name and company — add a role/title only when the data
-actually provides one; never guess it.]
+[A line or two of commentary — only what the quote can't say itself.]
 All evidence: [link] · [link] · [link] ...
-[If any item was verified against its source record or remains ambiguous, say so here in one line.]
 
-### [Next need...]
-
-## Counter-evidence
-[Only if found; otherwise omit the section.]
+## [Need 2...]
 
 ## What the evidence suggests the ticket should account for
-[Inferences, clearly labelled as such, each citing the groups/quotes it rests on.
-If the evidence supports no inferences, omit the section.]
-- Customers describing this need were mostly [X] — see [group], which suggests [Y]
+[Inferences, clearly labelled as such, each citing the groups/quotes it rests
+on. Counter-evidence belongs here when it directly shapes a requirement; give
+it its own short section only when it stands alone. Omit if the evidence
+supports no inferences.]
 
 ## Read this with
-[The calibration block: listening coverage for this domain, whether aggregated
-answers existed, anything that limits what the numbers above can mean.]
+[The calibration block as 2–4 tight bullets: listening coverage for this
+domain, whether aggregated answers existed, anything that limits what the
+numbers above can mean.]
 ```
 
-Keep it compact: lead with the groups, one or two quotes inline per group, everything else as links. Omit empty sections entirely. If the user wants the full quote bank, expand on request rather than defaulting to a wall of quotes.
+Formatting notes:
+
+- Cite speakers by name and company — add a role/title only when the data actually provides one; never guess it.
+- Markdown destinations (chat, tracker comments): use the evidence map table as-is — trackers like Linear and Jira render markdown tables. Keep cells to a few words so rows don't wrap badly.
+- HTML page: same structure with richer treatment — a real table, and every count clickable through to its evidence.
+
+**Charts, where they earn it.** When the *timing* of mentions tells a story — clustered around a release, accelerating, gone quiet — add a compact mention timeline for the group (or one combined timeline). In markdown destinations use a unicode bar row:
+
+```
+2025 Q3 ▎1   Q4 ▌2   2026 Q1 ▉6   Q2 ▋4
+```
+
+On the HTML page, draw real bars (inline SVG or styled divs — self-contained, no external libraries or network requests), each bar linking to its insights. A good chart shows something the reader would otherwise have to assemble from the citations themselves; skip it when the table already says it — a handful of mentions inside one month is just "all within [month]" in the table.
+
+Omit empty sections entirely. If the user wants the full quote bank, expand on request rather than defaulting to a wall of quotes.
 
 ## Hard rules
 

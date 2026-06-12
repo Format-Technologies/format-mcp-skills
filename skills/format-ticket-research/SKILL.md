@@ -5,6 +5,7 @@ metadata:
   title: Ticket Research
   personas: [product]
   image: card.jpg
+  related: [format-roadmap-check]
   use_case: >-
     Ground any ticket in customer reality before you build it. Paste a ticket
     and get back what customers have actually said about the problem behind
@@ -79,7 +80,7 @@ The make-or-break problem is vocabulary: customers rarely use the ticket's words
 
 **Round 2+ — search deeper.** Re-search with the learned vocabulary. On strong hits, use `similarToInsightId` to walk the insight graph and surface co-clustered quotes a text query would miss. Repeat until a round stops producing new accepted evidence — saturation, not a fixed round count, ends the loop.
 
-**Deduplicate everything by insight ID across all rounds.**
+**Deduplicate across all rounds — by ID and by content.** ID-level dedup is not enough: the same customer statement is often extracted under multiple topics as separate insights with different IDs. Treat near-identical quotes from the same record as **one** piece of evidence — count it once, cite it once (any of its share links works).
 
 ### Adjudicate every candidate
 
@@ -106,6 +107,7 @@ For needs-context insights whose resolution would change the picture — they're
 **Do not score, rank, or label demand strength.** No "strong demand", no "weak signal", no scores. Whether evidence is compelling depends on relative volume, capture quality, and how much this area gets discussed at all — judgments that belong to the reader. The skill's job is to make that judgment easy:
 
 - Per group: the raw facts (how many companies, who, the date span, latest mention) and a link to **every** supporting insight — the best one or two quotes inline, the rest as links, never an unverifiable summary.
+- Expect attribution gaps: many insights have no linked company, and some carry a company name without a linked company record. Count distinct companies by **name**, and surface unattributed evidence on its own line ("plus [N] mentions from speakers not linked to a company") rather than silently dropping it.
 - A calibration block: total workspace volume over the same span, whether any topic listens for this area, and whether aggregated answers were available — the denominators a reader needs to weigh the numerators.
 
 ### When little or nothing is found
@@ -137,8 +139,10 @@ For scale: this workspace holds [total] insights from [total] companies over the
 
 ### [Need, in customer language]
 [N] companies — [list] · latest mention [date]
-> "[best verbatim quote]" — [name, role], [company], [date] ([link])
+> "[best verbatim quote]" — [name], [company], [date] ([link])
 > "[second quote if it adds something]" — ... ([link])
+[Cite speakers by name and company — add a role/title only when the data
+actually provides one; never guess it.]
 All evidence: [link] · [link] · [link] ...
 [If any item was verified against its source record or remains ambiguous, say so here in one line.]
 

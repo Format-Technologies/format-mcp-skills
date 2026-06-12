@@ -49,13 +49,15 @@ Do NOT use this skill to validate a whole roadmap or a list of items — it goes
 
 **Required: the ticket.** Pasted title + description is the baseline and always works. If a tracker MCP (Linear, Jira, etc.) is connected and the user gives an ID or URL, fetch the ticket from there — include its comments, which often carry customer context the description lacks. Never require a tracker connection.
 
+If a Format company-context document (the output of the `format-company-context` skill) is already in the conversation, use it to sharpen the problem framing and initial probes — never require one or block on its absence.
+
 Do not ask the user setup questions. The research loop below discovers customer vocabulary on its own. Ask only if the ticket is genuinely too vague to extract a customer problem from — and then ask one question, not a form.
 
 ## Stage 0 — Preflight: understand the evidence base
 
 Run three cheap checks before researching. Their results calibrate everything downstream and feed the output's context section.
 
-1. **Volume and breadth:** `count_insights` with `{ level: 0, groupBy: "company" }` — total insight volume and how many distinct companies it spans, in one call.
+1. **Volume and breadth:** `count_insights` with `{ level: 0, groupBy: "company" }` — total insight volume and how many distinct companies it spans, in one call. Note the corpus's overall date span too (a `dateRange`-bounded count or two pins it down cheaply): this search runs unwindowed, and the output must say what period it could actually see, so the dates of the evidence found read against the dates that existed to be found.
 2. **Aggregated answers:** `count_insights` with `{ level: "aggregated" }` — whether this workspace has aggregated answers (themes synthesized across customers). Judge by the response **shape**, not the bare number: when aggregated answers exist, the response carries a per-level breakdown; when none exist, the tools transparently fall back to verbatim quotes, so a non-zero count alone does not prove aggregated answers are present. (Equivalently: if an "aggregated" search returns items with individual quotes and speakers instead of synthesized titles and customer counts, the workspace has none.) Having none is normal, not an error — work from verbatim quotes and skip the theme-based steps below. When they do exist, they're a major research asset.
 3. **Listening coverage:** `list_topics` — what kinds of feedback this workspace extracts. Format only captures what its topics ask for, so note whether any topic plausibly covers this ticket's domain. This matters most when the search comes back empty (see "When little or nothing is found").
 
@@ -75,7 +77,7 @@ These probes are a starting point, not the search. The loop refines them.
 
 The make-or-break problem is vocabulary: customers rarely use the ticket's words. Solve it iteratively rather than by guessing up front.
 
-**Round 1 — poke.** For each initial probe, call `search_insights` with `{ semanticQuery: "<probe>", level: 0 }`. Add a keyword pass with `{ keywordSearch: [...] }` for terms semantic search ranks poorly (product names, file formats, integration names). If aggregated answers exist, also search them (`level: "aggregated"` with keywords, or scoped by `topicNames` from preflight) — a matching theme is both confirmation the need exists at scale and a direct route to its supporting quotes: re-fetch with `select: "extended"`, locate your answer by ID in the response (extended aggregated results come back as a full page and can be very large), take its supporting insight IDs, and pass them back through `search_insights` at level 0 to get the verbatim quotes.
+**Round 1 — poke.** For each initial probe, call `search_insights` with `{ semanticQuery: "<probe>", level: 0 }`. Add a keyword pass with `{ keywordSearch: [...] }` for terms semantic search ranks poorly (product names, file formats, integration names). Keep these evidence searches unscoped by topic: `list_topics` diagnoses what the workspace listens for, but topics are a lens, not the corpus — a topic filter silently drops whatever insights no topic happened to capture. If aggregated answers exist, also search them (`level: "aggregated"` with keywords, or scoped by `topicNames` from preflight) — a matching theme is both confirmation the need exists at scale and a direct route to its supporting quotes: re-fetch with `select: "extended"`, locate your answer by ID in the response (extended aggregated results come back as a full page and can be very large), take its supporting insight IDs, and pass them back through `search_insights` at level 0 to get the verbatim quotes.
 
 **Learn.** Read the round's hits and extract how customers actually talk about this: their phrasings, the names they use for features and workflows, adjacent complaints that turn out to be the same need. Matching aggregated themes are a vocabulary goldmine — their synthesized claims are written from many customers' words.
 
@@ -107,7 +109,7 @@ For needs-context insights whose resolution would change the picture — they're
 
 **Do not score, rank, or label demand strength.** No "strong demand", no "weak signal", no scores. Whether evidence is compelling depends on relative volume, capture quality, and how much this area gets discussed at all — judgments that belong to the reader. The skill's job is to make that judgment easy:
 
-- Per group: the raw facts (how many companies, who, the date span, latest mention) and a link to **every** supporting insight — the best one or two quotes inline, the rest as links, never an unverifiable summary.
+- Per group: the raw facts (how many companies, who, the date span, latest mention — and, when an aggregated theme matched the group, that theme's customer count, the cheapest scale signal available) and a link to **every** supporting insight — the best one or two quotes inline, the rest as links, never an unverifiable summary.
 - Expect attribution gaps: many insights have no linked company, and some carry a company name without a linked company record. Count distinct companies by **name**, and surface unattributed evidence on its own line ("plus [N] mentions from speakers not linked to a company") rather than silently dropping it.
 - A calibration block: total workspace volume over the same span, whether any topic listens for this area, and whether aggregated answers were available — the denominators a reader needs to weigh the numerators.
 
@@ -121,10 +123,10 @@ Empty results have three different causes, and the output must say which applies
 
 ## Stage 4 — Render
 
-Ask where the user wants the output if they haven't said — these are the destinations:
+Deliver to the destination the user named. When they named none, default to **chat** rather than asking — a destination question at render time costs a round-trip exactly when the user wants the answer; instead, offer the alternatives in one line alongside the delivered output ("want this as an HTML page, a comment on the ticket, or a Format Brief?"). The destinations:
 
 - **Chat** (default) — the structure below, rendered as markdown.
-- **HTML evidence page** — the same content as a clean, self-contained HTML page: on claude.ai render it as an artifact; in Claude Code save it as an `.html` file and tell the user where. Every evidence link must be a real link to the insight or record in Format.
+- **HTML evidence page** — the same content as a clean, self-contained HTML page: as an artifact where the environment supports them, otherwise a saved `.html` file (tell the user where). Every evidence link must be a real link to the insight or record in Format.
 - **Comment on the ticket** — when a tracker MCP is connected, post the evidence directly as a comment on the ticket: show the user the comment as it will appear, then post it on their go-ahead. Adapt formatting to what the tracker renders well. Without a tracker connection, provide the comment as copy-ready text instead.
 - **Format Brief** — if the workspace supports creating briefs via Format MCP, the user may ask for the output as a brief; if those tools aren't available, say so and fall back to one of the above.
 
@@ -160,9 +162,10 @@ it its own short section only when it stands alone. Omit if the evidence
 supports no inferences.]
 
 ## Read this with
-[The calibration block as 2–4 tight bullets: listening coverage for this
-domain, whether aggregated answers existed, anything that limits what the
-numbers above can mean.]
+[The calibration block as 2–4 tight bullets: the period the search could
+see (the corpus's overall date span) vs. the dates of the evidence found;
+listening coverage for this domain; whether aggregated answers existed;
+anything else that limits what the numbers above can mean.]
 ```
 
 Formatting notes:

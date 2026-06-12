@@ -60,12 +60,13 @@ Run these cheap checks before anything else. Their results calibrate the whole r
 2. **Rate and span:** one more `count_insights` over a recent slice (via `dateRange`) to estimate roughly how many insights per month this workspace produces — and note the corpus's overall date span while you're at it. A freshly-ingested workspace may hold months of conversations imported on a single day; the window proposal in Stage 1 depends on both facts.
 3. **Aggregated answers:** `count_insights` with `{ level: "aggregated" }` — whether the workspace has aggregated answers (themes synthesized across many customers). Judge by the response **shape, not the bare number**: when aggregated answers exist, the response carries a per-level breakdown; when none exist, the tools transparently fall back to verbatim quotes, so a non-zero count alone does not prove aggregated answers are present. (Equivalently: if an "aggregated" search returns items with individual quotes and speakers instead of synthesized titles and customer counts, the workspace has none.) Having none is normal, not an error — it means the quotes-only paths below. When they do exist, they're a major asset for both halves of the board.
 4. **Listening coverage:** `list_topics` — what kinds of feedback this workspace extracts. Format only captures what its topics ask for; note which topics plausibly cover the roadmap's domains. Note also what product or audience the workspace's conversations appear to concern — topic definitions and early search hits usually make it obvious. If it visibly isn't the product the roadmap belongs to (wrong org selected, a demo workspace), raise that at the Stage 1 checkpoint: every empty row on the board would be an artifact of the mismatch, not of demand.
+5. **Company knowledge:** `list_org_attributes` — what the workspace knows about its companies beyond their names. Look especially for anything that separates prospects from customers (lifecycle stage, customer status, plan tier). An ask heard on an early prospecting call and the same ask from a paying customer are different evidence, and a board that silently blends them misleads. If such an attribute exists, bring it to the Stage 1 checkpoint as a scope choice. Finding nothing lifecycle-like is also normal — run unscoped and don't manufacture a segment from weaker signals.
 
-If the workspace holds very little data overall, say so before starting — the board will be anecdotal — and let the user decide whether to continue.
+If the workspace holds very little data overall, say so — the board will be anecdotal — and let the user decide whether to continue; fold this into the Stage 1 checkpoint rather than making a separate stop. A preflight that finds a healthy workspace needs no announcement at all: its numbers belong in the board's calibration block, not in chat.
 
 ## Stage 1 — Parse the roadmap and propose the window (one checkpoint)
 
-This skill makes exactly one stop before the long research run. Prepare two things and show them together:
+This skill makes exactly one stop before the long research run. Prepare three things and show them together:
 
 **1. The parsed roadmap.** Normalize the input into a list of items. For each: the item title, and the customer problem behind it in one line of customer language (solution-speak → problem-speak, exactly as a customer would describe the pain). Flag items that look **internal** — infrastructure, tech debt, compliance, replatforming — where customer evidence wouldn't be expected even for worthwhile work. Internal items stay on the board but are marked so an empty evidence row reads as "not customer-facing," never as "nobody wants this."
 
@@ -78,9 +79,40 @@ One boundary case overrides the heuristics: **if the corpus's date span is short
 
 State the proposal in one line with its reason — "No aggregated answers and roughly [N] insights/month, so I'll look at the last [window]; say the word to widen or narrow it" — and let the user override with a word. If the user already named a window, skip the proposal and respect it.
 
-Present both, take corrections (item framing, internal flags, window), then run without further questions.
+**3. The run's remaining settings, as defaults to redirect.** Two more choices shape the run, and the checkpoint is the cheap moment to settle them:
+
+- **Destination** — chat (compact board); an HTML page or equivalent artifact; a **Format Brief**, when the connection exposes the brief tools — the strongest option where it exists, because the board becomes a live, sharable Format artifact whose embedded insights stay clickable and playable; or a PDF, where the environment can produce one. Settle it now rather than at render time: by Stage 4 the user has waited through the whole run, and a destination question there costs a round-trip exactly when they want the answer. Pick the likeliest default from context (an explicit ask in the prompt wins; otherwise chat) and let them redirect with a word.
+- **Scope** — if preflight found an attribute separating prospects from customers, surface it as a choice: scope the evidence, or run unscoped with the mix disclosed wherever it's material. Propose the reading the user's question implies — a check of "what customers are asking for" usually wants real customers foregrounded — but make the choice visible rather than silently blending the two populations. A user-named segment is resolved as described under Inputs.
+
+**What the checkpoint is for.** The user has just handed over a roadmap and wants the research running; this stop exists to catch a misread cheaply — a wrongly reframed item, a bad window — not to demonstrate the preflight work. Include only what the user's answer could change: the reframed items, the window with its one-line reason, and the defaults chosen on their behalf. The preflight findings shaped those choices and will appear in the board's calibration block at the end — narrating them here means the user reads them twice, and the two or three things that actually need their eyes get buried. The exception is a preflight surprise that changes whether the user wants this run at all — a workspace/roadmap mismatch, a near-empty corpus, a compressed date span — which belongs front and center.
+
+A checkpoint that reads in under a minute:
+
+```
+Parsed the roadmap into 9 items. Check the reframings — everything else
+runs on the defaults below unless you redirect.
+
+| # | Item | The need, as customers put it | Note |
+[One row per item. Notes only where there's a judgment call: "internal —
+evidence not expected", "researched as 4 sub-needs", "roadmap calls this
+a bet — researching the underlying need". A note column where most rows
+would say "customer-facing" is noise.]
+
+Running with:
+- **Window: last 6 months** (~4,800 of 6,500 insights; aggregated
+  answers exist, so months-scale reads well) — say the word for 3 or 12.
+- **Scope: customers only** (the workspace's "lifecycle stage" attribute
+  separates them from prospects) — or unscoped with the mix disclosed.
+- **Destination: chat** — or an HTML page, a Format Brief, or a PDF.
+```
+
+**Use the environment's question UI when there is one.** The settings are discrete choices, and some environments offer a structured way to ask — option pickers with a free-text escape, as in Claude's plan mode. Where such a tool is available, put window, scope, and destination through it, recommended option first, and keep the parsed-roadmap table in the message itself: reframings need free-form correction, not a picker. Where there is no such tool, prose like the example above does the job.
+
+Take corrections (item framing, flags, window, scope, destination), then run without further questions.
 
 ## Stage 2 — Per-item research
+
+**Run quietly.** The checkpoint was the conversation and the board is the deliverable; in between, the user is waiting, not reading along. A play-by-play in chat — "strong asks for X, now probing Y" — is the board leaking out early: every line of it gets read again, better organized, in the final render, and the environment already signals that work is happening. Speak mid-run only when something changes the run itself — a discovery that invalidates the checkpoint's framing, a workspace surprise, a blocker — and at most a line at a genuine seam (crossing from the per-item half to unbuilt demand), not per item or per query.
 
 For each customer-facing item, run a compact version of the iterative research loop (the Ticket Research skill runs the same loop at full depth):
 
@@ -88,7 +120,7 @@ For each customer-facing item, run a compact version of the iterative research l
 2. **Learn the language:** extract how customers actually phrase this need from the first round's hits, re-search with the learned vocabulary, and use `similarToInsightId` on strong hits to surface co-clustered quotes a text query would miss. At survey depth, a round or two past the initial poke is usually enough — stop when a round adds nothing new.
 3. **Adjudicate strictly.** Semantic similarity is not demand. Bucket every candidate: **direct ask** (explicitly requests the capability), **implied need** (describes pain the item would resolve), **adjacent** (same area, different need — discard), **counter-evidence** (wants the opposite, or describes the item's approach as a problem — keep, shown separately). Candidates flagged `isAiRejected` aren't discarded out of hand — fetch the rejection reason (`select: "extended"` carries it) and weigh it: a reason about fit to the insight's own topic doesn't invalidate the quote as evidence for a roadmap item, while a reason about substance (content-free, unsupported, misattributed) does. If a rejected insight makes the board, note the flag alongside its citation.
 4. **Flag certainty.** Mark each accepted insight **clear** or **needs context**. For needs-context insights, fetch the underlying conversation with `get_record` and read the surrounding exchange — then confirm or discard. At survey depth, deep-dive only where the resolution would change that item's picture (e.g. the item's evidence hinges on one ambiguous quote). Anything still ambiguous is shown as ambiguous, never silently promoted.
-5. **Quantify locally — and count moments, not rows.** The accepted insights carry company, person, and timestamp — compute distinct companies, the date spread, and the latest mention from what's already in hand rather than issuing more queries. Two corrections matter for honest numbers: **(a)** Format extracts insights per topic, so one customer statement can exist as several near-identical insight rows — **dedupe on the record ID**: insights sharing a record that restate the same ask are one mention, and a record counts more than once only when it genuinely contains distinct asks (different speakers or different needs in the same conversation). **(b)** Company attribution can be partial — some insights carry a company name without a linked record, with spelling variants — so count companies by normalized name, and disclose how much of the item's evidence is unattributed when it's material.
+5. **Quantify locally — and count moments, not rows.** The accepted insights carry company, person, and timestamp — compute distinct companies, the date spread, and the latest mention from what's already in hand rather than issuing more queries. Two corrections matter for honest numbers: **(a)** Format extracts insights per topic, so one customer statement can exist as several near-identical insight rows — **dedupe on the record ID**: insights sharing a record that restate the same ask are one mention, and a record counts more than once only when it genuinely contains distinct asks (different speakers or different needs in the same conversation). **(b)** Company attribution can be partial — some insights carry a company name without a linked record, with spelling variants — so count companies by normalized name, and disclose how much of the item's evidence is unattributed when it's material. **(c)** When the workspace distinguishes prospects from customers and the run is unscoped, count them separately — "6 companies" where five are early-stage prospects is a materially different fact than six paying customers, and the board should say which it is.
 
 **When an item comes up empty,** name the most likely cause — they mean opposite things:
 
@@ -108,9 +140,14 @@ Now flip the direction: what are customers raising that maps to nothing on the r
 
 ## Stage 4 — Render the evidence board
 
-Ask which destination the user wants if they haven't said: **chat** (compact board), an **HTML page** (the full board — as an artifact where the environment supports them, otherwise a saved `.html` file), or **posted into the tracker**. For posting: one consolidated update on the roadmap's home (the project, epic, or document it came from), with the rendered board shown to the user before it goes up. Post per-item comments on individual tickets only if explicitly asked — unrequested, that's spam.
+Render to the destination settled at the checkpoint:
 
-The board, in reading order:
+- **Chat** — the compact board, as markdown.
+- **HTML page** — the full board: as an artifact where the environment supports them, otherwise a saved `.html` file. Every evidence link must be a real link into Format.
+- **Format Brief** — the full board as a live Format artifact, composed with `create_lens_brief`: the board table, the strongest quote per item embedded as an insight block, remaining citations as inline insight chips — so every count stays clickable at the source — and the calibration block as a closing section. Share the brief's URL in chat alongside a two-line summary.
+- **PDF** — where the environment can produce one: the HTML page's content, laid out for print.
+
+The board, in reading order (identical content in every destination):
 
 ```
 # Roadmap evidence check
@@ -149,10 +186,11 @@ whole workspace, including the unattributed share; the corpus's date span
 (and that trends are unreadable if it's compressed); whether aggregated
 answers exist (and that the unbuilt section is a sketch if not); which
 roadmap domains no topic listens for; any workspace/roadmap mismatch; any
-segment scope applied.]
+segment scope applied — or, when the workspace can tell prospects from
+customers and the run was unscoped, the mix.]
 ```
 
-Verbosity is the enemy of an evidence board. The table carries the overview; the evidence sections carry depth **through links, not bulk** — at most two quotes inline per group, everything else linked. Omit empty sections rather than printing empty headings. The chat rendering and the HTML page have identical content; the HTML version may add layout (the table as the centerpiece, evidence sections collapsible) but no extra prose.
+Verbosity is the enemy of an evidence board. The table carries the overview; the evidence sections carry depth **through links, not bulk** — at most two quotes inline per group, everything else linked. Omit empty sections rather than printing empty headings. Richer destinations may add layout — the HTML page can make the table the centerpiece with collapsible evidence sections; the brief swaps links for embedded insights — but never extra prose.
 
 ## Hard rules
 
@@ -162,7 +200,7 @@ Verbosity is the enemy of an evidence board. The table carries the overview; the
 - **Absence is disambiguated, never weaponized.** An empty row names its likely cause; it is never rendered as "customers don't want this."
 - **One checkpoint, then work.** The Stage 1 stop is the only planned interaction before rendering.
 - **The window is never silently defaulted.** Either the user named it or the skill proposed it with reasoning and the user saw it.
-- **Read-only on Format.** Query freely; never create, modify, or delete anything in Format. Posting to the tracker happens only after the user has seen the rendered board.
+- **Read-only on Format — except the brief.** Query freely; never modify or delete anything in Format. The one permitted write is the brief the user chose as the destination at the checkpoint.
 
 ## Related skills
 
@@ -181,11 +219,11 @@ Using the Format MCP and the format-roadmap-check skill, check this roadmap:
 
 ### Example 1 — pasted roadmap, full run
 
-User pastes nine Q-next items. The skill preflights (healthy volume, aggregated answers exist), parses the items, flags two as internal, proposes "last 6 months" with its reasoning, and shows the checkpoint. User tweaks one item's framing and confirms. The skill researches the seven customer-facing items, finds evidence for five, marks one "extraction gap" (no topic covers that domain) and one "genuinely quiet," then surfaces three multi-customer themes no item covers. Board delivered in chat; user asks for the HTML page; same content, rendered as a page.
+User pastes nine Q-next items. The skill preflights silently (healthy volume, aggregated answers exist), parses the items, flags two as internal, and shows the checkpoint — a dozen lines, table included, with "last 6 months" reasoned in one line and chat as the default destination. User tweaks one item's framing and confirms. The skill researches the seven customer-facing items without narrating between queries, finds evidence for five, marks one "extraction gap" (no topic covers that domain) and one "genuinely quiet," then surfaces three multi-customer themes no item covers. Board delivered in chat; user then asks for the HTML page; same content, rendered as a page.
 
-### Example 2 — tracker project, posted back
+### Example 2 — tracker project in, Brief out
 
-User: "Check the 'Q3 Platform' project against customer evidence and post the result on the project." A tracker MCP is connected, so the skill fetches the project's items, runs the checkpoint and research, renders the board, shows it to the user, and — once the user confirms — posts it as a single update on the project. No per-ticket comments.
+User: "Check the 'Q3 Platform' project against customer evidence." A tracker MCP is connected, so the skill fetches the project's items from it. The Format connection exposes the brief tools, so the checkpoint proposes a Format Brief as the destination and the user takes it. After the run, the board is composed as a brief — strongest quotes embedded as insight blocks, remaining citations as inline chips — and the user gets the share URL plus a two-line summary in chat.
 
 ### Example 3 — quotes-only workspace
 

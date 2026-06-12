@@ -1,6 +1,6 @@
 ---
 name: format-roadmap-check
-description: "Use when a product manager or leader wants to check a roadmap against real customer evidence using Format MCP — answering 'are customers asking for what we're building?' and the inverse, 'what are customers asking for that we're not building?'. Canonical invocation: 'using the Format MCP and the format-roadmap-check skill, check this roadmap' followed by a pasted list of roadmap items or a reference to a tracker project/epic. Also triggers on 'validate this roadmap against customer feedback', 'is there evidence for these roadmap items', 'what are customers asking for that isn't on the roadmap', 'roadmap evidence check', 'gap analysis on our roadmap'. Produces an evidence board: per-item customer evidence with links to every quote, plus the demand themes no roadmap item covers. It presents evidence and context — it never scores items or recommends what to build or cut."
+description: "Use when a product manager or leader wants to check a roadmap against real customer evidence using Format MCP — answering 'are customers asking for what we're building?' and the inverse, 'what are customers asking for that we're not building?'. Canonical invocation: 'using the Format MCP and the format-roadmap-check skill, check this roadmap' followed by a pasted list of roadmap items or a reference to a tracker project/epic. Also triggers on 'validate this roadmap against customer feedback', 'is there evidence for these roadmap items', 'what are customers asking for that isn't on the roadmap', 'roadmap evidence check', 'gap analysis on our roadmap'. Produces an evidence board: per-item customer evidence with links to every quote, plus the demand themes no roadmap item covers. It presents evidence and context rather than scoring items or recommending what to build or cut."
 metadata:
   display_order: 30
   title: Roadmap Check
@@ -33,7 +33,7 @@ Given a roadmap — a pasted list of items, a document, or a project/epic fetche
 1. **Roadmap vs. evidence** — for every item, what customers have said about the need behind it: the asks in customer language, who raised them and when, verbatim quotes, and a link to every piece of supporting evidence
 2. **Unbuilt demand** — the things customers keep raising that map to **no** roadmap item
 
-It presents evidence and the context needed to weigh it. It **never** scores items, grades demand, ranks the roadmap, or recommends building or cutting anything — whether the evidence is compelling depends on things only the reader can judge: capture quality, how much customers discuss this area in general, strategy, and what else competes for the team's time. The board's job is to make the evidence so legible that the reader's own conclusion is easy.
+It presents evidence and the context needed to weigh it, and deliberately stops short of scoring items, grading demand, ranking the roadmap, or recommending building or cutting anything — whether the evidence is compelling depends on things only the reader can judge: capture quality, how much customers discuss this area in general, strategy, and what else competes for the team's time. The board's job is to make the evidence so legible that the reader's own conclusion is easy.
 
 ## When to use it
 
@@ -41,16 +41,16 @@ It presents evidence and the context needed to weigh it. It **never** scores ite
 - A leadership review asks for customer evidence behind the plan
 - Periodic sanity check: "what are customers asking for that we're not building?"
 
-Do NOT use this skill for deep research on a single ticket or feature — that's survey depth across many items. See "Related skills" at the end for the hand-off.
+This skill is survey depth across many items. Deep research on a single ticket or feature is a different job — see "Related skills" at the end for the hand-off.
 
 ## Inputs
 
-**Required: the roadmap.** A pasted list of items (titles, ideally with a line of description each) is the baseline and always works. If a tracker MCP (Linear, Jira, Notion, etc.) is connected and the user points at a project, epic, milestone, or document, fetch the items from there — but never require a tracker connection.
+**Required: the roadmap.** A pasted list of items (titles, ideally with a line of description each) is the baseline and always works. If a tracker MCP (Linear, Jira, Notion, etc.) is connected and the user points at a project, epic, milestone, or document, fetch the items from there — a tracker connection is a bonus, not a requirement; a pasted list alone is always enough.
 
-**Optional, never interrogate:**
+**Optional — use when present, don't ask for:**
 
-- **Existing context** — if a Format company-context document (the output of the `format-company-context` skill) is already in the conversation, use it to inform item reframing and search vocabulary. Never require one or block on its absence.
-- **Timeframe** — if the user names a window, use it. Otherwise the skill proposes one from the data (see Stage 1); it never silently defaults.
+- **Existing context** — if a Format company-context document (the output of the `format-company-context` skill) is already in the conversation, use it to inform item reframing and search vocabulary; its absence blocks nothing.
+- **Timeframe** — if the user names a window, use it. Otherwise the skill proposes one from the data (see Stage 1) rather than silently defaulting.
 - **Segment scope** — the user may scope evidence to a customer segment (e.g. "active paying customers only"). Resolve via `list_org_attributes` to find the workspace's CRM attribute labels, then pass `attributeFilters` on every insight query. If the requested attribute doesn't exist in the workspace, say so and proceed unscoped rather than guessing.
 
 ## Stage 0 — Preflight: understand the evidence base
@@ -76,7 +76,7 @@ This skill makes exactly one stop before the long research run. Prepare three th
 - **With aggregated answers**, themes compress volume and already encode how mentions developed over time, so windows of several months up to a year work well.
 - **Without aggregated answers**, the unit of work is the raw quote, so scale the window inversely to the monthly insight rate — wide enough to be representative, narrow enough that every candidate can still be honestly adjudicated. As illustrative calibration: a workspace producing thousands of insights a month points to a window of weeks; hundreds a month points to a few months; less than that, wider.
 
-One boundary case overrides the heuristics: **if the corpus's date span is shorter than any window you'd propose, propose the full span and say so** — "everything here was captured within [span], so I'll use all of it." Rate math on a corpus like that produces nonsense, and the board's calibration block must then note that there is no date spread to read trends from.
+One boundary case overrides the heuristics: **if the corpus's date span is shorter than any window you'd propose, propose the full span and say so** — "everything here was captured within [span], so I'll use all of it." Rate math on a corpus like that produces nonsense, and the board's calibration block should then note that there is no date spread to read trends from.
 
 State the proposal in one line with its reason — "No aggregated answers and roughly [N] insights/month, so I'll look at the last [window]; say the word to widen or narrow it" — and let the user override with a word. If the user already named a window, skip the proposal and respect it.
 
@@ -119,18 +119,18 @@ Take corrections (item framing, flags, window, scope, destination), then run wit
 
 For each customer-facing item, run a compact version of the iterative research loop (the Ticket Research skill runs the same loop at full depth):
 
-1. **Poke:** search with a handful of probes spanning solution language and problem language — `search_insights` with `{ semanticQuery: "<probe>", level: 0 }` plus a `keywordSearch` pass for terms semantic search ranks poorly (product names, file formats, integration names). Keyword terms are OR'd together — pairing a precise term with a generic one ("Salesforce", "CRM") drowns the precise one, so probe precise terms separately or expect to filter the hits. Apply the agreed `dateRange` and any `attributeFilters` to every evidence query. Never narrow evidence searches by topic: `list_topics` diagnoses what the workspace listens for, but topics are a lens, not the corpus — scoping searches to them silently drops whatever insights no topic happened to capture. If aggregated answers exist, search them too (`level: "aggregated"`) — a matching theme is both confirmation the need exists at scale and a direct route to its quotes: re-fetch with `select: "extended"`, locate your answer by ID in the response (extended aggregated results come back as a full page and can be very large), take its supporting insight IDs, and pass them back through `search_insights` at level 0 for the verbatim quotes.
+1. **Poke:** search with a handful of probes spanning solution language and problem language — `search_insights` with `{ semanticQuery: "<probe>", level: 0 }` plus a `keywordSearch` pass for terms semantic search ranks poorly (product names, file formats, integration names). Keyword terms are OR'd together — pairing a precise term with a generic one ("Salesforce", "CRM") drowns the precise one, so probe precise terms separately or expect to filter the hits. Apply the agreed `dateRange` and any `attributeFilters` to every evidence query. Keep evidence searches unscoped by topic: `list_topics` diagnoses what the workspace listens for, but topics are a lens, not the corpus — scoping searches to them silently drops whatever insights no topic happened to capture. If aggregated answers exist, search them too (`level: "aggregated"`) — a matching theme is both confirmation the need exists at scale and a direct route to its quotes: re-fetch with `select: "extended"`, locate your answer by ID in the response (extended aggregated results come back as a full page and can be very large), take its supporting insight IDs, and pass them back through `search_insights` at level 0 for the verbatim quotes.
 2. **Learn the language:** extract how customers actually phrase this need from the first round's hits, re-search with the learned vocabulary, and use `similarToInsightId` on strong hits to surface co-clustered quotes a text query would miss. At survey depth, a round or two past the initial poke is usually enough — stop when a round adds nothing new.
 3. **Adjudicate strictly.** Semantic similarity is not demand. Bucket every candidate: **direct ask** (explicitly requests the capability), **implied need** (describes pain the item would resolve), **adjacent** (same area, different need — discard), **counter-evidence** (wants the opposite, or describes the item's approach as a problem — keep, shown separately). Candidates flagged `isAiRejected` aren't discarded out of hand — fetch the rejection reason (`select: "extended"` carries it) and weigh it: a reason about fit to the insight's own topic doesn't invalidate the quote as evidence for a roadmap item, while a reason about substance (content-free, unsupported, misattributed) does. If a rejected insight makes the board, note the flag alongside its citation.
-4. **Flag certainty.** Mark each accepted insight **clear** or **needs context**. For needs-context insights, fetch the underlying conversation with `get_record` and read the surrounding exchange — then confirm or discard. At survey depth, deep-dive only where the resolution would change that item's picture (e.g. the item's evidence hinges on one ambiguous quote). Anything still ambiguous is shown as ambiguous, never silently promoted.
+4. **Flag certainty.** Mark each accepted insight **clear** or **needs context**. For needs-context insights, fetch the underlying conversation with `get_record` and read the surrounding exchange — then confirm or discard. At survey depth, deep-dive only where the resolution would change that item's picture (e.g. the item's evidence hinges on one ambiguous quote). Anything still ambiguous is shown as ambiguous — promoting it silently overstates the evidence.
 5. **Quantify locally — and count moments, not rows.** The accepted insights carry company, person, and timestamp — compute distinct companies, the date spread, and the latest mention from what's already in hand rather than issuing more queries. Two corrections matter for honest numbers: **(a)** Format extracts insights per topic, so one customer statement can exist as several near-identical insight rows — **dedupe on the record ID**: insights sharing a record that restate the same ask are one mention, and a record counts more than once only when it genuinely contains distinct asks (different speakers or different needs in the same conversation). **(b)** Company attribution can be partial — some insights carry a company name without a linked record, with spelling variants — so count companies by normalized name, and disclose how much of the item's evidence is unattributed when it's material. **(c)** When the workspace distinguishes prospects from customers and the run is unscoped, count them separately — "6 companies" where five are early-stage prospects is a materially different fact than six paying customers, and the board should say which it is.
 
 **When an item comes up empty,** name the most likely cause — they mean opposite things:
 
 - **Internal item** — evidence wasn't expected; the flag from Stage 1 already says so.
 - **Outside the window** — before claiming silence, run one `count_insights` for the item's vocabulary over a wider range (skip this when the window already covers the full corpus). If older evidence exists, say "no mentions in the last [window], though older mentions exist" with a link path to them.
-- **Extraction gap** — no topic listens for this domain, so Format may never have captured it. Suggest (suggest only — never create anything) that the workspace could add a topic for the area.
-- **Workspace mismatch** — the conversations in this workspace concern a different product or audience than the roadmap (flagged at preflight). Then silence says nothing about demand, and the board must say so rather than reporting the items as quiet.
+- **Extraction gap** — no topic listens for this domain, so Format may never have captured it. Suggest that the workspace could add a topic for the area (a suggestion only — creating topics isn't this skill's job).
+- **Workspace mismatch** — the conversations in this workspace concern a different product or audience than the roadmap (flagged at preflight). Then silence says nothing about demand, and the board should say so rather than reporting the items as quiet.
 - **Genuinely quiet** — coverage is healthy, a relevant topic exists, the workspace matches the roadmap's product, and customers still aren't raising it. Report the silence as a fact, not a verdict.
 
 ## Stage 3 — Unbuilt demand (the inverse question)
@@ -146,11 +146,11 @@ Now flip the direction: what are customers raising that maps to nothing on the r
 Render to the destination settled at the checkpoint:
 
 - **Chat** — the compact board, as markdown.
-- **HTML page** — the full board: as an artifact where the environment supports them, otherwise a saved `.html` file. Every evidence link must be a real link into Format.
+- **HTML page** — the full board: as an artifact where the environment supports them, otherwise a saved `.html` file. Every evidence link should be a real, working link into Format — on a page this polished, a dead link is worse than none.
 - **Format Brief** — the full board as a live Format artifact, composed with `create_lens_brief`: the board table, the strongest quote per item embedded as an insight block, remaining citations as inline insight chips — so every count stays clickable at the source — and the calibration block as a closing section. Share the brief's URL in chat alongside a two-line summary.
 - **PDF** — where the environment can produce one: the HTML page's content, laid out for print.
 
-**Open by setting the stage.** The board often lands in front of someone who wasn't in the conversation — pasted into Slack, shared as a brief, rediscovered weeks later. So it never launches straight into rows and quotes: it opens with a short plain paragraph that tells a cold reader what they're looking at — the question being answered (which roadmap, checked against what evidence), the period the evidence covers, and the main finding, stated as neutral fact. Two or three sentences, not a section. In a Format Brief, this opener is the `tldr`.
+**Open by setting the stage.** The board often lands in front of someone who wasn't in the conversation — pasted into Slack, shared as a brief, rediscovered weeks later. So don't drop a cold reader straight into rows and quotes: open with a short plain paragraph that says what they're looking at — the question being answered (which roadmap, checked against what evidence), the period the evidence covers, and the main finding, stated as neutral fact. Two or three sentences, not a section. In a Format Brief, this opener is the `tldr`.
 
 The board, in reading order (identical content in every destination):
 
@@ -198,17 +198,18 @@ segment scope applied — or, when the workspace can tell prospects from
 customers and the run was unscoped, the mix.]
 ```
 
-Verbosity is the enemy of an evidence board. The table carries the overview; the evidence sections carry depth **through links, not bulk** — at most two quotes inline per group, everything else linked. Omit empty sections rather than printing empty headings. Richer destinations may add layout — the HTML page can make the table the centerpiece with collapsible evidence sections; the brief swaps links for embedded insights — but never extra prose.
+Verbosity is the enemy of an evidence board. The table carries the overview; the evidence sections carry depth **through links, not bulk** — at most two quotes inline per group, everything else linked. Omit empty sections rather than printing empty headings. Richer destinations may add layout — the HTML page can make the table the centerpiece with collapsible evidence sections; the brief swaps links for embedded insights — not extra prose.
 
-## Hard rules
+## Principles
 
-- **Verbatim quotes only, always cited** — speaker, company, date, and source link. Never paraphrase inside quotation marks; never fabricate.
-- **No grading, anywhere.** No scores, no strong/weak labels, no rankings, no build/cut recommendations. Counts, dates, and quotes are facts; adjectives about them are the reader's job.
-- **Every count is linked.** Any number on the board ("6 companies") must lead to the evidence behind it — share links where they exist; in chat, a described query that reproduces the set ("search_insights for X over the same window") satisfies this when there are too many quotes to link individually.
-- **Absence is disambiguated, never weaponized.** An empty row names its likely cause; it is never rendered as "customers don't want this."
-- **One checkpoint, then work.** The Stage 1 stop is the only planned interaction before rendering.
-- **The window is never silently defaulted.** Either the user named it or the skill proposed it with reasoning and the user saw it.
-- **Read-only on Format — except the brief.** Query freely; never modify or delete anything in Format. The one permitted write is the brief the user chose as the destination at the checkpoint.
+These are the defaults that make the board trustworthy. They're guidance, not law — depart when the situation genuinely calls for it, and say so when you do. The two exceptions that stay firm: quotes are never fabricated, and nothing in Format is modified or deleted (the one write is the brief the user chose as the destination).
+
+- **Quotes are verbatim and cited** — speaker, company, date, and source link. The board's authority rests entirely on quotes being real; paraphrase belongs outside quotation marks.
+- **The reader concludes.** Counts, dates, and quotes are facts; adjectives about them — scores, strong/weak labels, rankings, build/cut recommendations — are judgments that depend on strategy and constraints only the reader knows.
+- **Counts stay clickable.** A number on the board ("6 companies") earns trust by leading to the evidence behind it — share links where they exist; in chat, a described query that reproduces the set ("search_insights for X over the same window") does the job when there are too many quotes to link individually.
+- **Absence gets explained, not weaponized.** An empty row names its likely cause — the causes point in opposite directions, and "no captured evidence" rendered as "customers don't want this" is the board's worst failure mode.
+- **One checkpoint, then work.** The Stage 1 stop is the only planned interaction before rendering — every extra stop costs the user a round-trip while they're waiting for the board.
+- **The window is visible.** Either the user named it or the skill proposed it with reasoning and the user saw it — the window changes what every number on the board means, so a reader weighing those numbers needs to know it was a deliberate choice.
 
 ## Related skills
 

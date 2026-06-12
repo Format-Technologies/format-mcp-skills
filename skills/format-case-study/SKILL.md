@@ -1,7 +1,8 @@
 ---
-name: b2b-case-study
+name: format-case-study
 description: Find your best case study candidates and draft case studies from customer conversation data — before you ever schedule an interview. Use when the user wants to write a case study, customer story, or success story. Also triggers on "case study," "customer story," "who should we feature," "which customer has a good story," "case study draft," "case study candidate," "social proof," "write up a customer win," "we need case studies," "I don't know where to start with case studies," or "turn customer data into a case study." This skill uses customer intelligence data (calls, emails, support tickets, CRM) to identify which customers have the strongest stories and then produces a working draft based on what they've already said — so you walk into the interview with a near-finished piece instead of a blank page. Works best with a customer intelligence platform like Format (MCP server) but also works manually with compiled transcripts and recordings.
 metadata:
+  display_order: 50
   title: B2B Case Study
   personas: [marketing]
   image: card.jpg

@@ -9,27 +9,15 @@
   },
   "plugins": [
     {
-      "name": "b2b-case-study",
-      "description": "Find your strongest case-study candidates from customer conversation data and walk into the interview with a near-finished draft — built from what customers have already said, instead of starting from a blank page.",
-      "source": "./skills/b2b-case-study",
-      "strict": false
-    },
-    {
-      "name": "company-context",
+      "name": "format-company-context",
       "description": "Stop re-explaining your company in every chat. One run distills what customers actually say — who you serve, what they struggle with, the words they use — into a context doc your team's AI works from, every claim quote-backed. It won't invent your strategy or pricing; it flags those for you to fill.",
-      "source": "./skills/company-context",
+      "source": "./skills/format-company-context",
       "strict": false
     },
     {
-      "name": "cs-account-briefing",
-      "description": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
-      "source": "./skills/cs-account-briefing",
-      "strict": false
-    },
-    {
-      "name": "defining-your-icp",
-      "description": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from.",
-      "source": "./skills/defining-your-icp",
+      "name": "format-ticket-research",
+      "description": "Ground any ticket in customer reality before you build it. Paste a ticket and get back what customers have actually said about the problem behind it: the distinct asks grouped and linked to every supporting quote, who raised them and when, and what the evidence implies that the ticket never wrote down.",
+      "source": "./skills/format-ticket-research",
       "strict": false
     },
     {
@@ -39,9 +27,21 @@
       "strict": false
     },
     {
-      "name": "format-ticket-research",
-      "description": "Ground any ticket in customer reality before you build it. Paste a ticket and get back what customers have actually said about the problem behind it: the distinct asks grouped and linked to every supporting quote, who raised them and when, and what the evidence implies that the ticket never wrote down.",
-      "source": "./skills/format-ticket-research",
+      "name": "format-account-briefing",
+      "description": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
+      "source": "./skills/format-account-briefing",
+      "strict": false
+    },
+    {
+      "name": "format-case-study",
+      "description": "Find your strongest case-study candidates from customer conversation data and walk into the interview with a near-finished draft — built from what customers have already said, instead of starting from a blank page.",
+      "source": "./skills/format-case-study",
+      "strict": false
+    },
+    {
+      "name": "format-icp-definition",
+      "description": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from.",
+      "source": "./skills/format-icp-definition",
       "strict": false
     }
   ]

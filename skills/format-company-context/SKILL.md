@@ -1,7 +1,8 @@
 ---
-name: company-context
-description: Use when a team wants to generate a shared company context document — the foundational brief on their positioning, ICP, personas, voice, and proof points — grounded in real customer conversations from their Format workspace. Trigger phrases include "build our voice-of-customer doc", "build our company context", "generate our shared context", "create a company brief", "what's our positioning", "who are we really selling to", "extract our brand voice", "what do customers say about us", "build shared context for our team", "one source of truth for marketing", "generate our product marketing context", or "refresh our positioning doc". Uses the Format MCP to produce a single markdown document covering product overview, ICP, personas, pain points, competitive landscape, brand voice, and proof points — all backed by verbatim customer quotes. Runs end-to-end in one response. Re-run quarterly to refresh as the customer base evolves. Not for writing blog posts, emails, ads, or case studies — those are downstream skills that read this context. For a targeting-focused ICP deep-dive (prospect criteria, qualification filters), use defining-your-icp instead.
+name: format-company-context
+description: Use when a team wants to generate a shared company context document — the foundational brief on their positioning, ICP, personas, voice, and proof points — grounded in real customer conversations from their Format workspace. Trigger phrases include "build our voice-of-customer doc", "build our company context", "generate our shared context", "create a company brief", "what's our positioning", "who are we really selling to", "extract our brand voice", "what do customers say about us", "build shared context for our team", "one source of truth for marketing", "generate our product marketing context", or "refresh our positioning doc". Uses the Format MCP to produce a single markdown document covering product overview, ICP, personas, pain points, competitive landscape, brand voice, and proof points — all backed by verbatim customer quotes. Runs end-to-end in one response. Re-run quarterly to refresh as the customer base evolves. Not for writing blog posts, emails, ads, or case studies — those are downstream skills that read this context. For a targeting-focused ICP deep-dive (prospect criteria, qualification filters), use format-icp-definition instead.
 metadata:
+  display_order: 10
   title: Voice-of-Customer Context for AI
   personas: [customer-success, sales, marketing, product, leadership, research]
   image: card.jpg
@@ -76,7 +77,7 @@ Section headers use human labels. The file is structured to be pasted into any d
 
 - Fewer than ~50 customer conversations in Format — not enough signal for this depth
 - Writing a single deliverable (blog post, email, ad, case study) — those are downstream skills
-- A targeting-focused ICP deep-dive (prospect list criteria, qualification filters, seed accounts) — that's `defining-your-icp`; this document is the broad foundation it sits on
+- A targeting-focused ICP deep-dive (prospect list criteria, qualification filters, seed accounts) — that's `format-icp-definition`; this document is the broad foundation it sits on
 
 ## Setup
 

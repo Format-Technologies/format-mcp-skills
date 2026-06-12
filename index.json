@@ -10,31 +10,9 @@
   ],
   "skills": [
     {
-      "id": "b2b-case-study",
-      "title": "B2B Case Study",
-      "description": "Find your best case study candidates and draft case studies from customer conversation data — before you ever schedule an interview. Use when the user wants to write a case study, customer story, or success story. Also triggers on \"case study,\" \"customer story,\" \"who should we feature,\" \"which customer has a good story,\" \"case study draft,\" \"case study candidate,\" \"social proof,\" \"write up a customer win,\" \"we need case studies,\" \"I don't know where to start with case studies,\" or \"turn customer data into a case study.\" This skill uses customer intelligence data (calls, emails, support tickets, CRM) to identify which customers have the strongest stories and then produces a working draft based on what they've already said — so you walk into the interview with a near-finished piece instead of a blank page. Works best with a customer intelligence platform like Format (MCP server) but also works manually with compiled transcripts and recordings.",
-      "personas": [
-        "marketing"
-      ],
-      "image": "skills/b2b-case-study/card.jpg",
-      "useCase": "Find your strongest case-study candidates from customer conversation data and walk into the interview with a near-finished draft — built from what customers have already said, instead of starting from a blank page.",
-      "limitations": "Drafts are grounded in existing conversations — final quotes still need customer sign-off. Works best with rich call/transcript coverage for the featured account.",
-      "prompts": [
-        "Who are our strongest case-study candidates right now?",
-        "Draft a case study for Acme from what they've already said."
-      ],
-      "related": [],
-      "bodyPath": "skills/b2b-case-study/SKILL.md",
-      "files": [
-        "skills/b2b-case-study/SKILL.md",
-        "skills/b2b-case-study/references/repurposing-guide.md",
-        "skills/b2b-case-study/references/writing-guide.md"
-      ]
-    },
-    {
-      "id": "company-context",
+      "id": "format-company-context",
       "title": "Voice-of-Customer Context for AI",
-      "description": "Use when a team wants to generate a shared company context document — the foundational brief on their positioning, ICP, personas, voice, and proof points — grounded in real customer conversations from their Format workspace. Trigger phrases include \"build our voice-of-customer doc\", \"build our company context\", \"generate our shared context\", \"create a company brief\", \"what's our positioning\", \"who are we really selling to\", \"extract our brand voice\", \"what do customers say about us\", \"build shared context for our team\", \"one source of truth for marketing\", \"generate our product marketing context\", or \"refresh our positioning doc\". Uses the Format MCP to produce a single markdown document covering product overview, ICP, personas, pain points, competitive landscape, brand voice, and proof points — all backed by verbatim customer quotes. Runs end-to-end in one response. Re-run quarterly to refresh as the customer base evolves. Not for writing blog posts, emails, ads, or case studies — those are downstream skills that read this context. For a targeting-focused ICP deep-dive (prospect criteria, qualification filters), use defining-your-icp instead.",
+      "description": "Use when a team wants to generate a shared company context document — the foundational brief on their positioning, ICP, personas, voice, and proof points — grounded in real customer conversations from their Format workspace. Trigger phrases include \"build our voice-of-customer doc\", \"build our company context\", \"generate our shared context\", \"create a company brief\", \"what's our positioning\", \"who are we really selling to\", \"extract our brand voice\", \"what do customers say about us\", \"build shared context for our team\", \"one source of truth for marketing\", \"generate our product marketing context\", or \"refresh our positioning doc\". Uses the Format MCP to produce a single markdown document covering product overview, ICP, personas, pain points, competitive landscape, brand voice, and proof points — all backed by verbatim customer quotes. Runs end-to-end in one response. Re-run quarterly to refresh as the customer base evolves. Not for writing blog posts, emails, ads, or case studies — those are downstream skills that read this context. For a targeting-focused ICP deep-dive (prospect criteria, qualification filters), use format-icp-definition instead.",
       "personas": [
         "customer-success",
         "sales",
@@ -43,7 +21,7 @@
         "leadership",
         "research"
       ],
-      "image": "skills/company-context/card.jpg",
+      "image": "skills/format-company-context/card.jpg",
       "useCase": "Stop re-explaining your company in every chat. One run distills what customers actually say — who you serve, what they struggle with, the words they use — into a context doc your team's AI works from, every claim quote-backed. It won't invent your strategy or pricing; it flags those for you to fill.",
       "limitations": "Needs roughly 50+ customer conversations in Format for this depth. Some sections (pricing, business model, strategic positioning) can't come from conversations — the skill flags those as gaps for founder input rather than guessing.",
       "prompts": [
@@ -51,53 +29,33 @@
         "Refresh our positioning doc from the last six months of conversations."
       ],
       "related": [],
-      "bodyPath": "skills/company-context/SKILL.md",
+      "bodyPath": "skills/format-company-context/SKILL.md",
       "files": [
-        "skills/company-context/SKILL.md",
-        "skills/company-context/references/document-template.md"
+        "skills/format-company-context/SKILL.md",
+        "skills/format-company-context/references/document-template.md"
       ]
     },
     {
-      "id": "cs-account-briefing",
-      "title": "CS Account Briefing",
-      "description": "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the cs-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides a list of accounts and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence, does not prescribe actions.",
+      "id": "format-ticket-research",
+      "title": "Ticket Research",
+      "description": "Use when a product manager or engineer wants to ground a ticket (Linear, Jira, or any tracker) in real customer evidence using Format MCP. Canonical invocation: 'using the Format MCP and the format-ticket-research skill, research this ticket' followed by pasted ticket text or a ticket reference. Also triggers on 'what are customers saying about this ticket', 'who's asking for this', 'find customer evidence for [ticket]', 'what requirements are customers implying for [feature]'. Produces a compact evidence page: customer asks grouped by the distinct need expressed, verbatim quotes with links to every piece of evidence, and what the evidence suggests the ticket should account for. It presents evidence and context — it never grades demand or recommends whether to build.",
       "personas": [
-        "customer-success"
+        "product"
       ],
-      "image": "skills/cs-account-briefing/card.jpg",
-      "useCase": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
-      "limitations": "You provide the account list and time window. Surfaces evidence only — it doesn't prescribe actions. Quality depends on how much call/email coverage those accounts have in Format.",
+      "image": "skills/format-ticket-research/card.jpg",
+      "useCase": "Ground any ticket in customer reality before you build it. Paste a ticket and get back what customers have actually said about the problem behind it: the distinct asks grouped and linked to every supporting quote, who raised them and when, and what the evidence implies that the ticket never wrote down.",
+      "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score or rank demand. Quality depends on conversation coverage in Format and on whether a topic is listening for this kind of feedback; the output tells you when either is the limiting factor.",
       "prompts": [
-        "Using the CS account briefing skill, scan Acme, Globex and Initech over the last 30 days.",
-        "Prep me for the QBR with Acme — what's been said across their conversations lately?"
+        "Using the Format MCP and the format-ticket-research skill, research this ticket: [paste ticket]",
+        "Who's actually asking for this, and what do they expect it to do? [paste ticket]",
+        "Research the ticket about bulk export and post the evidence as a comment on it."
       ],
-      "related": [],
-      "bodyPath": "skills/cs-account-briefing/SKILL.md",
+      "related": [
+        "format-roadmap-check"
+      ],
+      "bodyPath": "skills/format-ticket-research/SKILL.md",
       "files": [
-        "skills/cs-account-briefing/SKILL.md",
-        "skills/cs-account-briefing/references/example-phrases.md"
-      ]
-    },
-    {
-      "id": "defining-your-icp",
-      "title": "Define Your ICP",
-      "description": "Use when defining, refining, or analysing the Ideal Customer Profile (ICP), identifying best-fit buyers, extracting buyer personas, or building target account criteria from customer conversation data. Trigger phrases include \"define our ICP\", \"build an ICP\", \"who are our best customers\", \"who should we target\", \"build a persona\", \"what do our best buyers have in common\", \"win/loss from calls\", and \"build a target account list from customer data\". This skill uses the Format MCP to produce an ICP snapshot, prospect list criteria, persona breakdowns, in-market language cues, and a competitive landscape — a cross-functional document for sales, marketing, paid ads, product, and leadership. Runs end-to-end silently without asking the user to configure anything upfront. Does not produce cold email copy, ad creative, or landing page copy — those are downstream skills.",
-      "personas": [
-        "marketing",
-        "sales",
-        "leadership"
-      ],
-      "image": "skills/defining-your-icp/card.jpg",
-      "useCase": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from.",
-      "limitations": "Needs a meaningful base of conversations in Format to be representative. Doesn't produce cold-email copy, ad creative, or landing pages — those are downstream skills.",
-      "prompts": [
-        "Define our ICP from the last 6 months of customer conversations.",
-        "What do our best customers have in common?"
-      ],
-      "related": [],
-      "bodyPath": "skills/defining-your-icp/SKILL.md",
-      "files": [
-        "skills/defining-your-icp/SKILL.md"
+        "skills/format-ticket-research/SKILL.md"
       ]
     },
     {
@@ -125,26 +83,68 @@
       ]
     },
     {
-      "id": "format-ticket-research",
-      "title": "Ticket Research",
-      "description": "Use when a product manager or engineer wants to ground a ticket (Linear, Jira, or any tracker) in real customer evidence using Format MCP. Canonical invocation: 'using the Format MCP and the format-ticket-research skill, research this ticket' followed by pasted ticket text or a ticket reference. Also triggers on 'what are customers saying about this ticket', 'who's asking for this', 'find customer evidence for [ticket]', 'what requirements are customers implying for [feature]'. Produces a compact evidence page: customer asks grouped by the distinct need expressed, verbatim quotes with links to every piece of evidence, and what the evidence suggests the ticket should account for. It presents evidence and context — it never grades demand or recommends whether to build.",
+      "id": "format-account-briefing",
+      "title": "CS Account Briefing",
+      "description": "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the format-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides a list of accounts and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence, does not prescribe actions.",
       "personas": [
-        "product"
+        "customer-success"
       ],
-      "image": "skills/format-ticket-research/card.jpg",
-      "useCase": "Ground any ticket in customer reality before you build it. Paste a ticket and get back what customers have actually said about the problem behind it: the distinct asks grouped and linked to every supporting quote, who raised them and when, and what the evidence implies that the ticket never wrote down.",
-      "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score or rank demand. Quality depends on conversation coverage in Format and on whether a topic is listening for this kind of feedback; the output tells you when either is the limiting factor.",
+      "image": "skills/format-account-briefing/card.jpg",
+      "useCase": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
+      "limitations": "You provide the account list and time window. Surfaces evidence only — it doesn't prescribe actions. Quality depends on how much call/email coverage those accounts have in Format.",
       "prompts": [
-        "Using the Format MCP and the format-ticket-research skill, research this ticket: [paste ticket]",
-        "Who's actually asking for this, and what do they expect it to do? [paste ticket]",
-        "Research the ticket about bulk export and post the evidence as a comment on it."
+        "Using the CS account briefing skill, scan Acme, Globex and Initech over the last 30 days.",
+        "Prep me for the QBR with Acme — what's been said across their conversations lately?"
       ],
-      "related": [
-        "format-roadmap-check"
-      ],
-      "bodyPath": "skills/format-ticket-research/SKILL.md",
+      "related": [],
+      "bodyPath": "skills/format-account-briefing/SKILL.md",
       "files": [
-        "skills/format-ticket-research/SKILL.md"
+        "skills/format-account-briefing/SKILL.md",
+        "skills/format-account-briefing/references/example-phrases.md"
+      ]
+    },
+    {
+      "id": "format-case-study",
+      "title": "B2B Case Study",
+      "description": "Find your best case study candidates and draft case studies from customer conversation data — before you ever schedule an interview. Use when the user wants to write a case study, customer story, or success story. Also triggers on \"case study,\" \"customer story,\" \"who should we feature,\" \"which customer has a good story,\" \"case study draft,\" \"case study candidate,\" \"social proof,\" \"write up a customer win,\" \"we need case studies,\" \"I don't know where to start with case studies,\" or \"turn customer data into a case study.\" This skill uses customer intelligence data (calls, emails, support tickets, CRM) to identify which customers have the strongest stories and then produces a working draft based on what they've already said — so you walk into the interview with a near-finished piece instead of a blank page. Works best with a customer intelligence platform like Format (MCP server) but also works manually with compiled transcripts and recordings.",
+      "personas": [
+        "marketing"
+      ],
+      "image": "skills/format-case-study/card.jpg",
+      "useCase": "Find your strongest case-study candidates from customer conversation data and walk into the interview with a near-finished draft — built from what customers have already said, instead of starting from a blank page.",
+      "limitations": "Drafts are grounded in existing conversations — final quotes still need customer sign-off. Works best with rich call/transcript coverage for the featured account.",
+      "prompts": [
+        "Who are our strongest case-study candidates right now?",
+        "Draft a case study for Acme from what they've already said."
+      ],
+      "related": [],
+      "bodyPath": "skills/format-case-study/SKILL.md",
+      "files": [
+        "skills/format-case-study/SKILL.md",
+        "skills/format-case-study/references/repurposing-guide.md",
+        "skills/format-case-study/references/writing-guide.md"
+      ]
+    },
+    {
+      "id": "format-icp-definition",
+      "title": "Define Your ICP",
+      "description": "Use when defining, refining, or analysing the Ideal Customer Profile (ICP), identifying best-fit buyers, extracting buyer personas, or building target account criteria from customer conversation data. Trigger phrases include \"define our ICP\", \"build an ICP\", \"who are our best customers\", \"who should we target\", \"build a persona\", \"what do our best buyers have in common\", \"win/loss from calls\", and \"build a target account list from customer data\". This skill uses the Format MCP to produce an ICP snapshot, prospect list criteria, persona breakdowns, in-market language cues, and a competitive landscape — a cross-functional document for sales, marketing, paid ads, product, and leadership. Runs end-to-end silently without asking the user to configure anything upfront. Does not produce cold email copy, ad creative, or landing page copy — those are downstream skills.",
+      "personas": [
+        "marketing",
+        "sales",
+        "leadership"
+      ],
+      "image": "skills/format-icp-definition/card.jpg",
+      "useCase": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from.",
+      "limitations": "Needs a meaningful base of conversations in Format to be representative. Doesn't produce cold-email copy, ad creative, or landing pages — those are downstream skills.",
+      "prompts": [
+        "Define our ICP from the last 6 months of customer conversations.",
+        "What do our best customers have in common?"
+      ],
+      "related": [],
+      "bodyPath": "skills/format-icp-definition/SKILL.md",
+      "files": [
+        "skills/format-icp-definition/SKILL.md"
       ]
     }
   ]

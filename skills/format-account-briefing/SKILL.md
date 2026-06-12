@@ -1,7 +1,8 @@
 ---
-name: cs-account-briefing
-description: "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the cs-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides a list of accounts and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence, does not prescribe actions."
+name: format-account-briefing
+description: "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the format-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides a list of accounts and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence, does not prescribe actions."
 metadata:
+  display_order: 40
   title: CS Account Briefing
   personas: [customer-success]
   image: card.jpg
@@ -172,7 +173,7 @@ At the bottom of the briefing, always include this disclaimer:
 Use this exact pattern:
 
 ```
-Using the Format MCP and the cs-account-briefing skill, apply it to these accounts over the last [N days/weeks]:
+Using the Format MCP and the format-account-briefing skill, apply it to these accounts over the last [N days/weeks]:
 
 - [Account name]
 - [Account name]
@@ -185,7 +186,7 @@ Swap the time window and account list each week.
 ### Example 1 — canonical weekly invocation
 
 User:
-> Using the Format MCP and the cs-account-briefing skill, apply it to these accounts over the last 14 days:
+> Using the Format MCP and the format-account-briefing skill, apply it to these accounts over the last 14 days:
 >
 > - [Account A]
 > - [Account B]
@@ -214,6 +215,6 @@ Skill:
 ### Example 3 — QBR prep for a single account
 
 User:
-> Using the Format MCP and the cs-account-briefing skill, prep me for QBR with [Account] over the last 90 days.
+> Using the Format MCP and the format-account-briefing skill, prep me for QBR with [Account] over the last 90 days.
 
 Skill: same flow as Example 1, scoped to a single account and a 90-day window. Output structure is identical — just one account section instead of many. The 5-quotes-per-category cap matters more here because a 90-day pull will surface more signal than a 14-day pull.

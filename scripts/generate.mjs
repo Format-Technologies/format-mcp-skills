@@ -124,6 +124,12 @@ function loadSkill(id) {
   ) {
     fail(id, 'metadata.related must be a non-empty array of skill ids when present');
   }
+  if (
+    meta.display_order !== undefined &&
+    (!Number.isInteger(meta.display_order) || meta.display_order < 0)
+  ) {
+    fail(id, 'metadata.display_order must be a non-negative integer when present');
+  }
 
   return {
     id,
@@ -137,6 +143,7 @@ function loadSkill(id) {
     related: meta.related ?? [],
     bodyPath: `skills/${id}/SKILL.md`,
     files: listFiles(dir, `skills/${id}/${meta.image}`),
+    displayOrder: meta.display_order,
   };
 }
 
@@ -158,6 +165,25 @@ for (const s of skills) {
     }
   }
 }
+
+// Gallery order: metadata.display_order ascending, then unordered skills
+// alphabetically. Order travels purely as array position in the manifests —
+// the field itself is never emitted, so the frozen v1 shape is untouched.
+const orderOwner = new Map();
+for (const s of skills) {
+  if (s.displayOrder === undefined) continue;
+  if (orderOwner.has(s.displayOrder)) {
+    fail(s.id, `metadata.display_order ${s.displayOrder} already used by "${orderOwner.get(s.displayOrder)}"`);
+  } else {
+    orderOwner.set(s.displayOrder, s.id);
+  }
+}
+skills.sort(
+  (a, b) =>
+    (a.displayOrder ?? Infinity) - (b.displayOrder ?? Infinity) ||
+    a.id.localeCompare(b.id),
+);
+for (const s of skills) delete s.displayOrder;
 
 if (errors.length > 0) {
   console.error('Validation failed:\n' + errors.join('\n'));

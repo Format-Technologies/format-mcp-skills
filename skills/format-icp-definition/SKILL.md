@@ -1,7 +1,8 @@
 ---
-name: defining-your-icp
+name: format-icp-definition
 description: Use when defining, refining, or analysing the Ideal Customer Profile (ICP), identifying best-fit buyers, extracting buyer personas, or building target account criteria from customer conversation data. Trigger phrases include "define our ICP", "build an ICP", "who are our best customers", "who should we target", "build a persona", "what do our best buyers have in common", "win/loss from calls", and "build a target account list from customer data". This skill uses the Format MCP to produce an ICP snapshot, prospect list criteria, persona breakdowns, in-market language cues, and a competitive landscape — a cross-functional document for sales, marketing, paid ads, product, and leadership. Runs end-to-end silently without asking the user to configure anything upfront. Does not produce cold email copy, ad creative, or landing page copy — those are downstream skills.
 metadata:
+  display_order: 60
   title: Define Your ICP
   personas: [marketing, sales, leadership]
   image: card.jpg

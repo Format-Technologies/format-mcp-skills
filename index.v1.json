@@ -16,7 +16,7 @@
       "personas": [
         "marketing"
       ],
-      "image": "skills/b2b-case-study/card.png",
+      "image": "skills/b2b-case-study/card.jpg",
       "useCase": "Find your strongest case-study candidates from customer conversation data and walk into the interview with a near-finished draft — built from what customers have already said, instead of starting from a blank page.",
       "limitations": "Drafts are grounded in existing conversations — final quotes still need customer sign-off. Works best with rich call/transcript coverage for the featured account.",
       "prompts": [
@@ -42,7 +42,7 @@
         "leadership",
         "research"
       ],
-      "image": "skills/company-context/card.png",
+      "image": "skills/company-context/card.jpg",
       "useCase": "Stop re-explaining your company in every chat. One run distills what customers actually say — who you serve, what they struggle with, the words they use — into a context doc your team's AI works from, every claim quote-backed. It won't invent your strategy or pricing; it flags those for you to fill.",
       "limitations": "Needs roughly 50+ customer conversations in Format for this depth. Some sections (pricing, business model, strategic positioning) can't come from conversations — the skill flags those as gaps for founder input rather than guessing.",
       "prompts": [
@@ -62,7 +62,7 @@
       "personas": [
         "customer-success"
       ],
-      "image": "skills/cs-account-briefing/card.png",
+      "image": "skills/cs-account-briefing/card.jpg",
       "useCase": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
       "limitations": "You provide the account list and time window. Surfaces evidence only — it doesn't prescribe actions. Quality depends on how much call/email coverage those accounts have in Format.",
       "prompts": [
@@ -84,7 +84,7 @@
         "sales",
         "leadership"
       ],
-      "image": "skills/defining-your-icp/card.png",
+      "image": "skills/defining-your-icp/card.jpg",
       "useCase": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from.",
       "limitations": "Needs a meaningful base of conversations in Format to be representative. Doesn't produce cold-email copy, ad creative, or landing pages — those are downstream skills.",
       "prompts": [

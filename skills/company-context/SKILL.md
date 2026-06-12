@@ -4,7 +4,7 @@ description: Use when a team wants to generate a shared company context document
 metadata:
   title: Voice-of-Customer Context for AI
   personas: [customer-success, sales, marketing, product, leadership, research]
-  image: card.png
+  image: card.jpg
   use_case: >-
     Stop re-explaining your company in every chat. One run distills what
     customers actually say — who you serve, what they struggle with, the

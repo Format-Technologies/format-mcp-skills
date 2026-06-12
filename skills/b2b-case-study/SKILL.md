@@ -4,7 +4,7 @@ description: Find your best case study candidates and draft case studies from cu
 metadata:
   title: B2B Case Study
   personas: [marketing]
-  image: card.png
+  image: card.jpg
   use_case: >-
     Find your strongest case-study candidates from customer conversation data
     and walk into the interview with a near-finished draft — built from what

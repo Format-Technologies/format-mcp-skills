@@ -150,12 +150,16 @@ Render to the destination settled at the checkpoint:
 - **Format Brief** — the full board as a live Format artifact, composed with `create_lens_brief`: the board table, the strongest quote per item embedded as an insight block, remaining citations as inline insight chips — so every count stays clickable at the source — and the calibration block as a closing section. Share the brief's URL in chat alongside a two-line summary.
 - **PDF** — where the environment can produce one: the HTML page's content, laid out for print.
 
+**Open by setting the stage.** The board often lands in front of someone who wasn't in the conversation — pasted into Slack, shared as a brief, rediscovered weeks later. So it never launches straight into rows and quotes: it opens with a short plain paragraph that tells a cold reader what they're looking at — the question being answered (which roadmap, checked against what evidence), the period the evidence covers, and the main finding, stated as neutral fact. Two or three sentences, not a section. In a Format Brief, this opener is the `tldr`.
+
 The board, in reading order (identical content in every destination):
 
 ```
 # Roadmap evidence check
-[One neutral headline of facts, not judgment: "Customer evidence found for
-7 of 12 items in the last N months; 3 items are internal; 4 recurring
+[The stage-setting opener — question, period, finding, as facts not
+judgment: "The Q3 roadmap's 12 items, checked against what customers
+said in conversations from Dec 2025 to Jun 2026. Evidence found for 7
+of the 12; 3 items are internal, where none was expected; 4 recurring
 customer asks map to no roadmap item."]
 
 ## The board

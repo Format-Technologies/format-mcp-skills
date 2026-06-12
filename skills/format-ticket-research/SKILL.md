@@ -130,12 +130,21 @@ Deliver to the destination the user named. When they named none, default to **ch
 - **Comment on the ticket** — when a tracker MCP is connected, post the evidence directly as a comment on the ticket: show the user the comment as it will appear, then post it on their go-ahead. Adapt formatting to what the tracker renders well. Without a tracker connection, provide the comment as copy-ready text instead.
 - **Format Brief** — if the workspace supports creating briefs via Format MCP, the user may ask for the output as a brief; if those tools aren't available, say so and fall back to one of the above.
 
+**Open by setting the stage.** The page travels — posted on the ticket, pasted into chat, read weeks later by someone who never saw the request — so it never launches straight into the evidence. Open with a couple of plain sentences that tell a cold reader what question was researched, what period the data covers, and the main finding, stated as neutral fact. In a Format Brief, this opener is the `tldr`.
+
 **Write for scanning, not reading.** A wall of dense prose is the failure mode here. Let tables carry the structure and keep prose to quotes plus a line or two of commentary — the reader should get the whole picture from the at-a-glance line and the evidence map, then drill into only the groups they care about.
 
 Structure, regardless of destination:
 
 ```
 # Customer evidence: [ticket title]
+
+[The stage-setting opener — two or three sentences: the customer problem
+researched, the period the evidence covers, and the main finding as
+neutral fact. "What customers have said about getting data out of the
+product, across conversations from Mar 2025 to Jun 2026. The demand
+splits into two distinct needs — one-off exports and a recurring sync —
+and the second isn't covered by the ticket as written."]
 
 **At a glance:** [N] pieces of evidence · [M] companies · [earliest]–[latest].
 For scale: [workspace totals over the same span]. [One sentence on mechanism

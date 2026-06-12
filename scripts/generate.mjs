@@ -134,6 +134,7 @@ function loadSkill(id) {
     useCase: (meta.use_case ?? '').trim(),
     limitations: (meta.limitations ?? '').trim(),
     prompts: meta.prompts ?? [],
+    related: meta.related ?? [],
     bodyPath: `skills/${id}/SKILL.md`,
     files: listFiles(dir, `skills/${id}/${meta.image}`),
   };
@@ -145,6 +146,18 @@ const ids = readdirSync(SKILLS_DIR, { withFileTypes: true })
   .sort();
 
 const skills = ids.map(loadSkill).filter(Boolean);
+
+// Cross-skill references are a checked contract: every id in metadata.related
+// must name a skill that exists in this repo, so a rename or removal breaks CI
+// here instead of silently rotting in a published skill body.
+for (const s of skills) {
+  for (const rel of s.related) {
+    if (rel === s.id) fail(s.id, 'metadata.related may not reference the skill itself');
+    else if (!ids.includes(rel)) {
+      fail(s.id, `metadata.related references unknown skill "${rel}"`);
+    }
+  }
+}
 
 if (errors.length > 0) {
   console.error('Validation failed:\n' + errors.join('\n'));

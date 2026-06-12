@@ -23,6 +23,7 @@
         "Who are our strongest case-study candidates right now?",
         "Draft a case study for Acme from what they've already said."
       ],
+      "related": [],
       "bodyPath": "skills/b2b-case-study/SKILL.md",
       "files": [
         "skills/b2b-case-study/SKILL.md",
@@ -49,6 +50,7 @@
         "Build our company context from what customers actually say.",
         "Refresh our positioning doc from the last six months of conversations."
       ],
+      "related": [],
       "bodyPath": "skills/company-context/SKILL.md",
       "files": [
         "skills/company-context/SKILL.md",
@@ -69,6 +71,7 @@
         "Using the CS account briefing skill, scan Acme, Globex and Initech over the last 30 days.",
         "Prep me for the QBR with Acme — what's been said across their conversations lately?"
       ],
+      "related": [],
       "bodyPath": "skills/cs-account-briefing/SKILL.md",
       "files": [
         "skills/cs-account-briefing/SKILL.md",
@@ -91,9 +94,34 @@
         "Define our ICP from the last 6 months of customer conversations.",
         "What do our best customers have in common?"
       ],
+      "related": [],
       "bodyPath": "skills/defining-your-icp/SKILL.md",
       "files": [
         "skills/defining-your-icp/SKILL.md"
+      ]
+    },
+    {
+      "id": "format-roadmap-check",
+      "title": "Roadmap Check",
+      "description": "Use when a product manager or leader wants to check a roadmap against real customer evidence using Format MCP — answering 'are customers asking for what we're building?' and the inverse, 'what are customers asking for that we're not building?'. Canonical invocation: 'using the Format MCP and the format-roadmap-check skill, check this roadmap' followed by a pasted list of roadmap items or a reference to a tracker project/epic. Also triggers on 'validate this roadmap against customer feedback', 'is there evidence for these roadmap items', 'what are customers asking for that isn't on the roadmap', 'roadmap evidence check', 'gap analysis on our roadmap'. Produces an evidence board: per-item customer evidence with links to every quote, plus the demand themes no roadmap item covers. It presents evidence and context — it never scores items or recommends what to build or cut.",
+      "personas": [
+        "product",
+        "leadership"
+      ],
+      "image": "skills/format-roadmap-check/card.jpg",
+      "useCase": "Hold your roadmap up against what customers have actually said. Paste a roadmap (or point at a tracker project) and get an evidence board: what customers have said about each item with links to every supporting quote, and the things they keep raising that map to nothing you're building.",
+      "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score items or rank the roadmap. Depth per item is survey-level; use the Ticket Research skill for a deep dive on one item. Quality depends on conversation coverage in Format and on which topics the workspace listens for; the board tells you when either is the limiting factor.",
+      "prompts": [
+        "Using the Format MCP and the format-roadmap-check skill, check this roadmap: [paste roadmap items]",
+        "Are customers actually asking for what's on our Q3 roadmap? Build me the evidence board as an HTML page.",
+        "What are customers raising that maps to nothing on this roadmap? [paste roadmap]"
+      ],
+      "related": [
+        "format-ticket-research"
+      ],
+      "bodyPath": "skills/format-roadmap-check/SKILL.md",
+      "files": [
+        "skills/format-roadmap-check/SKILL.md"
       ]
     },
     {
@@ -110,6 +138,9 @@
         "Using the Format MCP and the format-ticket-research skill, research this ticket: [paste ticket]",
         "Who's actually asking for this, and what do they expect it to do? [paste ticket]",
         "Research the ticket about bulk export and post the evidence as a comment on it."
+      ],
+      "related": [
+        "format-roadmap-check"
       ],
       "bodyPath": "skills/format-ticket-research/SKILL.md",
       "files": [

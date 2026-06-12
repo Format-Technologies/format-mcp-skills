@@ -41,6 +41,7 @@ sync with the skills.
        What it won't do / what it needs.
      prompts:                  # optional — example prompts shown with the skill
        - "Example prompt a user could paste."
+     related: [other-skill-id] # optional — companion skills this one hands off to
    ---
    <body — the prompt itself. Written for Claude first, but portable: it gets
    pasted into ChatGPT Projects, Cursor rules, and Copilot agents as-is.>
@@ -58,6 +59,12 @@ sync with the skills.
   least one known persona are required.
 - Skill ids may not be persona names (`marketing`, `sales`, …) — those are
   reserved for future persona-pack plugins.
+- Every id in `metadata.related` must name a skill that exists in this repo
+  (and not the skill itself) — cross-skill references are a checked contract,
+  so renaming or removing a skill breaks CI until references are updated. A
+  skill body that names a related skill must still degrade gracefully when
+  that skill isn't installed (suggest it if available; otherwise do the work
+  inline and point at the gallery).
 
 ## Writing guidelines
 

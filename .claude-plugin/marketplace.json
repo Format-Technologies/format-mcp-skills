@@ -33,6 +33,12 @@
       "strict": false
     },
     {
+      "name": "format-roadmap-check",
+      "description": "Hold your roadmap up against what customers have actually said. Paste a roadmap (or point at a tracker project) and get an evidence board: what customers have said about each item with links to every supporting quote, and the things they keep raising that map to nothing you're building.",
+      "source": "./skills/format-roadmap-check",
+      "strict": false
+    },
+    {
       "name": "format-ticket-research",
       "description": "Ground any ticket in customer reality before you build it. Paste a ticket and get back what customers have actually said about the problem behind it: the distinct asks grouped and linked to every supporting quote, who raised them and when, and what the evidence implies that the ticket never wrote down.",
       "source": "./skills/format-ticket-research",

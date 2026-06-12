@@ -1,6 +1,6 @@
 ---
 name: format-ticket-research
-description: "Use when a product manager or engineer wants to ground a ticket (Linear, Jira, or any tracker) in real customer evidence using Format MCP. Canonical invocation: 'using the Format MCP and the format-ticket-research skill, research this ticket' followed by pasted ticket text or a ticket reference. Also triggers on 'what are customers saying about this ticket', 'who's asking for this', 'find customer evidence for [ticket]', 'what requirements are customers implying for [feature]'. Produces a compact evidence page: customer asks grouped by the distinct need expressed, verbatim quotes with links to every piece of evidence, and what the evidence suggests the ticket should account for. It presents evidence and context — it never grades demand or recommends whether to build."
+description: "Use when a product manager or engineer wants to ground a ticket (Linear, Jira, or any tracker) in real customer evidence using Format MCP. Canonical invocation: 'using the Format MCP and the format-ticket-research skill, research this ticket' followed by pasted ticket text or a ticket reference. Also triggers on 'what are customers saying about this ticket', 'who's asking for this', 'find customer evidence for [ticket]', 'what requirements are customers implying for [feature]'. Produces a compact evidence page: customer asks grouped by the distinct need expressed, verbatim quotes with links to every piece of evidence, and what the evidence suggests the ticket should account for. It presents evidence and context rather than grading demand or recommending whether to build."
 metadata:
   display_order: 20
   title: Ticket Research
@@ -34,7 +34,7 @@ Given one ticket — pasted text or fetched from a connected tracker — this sk
 2. **Who and when** — which companies and people raised each need, and how the mentions are spread over time
 3. **What the evidence suggests the ticket should account for** — clearly-labelled inferences, each citing the quotes it came from
 
-It presents evidence and the context needed to weigh it. It **never** grades demand ("strong", "weak"), ranks the ticket, or recommends building or killing it — whether the evidence is compelling depends on things only the reader can judge: how well this kind of feedback gets captured, how much customers talk about this area in general, and what else competes for the team's time.
+It presents evidence and the context needed to weigh it, and deliberately stops short of grading demand ("strong", "weak"), ranking the ticket, or recommending building or killing it — whether the evidence is compelling depends on things only the reader can judge: how well this kind of feedback gets captured, how much customers talk about this area in general, and what else competes for the team's time.
 
 ## When to use it
 
@@ -43,21 +43,21 @@ It presents evidence and the context needed to weigh it. It **never** grades dem
 - An engineer wants to know what customers expect before designing
 - Backlog grooming on a specific item
 
-Do NOT use this skill to validate a whole roadmap or a list of items — it goes deep on **one** ticket.
+This skill goes deep on **one** ticket. Validating a whole roadmap or a list of items is a different job — that's what `format-roadmap-check` is for.
 
 ## Inputs
 
-**Required: the ticket.** Pasted title + description is the baseline and always works. If a tracker MCP (Linear, Jira, etc.) is connected and the user gives an ID or URL, fetch the ticket from there — include its comments, which often carry customer context the description lacks. Never require a tracker connection.
+**Required: the ticket.** Pasted title + description is the baseline and always works. If a tracker MCP (Linear, Jira, etc.) is connected and the user gives an ID or URL, fetch the ticket from there — include its comments, which often carry customer context the description lacks. A tracker connection is a bonus, not a requirement: pasted text alone is always enough.
 
 If a Format company-context document (the output of the `format-company-context` skill) is already in the conversation, use it to sharpen the problem framing and initial probes — never require one or block on its absence.
 
-Do not ask the user setup questions. The research loop below discovers customer vocabulary on its own. Ask only if the ticket is genuinely too vague to extract a customer problem from — and then ask one question, not a form.
+Setup questions are rarely needed — the research loop below discovers customer vocabulary on its own, so the best default is to just start. If the ticket is genuinely too vague to extract a customer problem from, one pointed question beats a form.
 
 ## Stage 0 — Preflight: understand the evidence base
 
 Run three cheap checks before researching. Their results calibrate everything downstream and feed the output's context section.
 
-1. **Volume and breadth:** `count_insights` with `{ level: 0, groupBy: "company" }` — total insight volume and how many distinct companies it spans, in one call. Note the corpus's overall date span too (a `dateRange`-bounded count or two pins it down cheaply): this search runs unwindowed, and the output must say what period it could actually see, so the dates of the evidence found read against the dates that existed to be found.
+1. **Volume and breadth:** `count_insights` with `{ level: 0, groupBy: "company" }` — total insight volume and how many distinct companies it spans, in one call. Note the corpus's overall date span too (a `dateRange`-bounded count or two pins it down cheaply): this search runs unwindowed, and the output should say what period it could actually see, so the dates of the evidence found read against the dates that existed to be found.
 2. **Aggregated answers:** `count_insights` with `{ level: "aggregated" }` — whether this workspace has aggregated answers (themes synthesized across customers). Judge by the response **shape**, not the bare number: when aggregated answers exist, the response carries a per-level breakdown; when none exist, the tools transparently fall back to verbatim quotes, so a non-zero count alone does not prove aggregated answers are present. (Equivalently: if an "aggregated" search returns items with individual quotes and speakers instead of synthesized titles and customer counts, the workspace has none.) Having none is normal, not an error — work from verbatim quotes and skip the theme-based steps below. When they do exist, they're a major research asset.
 3. **Listening coverage:** `list_topics` — what kinds of feedback this workspace extracts. Format only captures what its topics ask for, so note whether any topic plausibly covers this ticket's domain. This matters most when the search comes back empty (see "When little or nothing is found").
 
@@ -101,21 +101,21 @@ Alongside the bucket, mark each accepted insight:
 - **Clear** — the quote unambiguously expresses the need on its own
 - **Needs context** — plausible but ambiguous: the quote could be about something else, the situation is unclear, or the ask is fragmentary
 
-For needs-context insights whose resolution would change the picture — they're the only evidence for a group, or they tip a group from one need to another — fetch the underlying record with `get_record` and read the surrounding conversation. Records are full transcripts and can run to thousands of words: locate the quote and read around it rather than processing the whole conversation. Then either confirm (note that it was verified against the source) or discard. Insights that stay ambiguous after a deep-dive are shown **as ambiguous** — never silently promoted to clear evidence, never silently dropped.
+For needs-context insights whose resolution would change the picture — they're the only evidence for a group, or they tip a group from one need to another — fetch the underlying record with `get_record` and read the surrounding conversation. Records are full transcripts and can run to thousands of words: locate the quote and read around it rather than processing the whole conversation. Then either confirm (note that it was verified against the source) or discard. Insights that stay ambiguous after a deep-dive keep their flag in the output — promoting them silently overstates the evidence, dropping them silently understates it.
 
-## Stage 3 — Group and present; do not grade
+## Stage 3 — Group and present; the reader concludes
 
 **Group the accepted evidence by the distinct need expressed.** Variants of the ask are separate groups — "export to CSV" and "scheduled export to our warehouse" are different needs even if one ticket could cover both. Name each group in customer language.
 
-**Do not score, rank, or label demand strength.** No "strong demand", no "weak signal", no scores. Whether evidence is compelling depends on relative volume, capture quality, and how much this area gets discussed at all — judgments that belong to the reader. The skill's job is to make that judgment easy:
+**Leave demand strength to the reader.** Labels like "strong demand" and "weak signal" feel helpful but aren't: whether evidence is compelling depends on relative volume, capture quality, and how much this area gets discussed at all — judgments that belong to the reader, not the page. The skill's job is to make that judgment easy:
 
-- Per group: the raw facts (how many companies, who, the date span, latest mention — and, when an aggregated theme matched the group, that theme's customer count, the cheapest scale signal available) and a link to **every** supporting insight — the best one or two quotes inline, the rest as links, never an unverifiable summary.
+- Per group: the raw facts (how many companies, who, the date span, latest mention — and, when an aggregated theme matched the group, that theme's customer count, the cheapest scale signal available) and a link to **every** supporting insight — the best one or two quotes inline, the rest as links, rather than an unverifiable summary.
 - Expect attribution gaps: many insights have no linked company, and some carry a company name without a linked company record. Count distinct companies by **name**, and surface unattributed evidence on its own line ("plus [N] mentions from speakers not linked to a company") rather than silently dropping it.
 - A calibration block: total workspace volume over the same span, whether any topic listens for this area, and whether aggregated answers were available — the denominators a reader needs to weigh the numerators.
 
 ### When little or nothing is found
 
-Empty results have three different causes, and the output must say which applies — they lead to opposite conclusions:
+Empty results have three different causes that lead to opposite conclusions, so the output should say which one applies:
 
 1. **Thin workspace** — preflight showed little data overall. The absence means nothing.
 2. **Extraction gap** — no topic listens for this domain, so Format was never asked to capture it. Suggest the user consider a topic for this area (a suggestion only — never create or modify anything in Format).
@@ -126,15 +126,15 @@ Empty results have three different causes, and the output must say which applies
 Deliver to the destination the user named. When they named none, default to **chat** rather than asking — a destination question at render time costs a round-trip exactly when the user wants the answer; instead, offer the alternatives in one line alongside the delivered output ("want this as an HTML page, a comment on the ticket, or a Format Brief?"). The destinations:
 
 - **Chat** (default) — the structure below, rendered as markdown.
-- **HTML evidence page** — the same content as a clean, self-contained HTML page: as an artifact where the environment supports them, otherwise a saved `.html` file (tell the user where). Every evidence link must be a real link to the insight or record in Format.
+- **HTML evidence page** — the same content as a clean, self-contained HTML page: as an artifact where the environment supports them, otherwise a saved `.html` file (tell the user where). Every evidence link should be a real, working link to the insight or record in Format — on a page this polished, a dead link is worse than none.
 - **Comment on the ticket** — when a tracker MCP is connected, post the evidence directly as a comment on the ticket: show the user the comment as it will appear, then post it on their go-ahead. Adapt formatting to what the tracker renders well. Without a tracker connection, provide the comment as copy-ready text instead.
 - **Format Brief** — if the workspace supports creating briefs via Format MCP, the user may ask for the output as a brief; if those tools aren't available, say so and fall back to one of the above.
 
-**Open by setting the stage.** The page travels — posted on the ticket, pasted into chat, read weeks later by someone who never saw the request — so it never launches straight into the evidence. Open with a couple of plain sentences that tell a cold reader what question was researched, what period the data covers, and the main finding, stated as neutral fact. In a Format Brief, this opener is the `tldr`.
+**Open by setting the stage.** The page travels — posted on the ticket, pasted into chat, read weeks later by someone who never saw the request — so don't drop a cold reader straight into the evidence. Open with a couple of plain sentences that say what question was researched, what period the data covers, and the main finding, stated as neutral fact. In a Format Brief, this opener is the `tldr`.
 
 **Write for scanning, not reading.** A wall of dense prose is the failure mode here. Let tables carry the structure and keep prose to quotes plus a line or two of commentary — the reader should get the whole picture from the at-a-glance line and the evidence map, then drill into only the groups they care about.
 
-**Caveats once, method never.** Every caveat gets said exactly once, in the one place it changes the reading — usually the "Read this with" block; the opener states the framing, and no other section re-explains it. And never narrate this skill's own method or rules ("demand grades are deliberately omitted", "these are surfaced examples, not a census") — the output should read as research, not as a description of how the research was done.
+**Caveats once, method never.** A caveat lands hardest when it's said once, in the one place it changes the reading — usually the "Read this with" block; the opener states the framing, and no other section needs to re-explain it. Narrating this skill's own method or rules ("demand grades are deliberately omitted", "these are surfaced examples, not a census") is the other tell of process leaking into the page — the output should read as research, not as a description of how the research was done.
 
 Structure, regardless of destination:
 
@@ -195,14 +195,16 @@ On the HTML page, draw real bars (inline SVG or styled divs — self-contained, 
 
 Omit empty sections entirely. If the user wants the full quote bank, expand on request rather than defaulting to a wall of quotes.
 
-## Hard rules
+## Principles
 
-- **Verbatim quotes only, always cited.** Quote the insight's text exactly, with speaker, company, date, and link. Never paraphrase inside quotation marks; never fabricate.
-- **Every group links all of its evidence.** A claim the reader can't click through to verify doesn't go in the output.
-- **No demand grades, scores, or build/kill recommendations.** Present evidence and context; the reader concludes.
-- **Inference is labelled.** Everything in "what the evidence suggests" cites its sources; if it can't be cited, it isn't written.
-- **Absence is disambiguated.** Apply the three-cause rule whenever evidence is missing or sparse.
-- **Read-only on Format.** Query freely; never create, modify, or delete anything in Format. The only write this skill ever performs is posting the tracker comment, after showing it to the user.
+These are the defaults that make the output trustworthy. They're guidance, not law — depart when the situation genuinely calls for it, and say so when you do. The two exceptions that stay firm: quotes are never fabricated, and Format is never written to.
+
+- **Quotes are verbatim and cited.** The page's authority rests entirely on quotes being real. Quote the insight's text exactly, with speaker, company, date, and link; paraphrase belongs outside quotation marks.
+- **Claims stay clickable.** The reader should be able to verify anything by clicking through to its evidence — a claim with nothing behind it weakens everything around it.
+- **The reader concludes.** Evidence and context over demand grades, scores, or build/kill recommendations — the judgment depends on constraints only the reader knows.
+- **Inference is visible as inference.** Anything in "what the evidence suggests" names the quotes it rests on; a suggestion that can't cite its sources is the skill's opinion, and reads like it.
+- **Absence gets explained.** When evidence is missing or sparse, say which of the three causes applies — they point in opposite directions, and the reader can't tell them apart without help.
+- **Format is read-only territory.** Query freely; creating, modifying, or deleting anything in the workspace is never this skill's job. The one write it performs is posting the tracker comment, after showing it to the user.
 
 ## How to prompt this skill
 

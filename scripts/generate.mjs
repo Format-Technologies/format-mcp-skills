@@ -116,6 +116,14 @@ function loadSkill(id) {
   ) {
     fail(id, 'metadata.prompts must be a non-empty array of strings when present');
   }
+  if (
+    meta.related !== undefined &&
+    (!Array.isArray(meta.related) ||
+      meta.related.length === 0 ||
+      meta.related.some((r) => typeof r !== 'string' || !r.trim()))
+  ) {
+    fail(id, 'metadata.related must be a non-empty array of skill ids when present');
+  }
 
   return {
     id,

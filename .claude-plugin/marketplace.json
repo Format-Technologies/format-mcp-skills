@@ -31,6 +31,12 @@
       "description": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from.",
       "source": "./skills/defining-your-icp",
       "strict": false
+    },
+    {
+      "name": "format-ticket-research",
+      "description": "Ground any ticket in customer reality before you build it. Paste a ticket and get back what customers have actually said about the problem behind it: the distinct asks grouped and linked to every supporting quote, who raised them and when, and what the evidence implies that the ticket never wrote down.",
+      "source": "./skills/format-ticket-research",
+      "strict": false
     }
   ]
 }

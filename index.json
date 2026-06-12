@@ -95,6 +95,26 @@
       "files": [
         "skills/defining-your-icp/SKILL.md"
       ]
+    },
+    {
+      "id": "format-ticket-research",
+      "title": "Ticket Research",
+      "description": "Use when a product manager or engineer wants to ground a ticket (Linear, Jira, or any tracker) in real customer evidence using Format MCP. Canonical invocation: 'using the Format MCP and the format-ticket-research skill, research this ticket' followed by pasted ticket text or a ticket reference. Also triggers on 'what are customers saying about this ticket', 'who's asking for this', 'find customer evidence for [ticket]', 'what requirements are customers implying for [feature]'. Produces a compact evidence page: customer asks grouped by the distinct need expressed, verbatim quotes with links to every piece of evidence, and what the evidence suggests the ticket should account for. It presents evidence and context — it never grades demand or recommends whether to build.",
+      "personas": [
+        "product"
+      ],
+      "image": "skills/format-ticket-research/card.jpg",
+      "useCase": "Ground any ticket in customer reality before you build it. Paste a ticket and get back what customers have actually said about the problem behind it: the distinct asks grouped and linked to every supporting quote, who raised them and when, and what the evidence implies that the ticket never wrote down.",
+      "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score or rank demand. Quality depends on conversation coverage in Format and on whether a topic is listening for this kind of feedback; the output tells you when either is the limiting factor.",
+      "prompts": [
+        "Using the Format MCP and the format-ticket-research skill, research this ticket: [paste ticket]",
+        "Who's actually asking for this, and what do they expect it to do? [paste ticket]",
+        "Research the ticket about bulk export and post the evidence as a comment on it."
+      ],
+      "bodyPath": "skills/format-ticket-research/SKILL.md",
+      "files": [
+        "skills/format-ticket-research/SKILL.md"
+      ]
     }
   ]
 }

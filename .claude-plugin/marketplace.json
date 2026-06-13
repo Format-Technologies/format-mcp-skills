@@ -43,6 +43,30 @@
       "description": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from.",
       "source": "./skills/format-icp-definition",
       "strict": false
+    },
+    {
+      "name": "format-ads-copy",
+      "description": "Ship ad copy that sounds like your customers because it is built from them: 3–5 angles each anchored to a verbatim quote, spec-compliant copy for LinkedIn, Google RSA, and Lead Gen Forms, with character counts validated and CSV blocks ready to upload.",
+      "source": "./skills/format-ads-copy",
+      "strict": false
+    },
+    {
+      "name": "format-sales-enablement",
+      "description": "Sales collateral reps actually trust because it's built from your own deals: pick the asset — deck, one-pager, objection doc, demo script, battlecard, persona card, or ROI framing — and get it grounded in verbatim customer language and the objections and proof points your conversations actually contain.",
+      "source": "./skills/format-sales-enablement",
+      "strict": false
+    },
+    {
+      "name": "format-blog-post",
+      "description": "Blog posts that AI answer engines cite because they contain something no model can fabricate: your customers' real words and honestly counted data. One checkpoint to agree the angle, then a publish-ready draft — answer-first structure, extractable sections, evidence appendix.",
+      "source": "./skills/format-blog-post",
+      "strict": false
+    },
+    {
+      "name": "format-sales-call-coaching",
+      "description": "A rep scorecard built from every real call they ran in the window — not a sampled highlight reel: each conversation classified, prospecting calls scored dimension by dimension with verbatim evidence, and exactly one coaching priority, framed Situation–Behaviour–Impact.",
+      "source": "./skills/format-sales-call-coaching",
+      "strict": false
     }
   ]
 }

@@ -151,7 +151,7 @@ Output structure (markdown, in chat unless user requested file save):
 
 ---
 
-[Repeat per account. Skip accounts with zero signals entirely, but list them at the bottom under "Silent accounts (no activity in window) — [list]". Silent accounts are themselves a Risk signal worth surfacing.]
+[Repeat per account. Skip accounts with zero signals entirely, but list them at the bottom under "Silent accounts (no activity in window) — [list]". Silent accounts are themselves a Risk signal worth surfacing. Before listing one, run one wider check (double the window) for that account: "silent for 6 weeks since announcing cancellation" and "always this quiet" are opposite findings, and the briefing should say which it is. Label any widened window clearly in that account's section — the user's window stays the default for everything else.]
 ```
 
 ### Step 6: Coverage caveat

@@ -146,6 +146,97 @@
       "files": [
         "skills/format-icp-definition/SKILL.md"
       ]
+    },
+    {
+      "id": "format-ads-copy",
+      "title": "Paid Ads Copy",
+      "description": "Use when drafting, iterating, or refreshing paid ad copy for LinkedIn Ads, Google Ads, or LinkedIn Lead Gen Forms — grounded in real customer language from Format. Trigger phrases include \"write LinkedIn ads\", \"Google ad copy\", \"RSA headlines\", \"Lead Gen Form copy\", \"paid ad variations\", \"refresh our LinkedIn ads\", \"new ad angles\", \"ad creative from customer quotes\", \"ads that sound like our customers\", \"iterate on these ads\", or \"performance is dropping, give me new ads\". This skill uses the Format MCP to source in-market language, pain points, and outcome language directly from customer conversations — then produces spec-compliant ad copy for LinkedIn Single Image Ads, Google RSAs, and LinkedIn Lead Gen Forms. Runs end-to-end in one response. Not for campaign strategy, targeting, budgets, landing pages, or ad visuals — those are separate jobs.",
+      "personas": [
+        "marketing"
+      ],
+      "image": "skills/format-ads-copy/card.jpg",
+      "useCase": "Ship ad copy that sounds like your customers because it is built from them: 3–5 angles each anchored to a verbatim quote, spec-compliant copy for LinkedIn, Google RSA, and Lead Gen Forms, with character counts validated and CSV blocks ready to upload.",
+      "limitations": "Copy only — no visuals, targeting, budgets, or landing pages. Needs roughly 30+ relevant conversations in Format for real language signal. Customer names never appear in creative without sign-off.",
+      "prompts": [
+        "Write LinkedIn ads, Google RSAs and Lead Gen Form copy that sounds like our customers.",
+        "Our ad performance is dropping — give me new angles from real customer language."
+      ],
+      "related": [
+        "format-company-context"
+      ],
+      "bodyPath": "skills/format-ads-copy/SKILL.md",
+      "files": [
+        "skills/format-ads-copy/SKILL.md"
+      ]
+    },
+    {
+      "id": "format-sales-enablement",
+      "title": "Sales Enablement",
+      "description": "Use when a sales team wants collateral built from what their customers and prospects have actually said — pitch decks, one-pagers, objection-handling docs, demo scripts, talk tracks, battlecards, buyer-persona cards, or deal-specific value framing. Trigger phrases include 'sales deck', 'pitch deck', 'one-pager', 'leave-behind', 'objection handling', 'demo script', 'talk track', 'sales playbook', 'buyer persona card', 'battlecard', 'help my sales team', 'sales collateral', or 'what should I give my reps'. The skill asks which asset you want (if you haven't said), then uses the Format MCP to ground it in verbatim customer language, real objections and the responses that worked, and quote-backed proof points. Not for marketing website copy, cold email, or paid ads — those are different jobs.",
+      "personas": [
+        "sales"
+      ],
+      "image": "skills/format-sales-enablement/card.jpg",
+      "useCase": "Sales collateral reps actually trust because it's built from your own deals: pick the asset — deck, one-pager, objection doc, demo script, battlecard, persona card, or ROI framing — and get it grounded in verbatim customer language and the objections and proof points your conversations actually contain.",
+      "limitations": "Grounded in conversation data — claims it can't support from customer language are flagged for you to fill, not invented. Pricing and customer financials heard on calls are internal evidence, never published figures. Not for website copy, cold email, or paid ads.",
+      "prompts": [
+        "Help my sales team — what collateral can you build from our conversations?",
+        "Build an objection-handling doc from what prospects actually say.",
+        "Draft a one-pager and a demo script grounded in our customer calls."
+      ],
+      "related": [
+        "format-company-context"
+      ],
+      "bodyPath": "skills/format-sales-enablement/SKILL.md",
+      "files": [
+        "skills/format-sales-enablement/SKILL.md"
+      ]
+    },
+    {
+      "id": "format-blog-post",
+      "title": "AEO/SEO Blog Post",
+      "description": "Use when writing B2B blog posts that rank in traditional search AND get cited by AI answer engines (ChatGPT, Perplexity, Google AI Overviews, Claude) — sourcing the original evidence from real customer conversations via Format MCP. Trigger phrases include 'write a blog post', 'draft a blog article', 'SEO blog post', 'AEO blog post', 'AI-optimized post', 'content brief', 'write about [topic]', or 'blog post from our customer data'. The skill proposes a post type and angle grounded in what the workspace's customers actually discuss, checks them with the user once, then writes an answer-first, extractable post whose citable substance — real quotes, honest counts, switching stories — comes from Format. Produces the post draft, the content brief, and an internal evidence appendix. Not for landing pages, ad copy, or case studies — different jobs.",
+      "personas": [
+        "marketing"
+      ],
+      "image": "skills/format-blog-post/card.jpg",
+      "useCase": "Blog posts that AI answer engines cite because they contain something no model can fabricate: your customers' real words and honestly counted data. One checkpoint to agree the angle, then a publish-ready draft — answer-first structure, extractable sections, evidence appendix.",
+      "limitations": "The draft anonymizes customers to role/segment unless they're already publicly cited — final naming needs sign-off. Citation outcomes depend on distribution and domain authority, not the draft alone. Needs enough conversation coverage on the chosen topic to be evidence-backed.",
+      "prompts": [
+        "Write a comparison-style blog post grounded in what real users say about us vs the tools they came from.",
+        "Draft an AEO-optimized post about [topic] using our customer conversations as the evidence."
+      ],
+      "related": [
+        "format-company-context",
+        "format-case-study"
+      ],
+      "bodyPath": "skills/format-blog-post/SKILL.md",
+      "files": [
+        "skills/format-blog-post/SKILL.md"
+      ]
+    },
+    {
+      "id": "format-sales-call-coaching",
+      "title": "Sales Call Coaching",
+      "description": "Use when assessing the selling competency of one sales rep from their real call recordings in Format. Triggers include: 'coach [rep]', 'score [rep]'s calls', 'how is [rep] selling', 'competency assessment for our AEs', 'sales coaching', 'review call quality', 'where is [rep] losing deals', or 'rep scorecard'. The skill requires a single named rep and a time window — it stops and asks if either is missing — then reads every real conversation that rep had in the window via the Format MCP, classifies each by reachability and motion, scores the genuine prospecting conversations against a behavioural rubric, and produces a competency assessment with verbatim evidence and one prioritised coaching focus. Assessment only — it surfaces evidence and a single priority; it does not write call scripts or run the coaching session.",
+      "personas": [
+        "sales"
+      ],
+      "image": "skills/format-sales-call-coaching/card.jpg",
+      "useCase": "A rep scorecard built from every real call they ran in the window — not a sampled highlight reel: each conversation classified, prospecting calls scored dimension by dimension with verbatim evidence, and exactly one coaching priority, framed Situation–Behaviour–Impact.",
+      "limitations": "One named rep per run, never a team; both rep and window are asked for, never defaulted. Reads recorded calls only — it can't see emails, in-person meetings, or deals that progressed off-call. The rubric is calibrated for short outbound prospecting; the skill detects when the rep runs a different motion and says so.",
+      "prompts": [
+        "Using the format-sales-call-coaching skill, assess [rep name] over the last 14 days.",
+        "Where is [rep name] losing deals? Score their calls since May 1."
+      ],
+      "related": [],
+      "bodyPath": "skills/format-sales-call-coaching/SKILL.md",
+      "files": [
+        "skills/format-sales-call-coaching/SKILL.md",
+        "skills/format-sales-call-coaching/references/coaching-frames.md",
+        "skills/format-sales-call-coaching/references/rubric.md",
+        "skills/format-sales-call-coaching/references/scoring-example.md"
+      ]
     }
   ]
 }

@@ -142,6 +142,11 @@ With Format MCP, this takes about 30 minutes. You're pulling real quotes and dat
 
 Now take the Pre-Brief and write a working first draft. This isn't the final version — it's what you bring to the interview so the customer can react to something real instead of answering cold questions.
 
+Two rules before writing:
+
+- **State the data window.** The draft (and the Pre-Brief) opens with one line saying what it's built from — how many conversations, spanning what period (earliest → latest actually read). Whoever reviews the draft needs to know which era of the relationship it reflects.
+- **Customer financials stay out.** Conversations sometimes reveal the customer's own revenue, margins, headcount, or contract figures. Those are confidential context, never publishable copy — exclude them from the draft with an explicit do-not-publish note in the gaps list, and let the interview establish what the customer is willing to state on the record.
+
 ### Structure
 
 ```

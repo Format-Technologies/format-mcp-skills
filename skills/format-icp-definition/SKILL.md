@@ -195,11 +195,26 @@ search_insights(
 )
 ```
 
-4–5 calls. Combined with orientation and cohort-building: 8–11 total.
+**In-market language sweep** (feeds the language bank — always run this one):
+```
+search_insights(
+  orgId,
+  semanticQuery: "why we started looking, what pushed us to evaluate, the problem that made us reach out",
+  level: 0,
+  select: "default",
+  limit: 30
+)
+```
+
+Topics are a lens, not the corpus — a workspace can hold a large pool of insights no topic captured, and pre-purchase language often lives there. One semantic sweep alongside the topic pulls keeps the language bank from reading only what the topics were asked to hear.
+
+5–6 calls. Combined with orientation and cohort-building: 9–12 total — pagination on large company lists may add a call or two; spend them rather than truncating the cohort.
 
 ### Step 5: Synthesize
 
 All five sections built from the pool of extracted insights above. No additional tool calls needed.
+
+**The document header states the data window.** Right under the title, one line: how many conversations/insights the analysis drew on AND the period they span (earliest → latest timestamp actually read, e.g. "built from ~2,800 insights spanning Dec 2025 – Jun 2026"). A count without a period is the first follow-up question every reader asks — answer it up front.
 
 ---
 

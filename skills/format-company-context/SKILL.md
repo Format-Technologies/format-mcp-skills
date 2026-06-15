@@ -92,7 +92,7 @@ No configuration needed beyond that. The skill queries whatever Format workspace
 
 ## The run — how the skill executes
 
-Tight sequence. Target: 12–16 tool calls total. **Aggregated-first:** Format's quant pipeline pre-clusters customer quotes into themes (aggregated answers). Wherever possible, query at `level: 'any'` so you get those themes — with mention counts, distinct-customer counts, direction, and lifecycle — instead of re-clustering raw quotes yourself. Topics that haven't been aggregated yet automatically fall back to verbatim quotes in the same call.
+Tight sequence. Target: 12–16 tool calls total. **Aggregated-first:** Format's quant pipeline pre-clusters customer quotes into themes (aggregated answers). Wherever possible, query at `level: 'any'` so you get those themes — with mention counts, distinct-customer counts, and lifecycle state — instead of re-clustering raw quotes yourself. Topics that haven't been aggregated yet automatically fall back to verbatim quotes in the same call.
 
 ### Step 1: Orient (2 calls)
 
@@ -151,7 +151,7 @@ search_insights(orgId, topicNames: [use cases topic, if available], level: 'any'
 
 Read the results by level:
 
-- **Aggregated answers** (anything above level 0) are pre-built themes: `title` is the theme label, `subtitle` is the synthesized claim, `customerCount`/`mentions` size it, `direction` says whether it's growing or fading, `lifecycleState` says where it sits in its life. These become your messaging pillars and section structure directly.
+- **Aggregated answers** (anything above level 0) are pre-built themes: `title` is the theme label, `subtitle` is the synthesized claim, `customerCount`/`mentions` size it, `lifecycleState` (Emerging / Growing / Mature / Cooling / Dormant / Extinct) says where it sits in its life and whether it's growing or fading. These become your messaging pillars and section structure directly.
 - **Verbatim quotes** (level 0) are evidence. Each carries a `shareUrl` — when attributing a quote in the document, link the attribution to it so teammates can jump to the source conversation.
 
 ### Step 4: JTBD forces pass (3–4 calls)
@@ -208,7 +208,7 @@ All fourteen sections built from the extracted pool. No additional tool calls ne
 
 This is the product-marketer move — it turns raw quotes into reusable messaging pillars.
 
-**Use direction and lifecycle as editorial signals.** A theme with `direction: growing` belongs higher in its section than a Cooling one of equal size; say so in the prose ("rising fast this quarter"). Themes that are Dormant/Extinct still count for retrospective sections — don't silently drop them. On refresh runs, direction shifts are exactly what "What changed since last refresh" should report.
+**Use lifecycle as the editorial signal.** A `Growing` theme belongs higher in its section than a `Cooling` one of equal size; say so in the prose ("rising fast this quarter"). Themes that are Dormant/Extinct still count for retrospective sections — don't silently drop them. On refresh runs, lifecycle shifts are exactly what "What changed since last refresh" should report.
 
 **Flag gaps honestly.** Some sections can only be partially filled from customer conversations. Mark them clearly rather than fabricating:
 
@@ -264,6 +264,8 @@ Keep it to one line. Don't elaborate. The user either responds with URLs/text (a
 ## Deliverable format
 
 See `references/document-template.md` for the exact structure, section headers, and formatting rules.
+
+**The header states the data window.** Right under the title, one line: how many conversations and insights the document draws on AND the period they span (earliest → latest read from the data, e.g. "~6,400 conversations, March 2025 – June 2026"). A count without a period is the single most-asked follow-up question from readers — answer it before it's asked.
 
 **Every claim in the document must be evidence-backed or flagged as a gap.** Every persona pain point has a verbatim customer quote. Every value theme has a quote. Every voice characteristic has a quote. Every JTBD force has 2–3 quotes. If there's no quote to support a claim, either mark it as a gap or omit it. Never fabricate.
 

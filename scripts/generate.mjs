@@ -92,6 +92,10 @@ function loadSkill(id) {
     fail(id, `"${id}" is reserved for persona packs — pick another id`);
   }
   if (!fm.description?.trim()) fail(id, 'missing description');
+  // Claude (Desktop/claude.ai) rejects skill uploads whose description exceeds 1024 chars
+  else if (fm.description.length > 1024) {
+    fail(id, `description is ${fm.description.length} chars (max 1024)`);
+  }
 
   const meta = fm.metadata ?? {};
   if (!meta.title?.trim()) fail(id, 'missing metadata.title');

@@ -123,14 +123,14 @@ Empty results have three different causes that lead to opposite conclusions, so 
 
 ## Stage 4 — Render
 
-Deliver to the destination the user named. When they named none, default to **chat** rather than asking — a destination question at render time costs a round-trip exactly when the user wants the answer; instead, offer the alternatives in one line alongside the delivered output ("want this as an HTML page, a comment on the ticket, or a Format Brief?"). The destinations:
+Deliver to the destination the user named. When they named none, default to **chat** rather than asking — a destination question at render time costs a round-trip exactly when the user wants the answer; instead, offer the alternatives in one line alongside the delivered output ("want this as an HTML page, a comment on the ticket, or a Format Report?"). The destinations:
 
 - **Chat** (default) — the structure below, rendered as markdown.
 - **HTML evidence page** — the same content as a clean, self-contained HTML page: as an artifact where the environment supports them, otherwise a saved `.html` file (tell the user where). Every evidence link should be a real, working link to the insight or record in Format — on a page this polished, a dead link is worse than none.
 - **Comment on the ticket** — when a tracker MCP is connected, post the evidence directly as a comment on the ticket: show the user the comment as it will appear, then post it on their go-ahead. Adapt formatting to what the tracker renders well. Without a tracker connection, provide the comment as copy-ready text instead.
-- **Format Brief** — if the workspace supports creating briefs via Format MCP, the user may ask for the output as a brief; if those tools aren't available, say so and fall back to one of the above.
+- **Format Report** — if the workspace supports authoring reports via Format MCP (`create_report`), the user may ask for the output as a report; if that tool isn't available, say so and fall back to one of the above.
 
-**Open by setting the stage.** The page travels — posted on the ticket, pasted into chat, read weeks later by someone who never saw the request — so don't drop a cold reader straight into the evidence. Open with a couple of plain sentences that say what question was researched, what period the data covers, and the main finding, stated as neutral fact. In a Format Brief, this opener is the `tldr`.
+**Open by setting the stage.** The page travels — posted on the ticket, pasted into chat, read weeks later by someone who never saw the request — so don't drop a cold reader straight into the evidence. Open with a couple of plain sentences that say what question was researched, what period the data covers, and the main finding, stated as neutral fact. In a Format Report, this opener is the `tldr`.
 
 **Write for scanning, not reading.** A wall of dense prose is the failure mode here. Let tables carry the structure and keep prose to quotes plus a line or two of commentary — the reader should get the whole picture from the at-a-glance line and the evidence map, then drill into only the groups they care about.
 

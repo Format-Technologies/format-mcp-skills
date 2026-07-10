@@ -147,10 +147,10 @@ Render to the destination settled at the checkpoint:
 
 - **Chat** — the compact board, as markdown.
 - **HTML page** — the full board: as an artifact where the environment supports them, otherwise a saved `.html` file. Every evidence link should be a real, working link into Format — on a page this polished, a dead link is worse than none.
-- **Format Brief** — the full board as a live Format artifact, composed with `create_lens_brief`: the board table, the strongest quote per item embedded as an insight block, remaining citations as inline insight chips — so every count stays clickable at the source — and the calibration block as a closing section. Share the brief's URL in chat alongside a two-line summary.
+- **Format Report** — the full board as a live Format artifact, composed with `create_report`: the board table, the strongest quote per item embedded as an insight block, remaining citations as inline insight chips — so every count stays clickable at the source — and the calibration block as a closing section. Share the report's URL in chat alongside a two-line summary.
 - **PDF** — where the environment can produce one: the HTML page's content, laid out for print.
 
-**Open by setting the stage.** The board often lands in front of someone who wasn't in the conversation — pasted into Slack, shared as a brief, rediscovered weeks later. So don't drop a cold reader straight into rows and quotes: open with a short plain paragraph that says what they're looking at — the question being answered (which roadmap, checked against what evidence), the period the evidence covers, and the main finding, stated as neutral fact. Two or three sentences, not a section. In a Format Brief, this opener is the `tldr`.
+**Open by setting the stage.** The board often lands in front of someone who wasn't in the conversation — pasted into Slack, shared as a report, rediscovered weeks later. So don't drop a cold reader straight into rows and quotes: open with a short plain paragraph that says what they're looking at — the question being answered (which roadmap, checked against what evidence), the period the evidence covers, and the main finding, stated as neutral fact. Two or three sentences, not a section. In a Format Report, this opener is the `tldr`.
 
 The board, in reading order (identical content in every destination):
 

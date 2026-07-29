@@ -70,13 +70,30 @@ sync with the skills.
 
 - **Accuracy over plausibility:** every Format MCP tool call in a skill body
   must use real tool names and real parameters. If you're not sure a
-  parameter exists, check — a skill that references invented API surface
-  fails confusingly for everyone who installs it.
+  parameter exists, check it against the live `tools/list` schema — the
+  server's schemas are strict, so an unrecognised key now **fails the call by
+  name** instead of being silently dropped. A skill that references invented
+  API surface no longer degrades quietly; it breaks loudly for everyone who
+  installs it.
+- **Use the tool that is the altitude.** There is no level or select dial.
+  `search_insight_groups` returns themes across customers,
+  `search_insights` returns what one person said, and
+  `search_insights({ supportingGroupId })` drills from one to the other.
+  `describe_org` is the single orientation call.
+- **Speak the surface's vocabulary:** *insight* and *insight group*, never
+  quote, answer, level, aggregated or lens. A field name is the only
+  documentation most callers read, and a skill teaching a synonym teaches a
+  word nothing else uses.
 - **Portable by default:** the body should work pasted into any AI tool.
   Environment-specific machinery (file outputs, UI affordances) must be
   phrased conditionally ("on claude.ai…; in Claude Code…").
-- **Read-only:** skills query Format; they never instruct the model to
-  modify anything in it.
+- **Reading is the default; writing is asked for.** Skills query Format. The
+  only writes any skill may perform are creating and publishing a **new**
+  report the user explicitly asked for (`create_report` and friends, which are
+  gated per organization) — never editing or deleting anything already in the
+  workspace, and never without showing the user first. A skill that offers a
+  report destination must degrade gracefully when those tools aren't on the
+  connection.
 - **Public content only:** no customer names, no internal links, nothing you
   wouldn't put on the website.
 

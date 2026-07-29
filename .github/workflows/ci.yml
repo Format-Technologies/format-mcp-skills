@@ -40,7 +40,10 @@ jobs:
           if ! git diff --quiet; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add index.json .claude-plugin/marketplace.json
+            # index.v1.json is the file deployed apps actually fetch — omitting
+            # it here left the frozen contract stale on main while the other
+            # two were repaired, and [skip ci] meant nothing came back for it.
+            git add index.json index.v1.json .claude-plugin/marketplace.json
             git commit -m "chore: regenerate manifests [skip ci]"
             git push
           fi

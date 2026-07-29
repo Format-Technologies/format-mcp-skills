@@ -51,7 +51,8 @@
         "Research the ticket about bulk export and post the evidence as a comment on it."
       ],
       "related": [
-        "format-roadmap-check"
+        "format-roadmap-check",
+        "format-report-authoring"
       ],
       "bodyPath": "skills/format-ticket-research/SKILL.md",
       "files": [
@@ -75,7 +76,8 @@
         "What are customers raising that maps to nothing on this roadmap? [paste roadmap]"
       ],
       "related": [
-        "format-ticket-research"
+        "format-ticket-research",
+        "format-report-authoring"
       ],
       "bodyPath": "skills/format-roadmap-check/SKILL.md",
       "files": [
@@ -236,6 +238,30 @@
         "skills/format-sales-call-coaching/references/coaching-frames.md",
         "skills/format-sales-call-coaching/references/rubric.md",
         "skills/format-sales-call-coaching/references/scoring-example.md"
+      ]
+    },
+    {
+      "id": "format-report-authoring",
+      "title": "Report Authoring",
+      "description": "Use when an analysis should outlive the chat — publishing findings into Format as a real report with its own share URL, rather than answering in the conversation. Trigger phrases include 'publish this as a report', 'write this up in Format', 'turn this analysis into a report', 'make this shareable', 'create a Format report', 'update that report', 'send the report to the team', or 'add a chart to the report'. Covers the whole authoring loop: what the block types are and when each one earns its place, how to compose a document that reads as a report rather than a data dump, embedding insights as clickable chips or full quote blocks, tables and charts, the draft-then-publish lifecycle, revising with replace_report, images, and emailing it with send_report. Report authoring is enabled per organization — when the write tools aren't on your connection, say so and deliver the analysis another way. Not for finding the evidence itself; the research skills do that.",
+      "personas": [
+        "product",
+        "marketing",
+        "research",
+        "leadership"
+      ],
+      "image": "skills/format-report-authoring/card.jpg",
+      "useCase": "Turn an analysis into a real Format report instead of a chat message — a shareable page where embedded insights stay clickable and playable at the source. This is the craft half: which block earns its place, how a report reads as an argument rather than an export, and the draft-review-publish loop.",
+      "limitations": "Report authoring is enabled per organization, so the write tools may not be on your connection at all. It composes and publishes; it does not do the research — pair it with a skill that gathers the evidence first. Format does no AI work here: everything on the page is what you wrote.",
+      "prompts": [
+        "Publish this analysis as a Format report and share the link.",
+        "Turn what we just found into a report — embed the strongest insights.",
+        "Update the report we published last week with this month's numbers."
+      ],
+      "related": [],
+      "bodyPath": "skills/format-report-authoring/SKILL.md",
+      "files": [
+        "skills/format-report-authoring/SKILL.md"
       ]
     }
   ]

@@ -46,7 +46,7 @@ It produces one asset at a time, well, from a menu:
 
 **If the user named the asset(s)** ("build an objection doc", "I need a one-pager for the trade show"), skip straight to building — confirm only a genuinely ambiguous scope (which persona? which competitor? which account?).
 
-**If the request is generic** ("help my sales team", "what should I give my reps", "sales collateral"), make one checkpoint: show the menu above, ask which asset(s) they want and for which persona / deal stage / competitor where that matters, and — if you can see it from a quick `list_topics` — name what the workspace can ground well ("your conversations are rich on objections and competitive mentions; lighter on ROI numbers"). Take their pick, then build without further questions.
+**If the request is generic** ("help my sales team", "what should I give my reps", "sales collateral"), make one checkpoint: show the menu above, ask which asset(s) they want and for which persona / deal stage / competitor where that matters, and — if you can see it from a quick `describe_org` — name what the workspace can ground well ("your conversations are rich on objections and competitive mentions; lighter on ROI numbers"). Take their pick, then build without further questions.
 
 This is the only planned stop. Use the environment's question UI where one exists (e.g. plan-mode option pickers); otherwise ask in prose. One asset per run is the default — if they want several, confirm the set at the checkpoint and produce them in sequence in one deliverable.
 
@@ -56,15 +56,16 @@ This is the only planned stop. Use the environment's question UI where one exist
 
 Then pull what the chosen asset needs (each asset's section below says which). Across all of them:
 
-- `list_organizations()` → confirm org; `list_topics()` → map this workspace's topics (names vary; never assume one exists).
-- Pull verbatim and aggregated evidence with `search_insights`. Use `level: "any"` to ride aggregated themes where they exist (carrying `customerCount`, `mentions`, `lifecycleState`); drill to verbatim `level: 0` quotes via `select: "extended"` → `supportingInsightIds` for the evidence.
-- **Always pair topic pulls with at least one `semanticQuery` sweep** — topics are a lens, not the corpus, and a workspace's untopiced insights hold language the topics never captured.
-- Note the **data window** (earliest → latest timestamp actually read); every asset states it.
+- `describe_org()` → one call for the org that answered, this workspace's `topics` (names vary; never assume one exists), the CRM `attributes` you can filter on, the `coverage` date span, and `processing.hasGroups`. Use `list_organizations()` only when the connection can reach more than one workspace.
+- **Two verbs, and the one you call is the altitude.** `search_insight_groups` returns themes across customers — each with a `title`, a `subtitle`, `customerCount` (distinct customers), `mentions`, and a `lifecycleState`; that is what ranks an objection or a differentiator. `search_insights` returns what one person said, once, in their own words — the evidence under it. Drill from a theme to its evidence with `search_insights({ supportingGroupId: "<group id>" })`. Where `hasGroups` is false, nothing has been grouped here yet — work from `search_insights` alone and cluster as you go; `emptyReason: "no_groups_yet"` is the same news arriving from the other direction.
+- **Rank with `customerCount`; never sum it.** Themes nest, so a customer in a narrow theme is counted again in every broader one — the column orders a doc, it doesn't total. And group `id`s are handles for this conversation only: never write one into an asset.
+- **Always pair topic pulls with at least one unscoped `semanticQuery` sweep.** Every insight sits under exactly one topic, so filtering to the two or three you judged relevant drops everything that landed under a topic you didn't pick — and the language you didn't predict is exactly what you came for.
+- Note the **data window** (earliest → latest `timestamp` actually read); every asset states it.
 
 ## Building each asset
 
 ### Objection-handling doc
-Census-first, the strongest-grounded asset. Pull the objections topic at `level: "any"`; rank themes by **distinct-account count** (that ranking decides order and what makes the doc), drill to verbatim quotes. Per objection: the as-heard quote (attributed) → why they say it (the real concern) → the response, tagged **field-observed** (a rep ran it on a real call, cite it, with the outcome where the data shows one) or **suggested — not yet field-tested** (no observed resolution; a reasonable play, clearly labelled). Plus a proof point and a follow-up question. Lead with a one-screen quick-reference table; close with a "when to walk" section. Unresolved recurring objections are listed and marked, not hidden.
+Census-first, the strongest-grounded asset. `search_insight_groups({ topicNames: ["<objections topic>"] })` gives the objections as themes; rank them by `customerCount` — how many distinct accounts raised each — and that ranking decides both the order and what makes the doc. Then `search_insights({ supportingGroupId })` for the words. Per objection: the as-heard line (attributed) → why they say it (the real concern) → the response, tagged **field-observed** (a rep ran it on a real call, cite it, with the outcome where the data shows one) or **suggested — not yet field-tested** (no observed resolution; a reasonable play, clearly labelled). Plus a proof point and a follow-up question. Lead with a one-screen quick-reference table; close with a "when to walk" section. Unresolved recurring objections are listed and marked, not hidden.
 
 ### Pitch / sales deck
 10–12 slides, story arc not feature tour: current-world problem (in customer language) → cost of the problem → the shift creating urgency → your approach → 3–4 key workflows → proof points → one customer story → value/ROI → next step. One idea per slide. Pull pain, positive-outcome, and competitive topics; every problem and proof slide carries a verbatim quote behind it. Flag pricing and hard ROI numbers as founder-input gaps rather than inventing them.
@@ -76,10 +77,10 @@ Problem (one sentence, their words) → solution → 3 differentiators customers
 Opening → discovery recap → solution walkthrough built around the 3–4 pains customers most raise (pulled from the pain/feature-request topics) → interaction points → close with next step. The script maps features to *their* stated pains, not a feature tour.
 
 ### Battlecard
-For the named competitor (or the most-mentioned one from the competitive topic): how customers describe choosing between you, where they say you win, where they say you lose (kept honest — losses are the useful part), and the reframe reps can use, each backed by a verbatim competitive-mention quote.
+For the named competitor (or the most-mentioned one from the competitive topic): how customers describe choosing between you, where they say you win, where they say you lose (kept honest — losses are the useful part), and the reframe reps can use, each backed by a verbatim competitive-mention insight.
 
 ### Buyer-persona card
-One archetype from `list_persons` + the conversations: role, what they care about, the pains in their own words, objections they raise, where to reach them. Quote-backed; roles taken from titles/attributes where present, never invented.
+One archetype from `list_persons` + the conversations: role, what they care about, the pains in their own words, objections they raise, where to reach them. Every line backed by an insight; roles taken from titles or mapped CRM `attributes` where present, never invented.
 
 ### Deal-specific value framing
 For one named account: pull that account's conversations (`companyIds`), assemble the value story from what *they* said — their stated goals, the pains they named, the outcomes they've already praised — so the rep walks in with the customer's own words.
@@ -106,7 +107,7 @@ never published figures.]
 
 These are the defaults that make the collateral trustworthy. They're guidance, not law — depart when the situation genuinely calls for it, and say so when you do. The two exceptions that stay firm: quotes are never fabricated, and nothing in Format is modified or deleted.
 
-- **Reps trust what's real.** Every problem, differentiator, objection, and proof point traces to a verbatim customer quote — speaker, company, date, link. Paraphrase belongs outside quotation marks.
+- **Reps trust what's real.** Every problem, differentiator, objection, and proof point traces to a verbatim customer insight — speaker, company, date, `shareUrl`. Paraphrase belongs outside quotation marks. Where `person.source` or `company.source` reads `inferred`, the name came out of the conversation rather than a linked customer record — hedge it.
 - **Grounding over guessing.** What the conversations can't support (pricing mechanics, hard ROI numbers, strategic positioning) is flagged as a founder-input gap, never filled with generic B2B copy.
 - **Field-observed beats invented** (objection docs especially): a response a rep actually ran, cited to the call, is the product; suggestions are tagged as suggestions.
 - **Customer financials stay internal.** Pricing, revenue, or contract figures heard on calls are context, never published collateral copy.

@@ -41,7 +41,7 @@ The document has five sections:
 1. **ICP snapshot** — who the company sells to, in one page. For leadership, marketing, and anyone who needs the high-level answer.
 2. **Prospect list criteria** — primary / secondary / exclude filters, triggers, disqualifiers, and seed accounts. For sales, SDRs, paid ads.
 3. **Buyer personas** — three archetypes with day-to-day reality, what they care about, and where to find them. For sales, marketing, content, paid ads.
-4. **In-market language bank** — verbatim quotes that indicate an account is ready to buy. For sales qualification, SDR prospecting, marketing keyword research.
+4. **In-market language bank** — verbatim customer lines that indicate an account is ready to buy. For sales qualification, SDR prospecting, marketing keyword research.
 5. **Competitive landscape** — who's in the account and how customers talk about them. For positioning, qualification, paid ads exclusions.
 
 One document, read differently by different teams. Section headers use the human labels — never label sections as "Artifact 1, Artifact 2," etc.
@@ -75,14 +75,15 @@ If Format MCP isn't connected yet:
 
 Tight sequence. Target: 10–12 tool calls total. Broad topic-first queries, not over-filtered semantic queries.
 
-### Step 1: Orient (2 calls)
+### Step 1: Orient (1 call)
 
 ```
-list_organizations()  → get orgId
-list_topics(orgId)    → see what's actually in this Format workspace
+describe_org()   → the workspace in one call
 ```
 
-Topic structures vary across Format orgs. Map the available topics to the roles below and proceed. Do not surface this mapping to the user.
+It returns the org that answered plus this workspace's `topics` (each with the standing question it asks and its `insightCount`), the CRM `attributes` available to filter on and the operators each accepts, the connected `sources`, the `coverage` date span, and `processing.hasGroups` — whether Format has gathered these conversations into insight groups yet. If the connection can reach several workspaces, `list_organizations()` names them.
+
+Topic structures vary across Format orgs. Map the available topics to the roles below and proceed. Do not surface this mapping to the user. `topicNames` takes those names case-insensitively; an unknown one is refused with the valid list rather than returning nothing.
 
 **Topic role mapping:**
 
@@ -101,9 +102,7 @@ If the workspace has the topic, use it. If not, fall back to semantic queries ag
 **Best cohort** — positive-signal topic, no narrow sentiment filter:
 ```
 search_insights(
-  orgId,
   topicNames: [best-cohort topic],
-  select: "default",
   limit: 75
 )
 ```
@@ -111,24 +110,23 @@ search_insights(
 **Worst cohort** — worst-signal topic:
 ```
 search_insights(
-  orgId,
   topicNames: [worst-cohort topic],
-  select: "default",
   limit: 75
 )
 ```
 
-Extract unique company names from each. Dedupe companies appearing in both.
+Each row carries the `company` that said it (with `source: 'linked'` when Format knows the customer and `'inferred'` when the name was only read out of the conversation — the `id` is `null` in exactly that case). Extract unique company names from each cohort and dedupe companies appearing in both.
 
 ### Step 3: Resolve companies, firmographics and roles (2 calls)
 
 ```
-list_companies(orgId, hasInsights: true, limit: 200)
+list_companies(hasInsights: true, limit: 200)
   → match Best/Worst cohort names to company records: IDs (needed for Step 4
     filters) + the attributes array (CRM-mapped fields like industry, plan,
-    company size — whatever this org has mapped)
+    company size — whatever this org has mapped). `totalCount` says how many
+    matched in all, so you know whether one page covered the register.
 
-list_persons(orgId, companyIds: [Best cohort company IDs], hasInsights: true, limit: 200)
+list_persons(companyIds: [Best cohort company IDs], hasInsights: true, limit: 200)
   → who actually shows up in the conversations; roles from titles/attributes
 ```
 
@@ -144,10 +142,8 @@ Pull the substance for ICP snapshot, personas, in-market signals, competitive la
 **Why customers chose them** (feeds ICP snapshot + competitive landscape):
 ```
 search_insights(
-  orgId,
   topicNames: [competitive/in-market topic],
   companyIds: [Best cohort company IDs],
-  select: "default",
   limit: 40
 )
 ```
@@ -155,10 +151,8 @@ search_insights(
 **Pains and what's broken** (feeds ICP snapshot, personas, in-market signals):
 ```
 search_insights(
-  orgId,
   topicNames: [product gaps topic],
   companyIds: [Best cohort company IDs],
-  select: "default",
   limit: 40
 )
 ```
@@ -166,10 +160,8 @@ search_insights(
 **Value realized** (feeds ICP snapshot, personas):
 ```
 search_insights(
-  orgId,
   topicNames: [best-cohort topic],
   companyIds: [Best cohort company IDs],
-  select: "default",
   limit: 40
 )
 ```
@@ -177,10 +169,8 @@ search_insights(
 **Onboarding / use case patterns** (feeds personas):
 ```
 search_insights(
-  orgId,
   topicNames: [onboarding topic, if available],
   companyIds: [Best cohort company IDs],
-  select: "default",
   limit: 30
 )
 ```
@@ -188,9 +178,7 @@ search_insights(
 **Disqualifier content** (feeds Not-Fit account list):
 ```
 search_insights(
-  orgId,
   topicNames: [worst-cohort topic],
-  select: "default",
   limit: 40
 )
 ```
@@ -198,17 +186,23 @@ search_insights(
 **In-market language sweep** (feeds the language bank — always run this one):
 ```
 search_insights(
-  orgId,
   semanticQuery: "why we started looking, what pushed us to evaluate, the problem that made us reach out",
-  level: 0,
-  select: "default",
   limit: 30
 )
 ```
 
-Topics are a lens, not the corpus — a workspace can hold a large pool of insights no topic captured, and pre-purchase language often lives there. One semantic sweep alongside the topic pulls keeps the language bank from reading only what the topics were asked to hear.
+**The competitive landscape, sized** (1 call, when `processing.hasGroups` is true):
+```
+search_insight_groups(
+  topicNames: [competitive/in-market topic],
+  limit: 20
+)
+```
+Where Format has gathered these conversations into insight groups, each group is a theme across customers with a `customerCount` — how many distinct customers raised it. That is the honest basis for the "where it shows up" column: rank alternatives by it, and never add the column up (nested themes count the same customer more than once). `search_insights({ supportingGroupId: "<id>" })` returns the words underneath any theme you want to evidence.
 
-5–6 calls. Combined with orientation and cohort-building: 9–12 total — pagination on large company lists may add a call or two; spend them rather than truncating the cohort.
+Every insight sits under exactly one topic, so a topic-scoped pull only ever returns the topics you thought to name — and pre-purchase language is often filed under one you didn't. One unscoped semantic sweep alongside the topic pulls keeps the language bank from reading only what you guessed at.
+
+6–7 calls. Combined with orientation and cohort-building: 9–12 total — pagination on large company lists may add a call or two; spend them rather than truncating the cohort.
 
 ### Step 5: Synthesize
 
@@ -404,7 +398,7 @@ This signals the hierarchy honestly. Three personas of equal weight reads as a l
 | Content that resonates | [What content format lands with this persona — e.g. "before/after operational walkthroughs, HRIS integration demos, benchmarking data"] | [...] | [...] |
 
 **The two rows that make this artifact usable for marketing, not just sales:**
-- **What's broken (their words)** — verbatim quotes with slashes between them give marketers drop-in headline material
+- **What's broken (their words)** — verbatim customer lines with slashes between them give marketers drop-in headline material
 - **Content that resonates** — tells content and marketing teams exactly what formats to produce for this persona
 
 **The Example people row matters too.** Pulling real Name (Company) pairs from the best cohort makes the persona concrete. If sales or marketing wants to validate the persona, they can go look at those people's LinkedIn profiles.

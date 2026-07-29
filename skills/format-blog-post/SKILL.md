@@ -38,14 +38,16 @@ This skill builds that post — and sources the can't-fabricate layer from the F
 - **Existing context** — if a Format company-context document (the `format-company-context` skill's output) is in the conversation, use its positioning, competitive landscape, and customer-language sections; don't re-derive them.
 - **A case study** — if a drafted case study (the `format-case-study` skill's output) is available, it's ready-made story material.
 
-## Stage 0 — Preflight: find the citable ore (3–4 calls)
+## Stage 0 — Preflight: find the citable ore (2–3 calls)
 
 Run cheap scans before proposing anything:
 
-1. `list_topics()` — what this workspace listens for; competitive, inbound-driver, and feedback topics are the usual ore for posts.
-2. `count_insights({ level: "aggregated" })` — whether aggregated themes exist. Judge by response shape, not the bare number; having none is normal and just means quote-level work.
-3. One or two `count_insights` / `search_insights` probes on the candidate territory (e.g. competitor mentions, the recurring pain the user hinted at) — enough to know where the evidence is dense. Use `semanticQuery` probes too: topics are a lens, not the corpus.
-4. Note the corpus's date span — the post will state the period its data covers.
+1. `describe_org()` — one call, and it answers all three preflight questions at once:
+   - **What this workspace listens for**: `topics[]`, each with its standing question and its `insightCount`. Competitive, inbound-driver, and feedback topics are the usual ore for posts.
+   - **Whether Format's own analysis is available**: `processing.hasGroups`. `true` means customers' words have been gathered into insight groups — themes running across many customers, each carrying how many distinct customers contributed. `false` means insight-level work, which is normal and blocks nothing. `processing.pendingInsightCount` says how far the groups lag the insights.
+   - **The period the post can honestly claim**: `coverage.earliestRecordAt` → `latestRecordAt`, plus `recordCount` and `companyCount`.
+2. One or two `count_insights` / `search_insights` probes on the candidate territory (e.g. competitor mentions, the recurring pain the user hinted at) — enough to know where the evidence is dense. Use `semanticQuery` probes too: topics are a lens, not the corpus.
+3. Where `hasGroups` is true, one `search_insight_groups({ limit: 20 })` shows you the biggest themes in the workspace and their reach — the fastest read on whether a post is buildable at all.
 
 ## Stage 1 — Propose the post (one checkpoint)
 
@@ -64,7 +66,7 @@ Prepare and show together, in under a minute of reading:
 
 **2. The angle and primary answer** — the target query, and the one sentence you'd want an AI to quote.
 
-**3. What the data offers** — one line per evidence block the preflight found ("412 insights mention competitors; Excel dominates at ~70 mentions across 40+ companies; strongest switching quotes are from finance leads"). The user should see the post is buildable before a word is written.
+**3. What the data offers** — one line per evidence block the preflight found ("412 insights mention competitors; Excel dominates at ~70 mentions across 40+ companies; the strongest switching stories come from finance leads"). The user should see the post is buildable before a word is written.
 
 **4. The defaults** — working title, 4–6 H2 sub-questions, target length, and the attribution stance (anonymized to role/segment unless a name is already publicly cited — see Principles).
 
@@ -74,9 +76,10 @@ The test for what makes the checkpoint: include only what the user's answer coul
 
 **Run quietly** — the checkpoint was the conversation; the draft is the deliverable.
 
-1. **Pull the quotes.** `search_insights` with `semanticQuery` probes spanning pain language ("struggling with", "we used to"), solution language ("now we can", "what changed"), and comparison language ("switched from", "compared to") at `level: 0` — plus topic pulls where preflight found dense topics. Aggregated answers, where they exist, are shortcuts to theme + supporting quotes (`select: "extended"` → `supportingInsightIds` → level 0).
-2. **Compute the counts honestly.** Every statistic in the post comes from `count_insights` or from counting fetched results — never from vibes. Count distinct companies, not raw rows (dedupe insights sharing a record); disclose overlap where two counts could double-cover ("N mentions of Excel or Sheets" needs an overlap caveat). A number that survives discounting is the headline; one that doesn't, isn't.
-3. **Flag the zero results too.** "We expected Airtable mentions and found none" is itself a finding — report absence as fact, never pad it.
+1. **Pull what customers actually said.** `search_insights` with `semanticQuery` probes spanning pain language ("struggling with", "we used to"), solution language ("now we can", "what changed"), and comparison language ("switched from", "compared to") — plus topic pulls where preflight found dense topics. Every row arrives citation-ready: `text`, `person`, `company`, `record`, `timestamp`, `shareUrl`.
+2. **Where insight groups exist, work top-down.** `search_insight_groups` names the theme and sizes it (`customerCount` = distinct customers, `mentions` = insights in it); `search_insights({ supportingGroupId: "<group id>" })` returns every insight underneath it, so the theme hands you its own evidence. Rank themes by `customerCount` — but never add those numbers up across themes: groups nest, and a customer in a narrow theme is counted again in every broader one above it. Group ids are handles for this conversation only; they never go in the draft.
+3. **Compute the counts honestly.** Every statistic in the post comes from `count_insights` or from counting fetched results — never from vibes. `count_insights({ breakdownBy: "company" })` gives the cross-tab in one call; note that `count` is always the full total while `breakdown` covers only the insights that have a bucket, and `isBreakdownTruncated` tells you when the two don't reconcile. Count distinct companies, not raw rows (dedupe insights sharing a record); disclose overlap where two counts could double-cover ("N mentions of Excel or Sheets" needs an overlap caveat). A number that survives discounting is the headline; one that doesn't, isn't.
+4. **Flag the zero results too.** "We expected Airtable mentions and found none" is itself a finding — report absence as fact, never pad it. When a search comes back empty, `emptyReason` says which kind of empty it is: `filtered_out` (loosen the filter), `no_groups_yet` (nothing gathered into groups here — ask `search_insights` instead), `empty_org` (no customer data at all). Only the first is evidence of anything.
 
 ## Stage 3 — Write the post
 

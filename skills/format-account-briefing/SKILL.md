@@ -24,7 +24,7 @@ metadata:
 
 ## What this skill does
 
-Given a list of customer accounts and a time window, this skill scans all conversation data in Format (calls, emails, notes) tied to those accounts and produces a per-account briefing organized under 6 Customer Success signal categories. It surfaces verbatim quotes with speaker, date, and source — it **flags signals only, it does not prescribe CSM actions**.
+Given a list of customer accounts and a time window, this skill scans all conversation data in Format (calls, emails, notes) tied to those accounts and produces a per-account briefing organized under 6 Customer Success signal categories. It surfaces what customers actually said, verbatim, with speaker, date, and source — it **flags signals only, it does not prescribe CSM actions**.
 
 ## When to use it
 
@@ -78,34 +78,43 @@ Signals the business or contract may not sustain: payment delays, downgrade conv
 ### Step 1: Confirm inputs
 If account list or time window is missing, prompt for them. Do not proceed without both.
 
-### Step 2: Resolve account names to Format company IDs
+### Step 2: Orient once
 
-Use the Format MCP to map each account name to its company record. Default to `list_companies` — that's the right call for Format's data model. Only fall back to `list_organizations` or `list_records` if `list_companies` returns nothing.
+`describe_org()` — one call, and it tells you what the briefing needs to be honest about: `coverage.earliestRecordAt` / `latestRecordAt` (does the requested window even overlap the data?), which sources are connected, and how many companies the workspace knows. If the requested window sits entirely outside the coverage span, say so before scanning rather than reporting six silent accounts.
 
-1. Call `list_companies` with a reasonable page size
-2. Fuzzy-match each provided name to a returned company name
-3. **If an account name doesn't match anything in Format**, flag it back to the user: "Couldn't find [name] in Format — skip, or did you mean [closest match]?"
-4. **If a name is ambiguous** (multiple matches), ask the user to disambiguate before proceeding
+If the connection can reach more than one Format workspace, `list_organizations()` names them and every response echoes the `org` that answered — check it matches the book of business you were asked about.
 
-### Step 3: Pull conversation signals per account
+### Step 3: Resolve account names to Format company IDs
+
+`list_companies` is the right tool for this — Format's companies are the customer register.
+
+1. Call `list_companies({ nameSearch: "<account name>" })` per account — `nameSearch` is a case-insensitive substring match, so it beats paging the whole register and eyeballing it. `domainSearch` does the same on domains when you were given those instead.
+2. Take the `id` off the match; that's what `companyIds` wants downstream.
+3. **If an account name matches nothing**, flag it back to the user: "Couldn't find [name] in Format — skip, or did you mean [closest match]?"
+4. **If a name is ambiguous** (several rows come back), ask the user to disambiguate before proceeding.
+
+When you already hold a domain, `get_company({ domain: "acme.com" })` resolves it in one call and returns the account's mapped CRM attributes alongside — useful context for the briefing. A miss there names which key failed and points at `list_companies`.
+
+### Step 4: Pull conversation signals per account
 
 For each resolved company, call `search_insights` with:
-- The company ID as a filter (`companyIds` parameter)
-- The user-specified date range
-- `isAiRejected: false` (excludes insights Format's review layer flagged as low-confidence — keeps the brief tight)
-- No topic filter — we categorize ourselves in Step 4
+- The company id in `companyIds`
+- The user-specified window in `dateRange` (`{ from, to }` — a bare `YYYY-MM-DD` is accepted and becomes the right day edge)
+- No topic filter — we categorize ourselves in Step 5
 
-Then for each returned insight, capture: verbatim quote, speaker name + role, date, source type (call / email / note), and the `shareUrl` (Format link to the underlying record).
+Each row comes back ready to cite: `text` (what the person said), `person` and `company` (each with a `source` of `linked` or `inferred` — hedge attribution on inferred ones), `record` (the conversation, with its `sourceType`), `timestamp`, and a durable `shareUrl`. Set `includeContext: true` when a signal only makes sense with the surrounding conversation — it is long, so use it when reading closely rather than on every sweep.
 
-### Step 4: Categorize signals
+**An empty page explains itself.** `emptyReason` is `null` when rows came back and otherwise says why there are none: `filtered_out` (the workspace holds insights, none of them matched this filter — this account, this window, or both) or `empty_org` (there is no customer data here at all). The second one means the briefing has nothing to say about any account and should stop rather than list six silent ones; separating "quiet account" from "quiet workspace" is exactly what the silent-accounts section below turns on.
 
-For each insight, judge which of the 6 categories it belongs to. A single insight can belong to multiple categories (e.g. a churn-risk quote that also mentions a competitor = Risk + Growth flag). Be generous with category assignment but only include an insight if there's clear signal — do not pad.
+### Step 5: Categorize signals
+
+For each insight, judge which of the 6 categories it belongs to. A single insight can belong to multiple categories (e.g. a churn-risk remark that also mentions a competitor = Risk + Growth flag). Be generous with category assignment but only include an insight if there's clear signal — do not pad.
 
 For ambiguous insights that don't cleanly fit any category, drop them rather than force-fit. The brief is more valuable if it's tight.
 
-**Cap per category per account: 5 quotes.** If a category has more than 5 strong signals, pick the 5 most material and append a line at the bottom of that subsection: `+ N more in Format — pull the full list directly from search_insights with the same filters`.
+**Cap per category per account: 5 insights.** If a category has more than 5 strong signals, pick the 5 most material and append a line at the bottom of that subsection: `+ N more in Format — pull the full list directly from search_insights with the same filters`.
 
-### Step 5: Render the briefing
+### Step 6: Render the briefing
 
 Output structure (markdown, in chat unless user requested file save):
 
@@ -115,7 +124,7 @@ Output structure (markdown, in chat unless user requested file save):
 **Accounts scanned:** [N accounts]
 
 ## Red flags this week
-[Pull only Risk & churn drivers + Commercial & viability risk signals here, sorted by account. One bullet per signal: "**[Account]** — [verbatim quote]" (speaker, date, source). Skip this section entirely if no red flags.]
+[Pull only Risk & churn drivers + Commercial & viability risk signals here, sorted by account. One bullet per signal: "**[Account]** — [verbatim]" (speaker, date, source). Skip this section entirely if no red flags.]
 
 ---
 
@@ -125,7 +134,7 @@ Output structure (markdown, in chat unless user requested file save):
 **Insights captured (distinct):** [N] — some appear in multiple categories below.
 
 **Risk & churn drivers**
-- "[verbatim quote]" — [speaker, role], [date], [source link]
+- "[verbatim, exactly as the insight's `text` reads]" — [speaker, role], [date], [shareUrl]
 - ...
 
 **Product & process blockers**
@@ -151,10 +160,10 @@ Output structure (markdown, in chat unless user requested file save):
 
 ---
 
-[Repeat per account. Skip accounts with zero signals entirely, but list them at the bottom under "Silent accounts (no activity in window) — [list]". Silent accounts are themselves a Risk signal worth surfacing. Before listing one, run one wider check (double the window) for that account: "silent for 6 weeks since announcing cancellation" and "always this quiet" are opposite findings, and the briefing should say which it is. Label any widened window clearly in that account's section — the user's window stays the default for everything else.]
+[Repeat per account. Skip accounts with zero signals entirely, but list them at the bottom under "Silent accounts (no activity in window) — [list]". Silent accounts are themselves a Risk signal worth surfacing. Before listing one, run one wider check for that account — `count_insights({ companyIds: [id] })` with no window is the cheapest way to ask "has this account ever said anything?", and doubling the window says when it last did: "silent for 6 weeks since announcing cancellation" and "always this quiet" are opposite findings, and the briefing should say which it is. Label any widened window clearly in that account's section — the user's window stays the default for everything else.]
 ```
 
-### Step 6: Coverage caveat
+### Step 7: Coverage caveat
 At the bottom of the briefing, always include this disclaimer:
 
 > **What this misses:** This briefing covers conversation signals only (calls, emails, notes captured in Format). For usage-decline signals — drop in active users, declining feature adoption, recommendation acceptance rate — check your product analytics. Format only sees what was said, not what was done in-product.
@@ -162,11 +171,12 @@ At the bottom of the briefing, always include this disclaimer:
 ## Hard rules
 
 - **Flag, do not prescribe.** Never recommend a CSM action ("you should follow up with X", "send an education email", "consider asking about Y"). Surface evidence; the CSM decides what to do. "Open threads in the data" is evidence framing — it must describe what's unresolved in the conversations, never instruct the CSM what to do about it.
-- **Verbatim quotes only — from the Format insight.** Do not paraphrase. Format's extraction layer has already selected the quote span from the underlying transcript; the skill surfaces those insight-level quotes and does not re-quote from full transcripts.
-- **Always cite source.** Every signal must have speaker + role + date + Format link.
-- **Never fabricate signals.** If an account has no data, say so. Do not invent quotes or sentiment.
+- **Verbatim only — the insight's own `text`.** Do not paraphrase. Format's extraction layer has already selected the span from the underlying transcript; the skill surfaces that text and does not re-cut it from full transcripts.
+- **Always cite source.** Every signal must have speaker + role + date + the insight's `shareUrl`.
+- **Never fabricate signals.** If an account has no data, say so. Do not invent words or sentiment.
+- **Hedge inferred attribution.** `person.source` / `company.source` is `linked` when Format knows the customer and `inferred` when the extraction only read a name out of the conversation. An inferred name is a good lead, not a confirmed speaker — say "someone at [company]" rather than asserting a person.
 - **Never default the time window.** Always ask.
-- **Cap quotes at 5 per category per account.** If more exist, note the overflow and link back to Format — do not dump everything.
+- **Cap at 5 insights per category per account.** If more exist, note the overflow and link back to Format — do not dump everything.
 
 ## How to prompt this skill
 
@@ -196,11 +206,12 @@ User:
 > - [Account F]
 
 Skill:
-1. Resolves the account names to Format company IDs via `list_companies` (asks to disambiguate any ambiguous match, flags any name with no match)
-2. Pulls insights for each resolved company from the specified window via `search_insights` with `isAiRejected: false`
-3. Categorizes each insight into the 6 buckets (multi-category assignment allowed)
-4. Renders the briefing in the output structure above (red-flag rollup → per-account detail with distinct-insight count + verbatim quotes capped at 5 per category + open threads in the data → silent accounts list)
-5. Appends the coverage caveat at the bottom
+1. Orients with `describe_org()` — confirms the window overlaps the data Format holds
+2. Resolves the account names to Format company IDs via `list_companies({ nameSearch })` (asks to disambiguate any ambiguous match, flags any name with no match)
+3. Pulls insights for each resolved company from the specified window via `search_insights({ companyIds, dateRange })`
+4. Categorizes each insight into the 6 buckets (multi-category assignment allowed)
+5. Renders the briefing in the output structure above (red-flag rollup → per-account detail with distinct-insight count + verbatim evidence capped at 5 per category + open threads in the data → silent accounts list)
+6. Appends the coverage caveat at the bottom
 
 ### Example 2 — informal trigger, skill prompts for missing inputs
 
@@ -217,4 +228,4 @@ Skill:
 User:
 > Using the Format MCP and the format-account-briefing skill, prep me for QBR with [Account] over the last 90 days.
 
-Skill: same flow as Example 1, scoped to a single account and a 90-day window. Output structure is identical — just one account section instead of many. The 5-quotes-per-category cap matters more here because a 90-day pull will surface more signal than a 14-day pull.
+Skill: same flow as Example 1, scoped to a single account and a 90-day window. Output structure is identical — just one account section instead of many. The five-per-category cap matters more here because a 90-day pull will surface more signal than a 14-day pull.

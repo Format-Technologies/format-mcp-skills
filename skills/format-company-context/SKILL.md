@@ -56,9 +56,9 @@ The document has fourteen sections:
 7. **Differentiation** — key differentiators, how we do it, why it's better, why customers choose us
 8. **Objections** — table of objection / response / customer proof
 9. **Anti-persona & sales cycle pattern** — who it's not for, common buying path
-10. **Switching dynamics (JTBD forces)** — Push / Pull / Habit / Anxiety, each with verbatim quotes
+10. **Switching dynamics (JTBD forces)** — Push / Pull / Habit / Anxiety, each with verbatim evidence
 11. **Customer language** — how they describe the problem (thematic clusters), how they describe the product, words to use, words to avoid, glossary
-12. **Brand voice** — tone, style, personality with evidence quotes
+12. **Brand voice** — tone, style, personality, each with the insight that evidences it
 13. **Proof points** — testimonials, value themes, notable customers, buyer profile pattern, geography, stack
 14. **Last refreshed** — date + what changed since last run
 
@@ -92,16 +92,28 @@ No configuration needed beyond that. The skill queries whatever Format workspace
 
 ## The run — how the skill executes
 
-Tight sequence. Target: 12–16 tool calls total. **Aggregated-first:** Format's quant pipeline pre-clusters customer quotes into themes (aggregated answers). Wherever possible, query at `level: 'any'` so you get those themes — with mention counts, distinct-customer counts, and lifecycle state — instead of re-clustering raw quotes yourself. Topics that haven't been aggregated yet automatically fall back to verbatim quotes in the same call.
+Tight sequence. Target: 12–16 tool calls total.
 
-### Step 1: Orient (2 calls)
+**Themes first, words second.** Format has two retrieval verbs, and the one you call is the altitude you get:
+
+- `search_insight_groups` — **what customers collectively say.** An insight group is a theme: many similar insights, from different customers in different conversations, gathered under one label, carrying `customerCount` (how many distinct customers contributed), `mentions`, a first/last-seen span, and a `lifecycleState`. These become the document's messaging pillars and section structure directly.
+- `search_insights` — **what one person said, once, in their own words.** This is the evidence under every claim: `text`, who said it, which company, which conversation, when, and a durable `shareUrl`.
+
+Lead with groups where the workspace has them, then drill to the words. Never re-cluster what Format already clustered.
+
+### Step 1: Orient (1 call)
 
 ```
-list_organizations()  → confirm orgId (defaults to your primary org)
-list_topics(orgId)    → see what's actually in this workspace
+describe_org()   → everything this run needs to calibrate itself
 ```
 
-Topic structures vary across Format orgs. Map available topics to the analytical roles below and proceed silently.
+One call returns the org that answered, this workspace's `topics` (each with the standing question it asks, its `insightCount` and `groupCount`), the CRM `attributes` you can filter on and the operators each accepts, the connected `sources`, the `coverage` span (`earliestRecordAt` → `latestRecordAt`, `recordCount`, `companyCount`, `personCount` — the numbers the document's header line states), and `processing`.
+
+**Read `processing.hasGroups` before concluding anything.** `true` means this workspace has been through Format's analysis and Step 3 can lead with themes. `false` means nothing here has been gathered into insight groups at all — not that the workspace is thin — and the run proceeds identically from insights, with you doing the clustering in Step 7.
+
+If the connection can reach several Format workspaces, `list_organizations()` names them; every response echoes the `org` that answered, so a wrong default is visible on the first call rather than at the end of the document.
+
+Topic structures vary across Format orgs. Map available topics to the analytical roles below and proceed silently. `topicNames` takes the names `describe_org` returned, case-insensitively; a name that doesn't exist is refused with the full valid list rather than quietly returning nothing.
 
 **Topic role mapping:**
 
@@ -119,12 +131,13 @@ If a topic exists, use it. If not, fall back to semantic queries against all top
 ### Step 2: Firmographics & buyer roles (2 calls)
 
 ```
-list_companies(orgId, hasInsights: true, limit: 200)
+list_companies(hasInsights: true, limit: 200)
   → industries, size, plan, etc. come from the `attributes` array (CRM-mapped
-    fields — whatever this org has mapped). Also feeds notable customers in
-    Proof Points.
+    fields — whatever this org has mapped). `totalCount` says how many matched
+    in all, so you know whether one page covered the register. Also feeds
+    notable customers in Proof Points.
 
-list_persons(orgId, hasInsights: true, limit: 200)
+list_persons(hasInsights: true, limit: 200)
   → who actually shows up in conversations; roles from titles/attributes.
     Feeds Decision-makers, Personas, buyer profile in Proof Points.
 ```
@@ -133,63 +146,73 @@ If the org has no CRM attributes mapped (empty `attributes` arrays), don't fabri
 
 ### Step 3: Thematic core pass (4 calls, one per analytical role)
 
-One aggregated-first query per role. These feed most of the document:
+One theme query per analytical role. These give the document its spine:
 
 ```
-search_insights(orgId, topicNames: [positive topic], level: 'any', select: "default", limit: 50)
+search_insight_groups(topicNames: [positive topic], limit: 30)
   → Voice, Proof points, Differentiation, Customer Language (praise)
 
-search_insights(orgId, topicNames: [pain topic], level: 'any', select: "default", limit: 50)
+search_insight_groups(topicNames: [pain topic], limit: 30)
   → Problems, Personas, Switching Dynamics (Push), Customer Language (problem)
 
-search_insights(orgId, topicNames: [competitive topic], level: 'any', select: "default", limit: 50)
+search_insight_groups(topicNames: [competitive topic], limit: 30)
   → Competitive landscape, Differentiation, Objections
 
-search_insights(orgId, topicNames: [use cases topic, if available], level: 'any', select: "default", limit: 40)
+search_insight_groups(topicNames: [use cases topic, if available], limit: 20)
   → Personas, Target Audience, Product Overview
 ```
 
-Read the results by level:
+How to read a group: `title` is the theme label, `subtitle` is the claim it makes, `customerCount` and `mentions` size it, `lifecycleState` (Emerging / Growing / Mature / Cooling / Dormant / Extinct) says where it sits in its life and whether it's growing or fading, and `childCount` says whether narrower themes sit beneath it.
 
-- **Aggregated answers** (anything above level 0) are pre-built themes: `title` is the theme label, `subtitle` is the synthesized claim, `customerCount`/`mentions` size it, `lifecycleState` (Emerging / Growing / Mature / Cooling / Dormant / Extinct) says where it sits in its life and whether it's growing or fading. These become your messaging pillars and section structure directly.
-- **Verbatim quotes** (level 0) are evidence. Each carries a `shareUrl` — when attributing a quote in the document, link the attribution to it so teammates can jump to the source conversation.
+Three things about these numbers:
+
+- **`customerCount` ranks; it never sums.** A customer counted in a narrow theme is counted again in every broader theme above it, so adding the column produces a number that double-counts people. Use it to order pillars, never to claim a total.
+- **A page can be shorter than its `limit`.** Where themes nest, the page carries the broadest of each nest rather than both — so `count` is what came back and `hasMore` is whether the database had more.
+- **Group `id`s are handles for this conversation only.** Format re-clusters, and an id does not survive it — never write one into the document, a saved file, or a scheduled job.
+
+**When `hasGroups` was false**, skip this step's shape and run the same four pulls as `search_insights(topicNames: [...], limit: 50)` instead. `emptyReason` on any empty page tells you which case you're in: `no_groups_yet` (nothing gathered into groups here — go to insights), `filtered_out` (the filter matched nothing — loosen it), `empty_org` (no customer data at all — stop).
 
 ### Step 4: JTBD forces pass (3–4 calls)
 
-Semantic queries are level-0-only (embeddings live on individual quotes), so these return verbatim evidence for the Switching Dynamics section:
+`semanticQuery` searches individual insights by meaning, so these return the verbatim evidence the Switching Dynamics section is built from:
 
 ```
-search_insights(orgId, semanticQuery: "frustrated with how we do this today, too manual, can't keep up, falling behind", level: 0, select: "default", limit: 30)
+search_insights(semanticQuery: "frustrated with how we do this today, too manual, can't keep up, falling behind", limit: 30)
   → Push (dissatisfaction with current state)
 
-search_insights(orgId, semanticQuery: "this is exactly what we needed, finally, game changer", level: 0, select: "default", limit: 30)
+search_insights(semanticQuery: "this is exactly what we needed, finally, game changer", limit: 30)
   → Pull (attraction to the new solution)
 
-search_insights(orgId, topicNames: [objections topic], semanticQuery: "worried about switching, security concerns, will it be reliable, not sure about the data", level: 0, select: "default", limit: 30)
+search_insights(topicNames: [objections topic], semanticQuery: "worried about switching, security concerns, will it be reliable, not sure about the data", limit: 30)
   → Anxiety (concerns about switching)
 
-search_insights(orgId, semanticQuery: "what we already use works fine, good enough, don't need another tool", level: 0, select: "default", limit: 20)
+search_insights(semanticQuery: "what we already use works fine, good enough, don't need another tool", limit: 20)
   → Habit (inertia — why the existing workflow feels fine)
 ```
+
+Ordering follows the query: with a `semanticQuery` you get best-match first, without one you get newest first. There is no `orderBy` to set.
 
 ### Step 5: Objections pass (1 call)
 
 ```
-search_insights(orgId, topicNames: [objections topic], level: 'any', select: "default", limit: 40)
+search_insight_groups(topicNames: [objections topic], limit: 30)
 ```
 
-Feeds the Objections table. Cross-reference with the positive themes from Step 3 to find customer-proof rebuttals for each objection.
+Feeds the Objections table. Cross-reference with the positive themes from Step 3 to find customer-proof rebuttals for each objection. Where `hasGroups` was false, run the same pull as `search_insights` instead.
 
 ### Step 6: Drill where evidence is thin (0–3 calls, as needed)
 
-Every claim in the document needs a verbatim quote behind it. When an aggregated theme from Step 3 is load-bearing but you don't yet hold quotes for it, drill in:
+Every claim in the document needs a verbatim insight behind it. When a theme from Step 3 is load-bearing but you don't yet hold the words for it, drill straight down from the group:
 
 ```
-search_insights(orgId, insightIds: [the answer's id], level: 'aggregated', select: "extended")
-  → exposes supportingInsightIds
-search_insights(orgId, insightIds: [supportingInsightIds], level: 0, select: "default", limit: 10)
-  → the underlying verbatim quotes
+search_insights(supportingGroupId: "<the group's id>", limit: 10)
+  → every insight gathered under that theme, however deep
 ```
+
+That is the whole drill — one filter, one call. Two neighbouring moves are worth knowing:
+
+- `get_insight_group(groupId, descendants: 'direct')` walks *sideways and down through themes* rather than to the words, which is what you want when a group's `childCount` is high and you need the sub-themes before the evidence.
+- `find_similar_insights(insightId)` reaches out from one strong insight to others near it — Format's own clustering where it exists, wording similarity where it doesn't.
 
 Budget these — drill only for themes that anchor a section (top pain, top differentiator, headline switching force).
 
@@ -197,16 +220,16 @@ Budget these — drill only for themes that anchor a section (top pain, top diff
 
 All fourteen sections built from the extracted pool. No additional tool calls needed.
 
-**Themes come pre-clustered — use them.** In the Customer Language section, do NOT dump random quotes. Where the workspace had aggregated answers, the clustering is already done: use each answer's `title`/`subtitle` as the bolded theme label and its drilled quotes as members. Where a topic only returned verbatim quotes, cluster them yourself into 3–5 themes per subsection. Example shape either way:
+**Themes come pre-clustered — use them.** In the Customer Language section, do NOT dump a list of unrelated lines. Where the workspace had insight groups, the clustering is already done: use each group's `title`/`subtitle` as the bolded theme label and the insights you drilled from it as members. Where a topic returned only insights, cluster them yourself into 3–5 themes per subsection. Example shape either way:
 
 > **"We're data rich and insight poor"**
-> - "[Quote 1]" — [Name], [Company]
-> - "[Quote 2]" — [Name], [Company]
+> - "[verbatim]" — [Name], [Company]
+> - "[verbatim]" — [Name], [Company]
 >
 > **"Insights get filtered and distorted"**
-> - "[Quote 1]" — [Name], [Company]
+> - "[verbatim]" — [Name], [Company]
 
-This is the product-marketer move — it turns raw quotes into reusable messaging pillars.
+This is the product-marketer move — it turns scattered evidence into reusable messaging pillars.
 
 **Use lifecycle as the editorial signal.** A `Growing` theme belongs higher in its section than a `Cooling` one of equal size; say so in the prose ("rising fast this quarter"). Themes that are Dormant/Extinct still count for retrospective sections — don't silently drop them. On refresh runs, lifecycle shifts are exactly what "What changed since last refresh" should report.
 
@@ -247,9 +270,9 @@ Keep it to one line. Don't elaborate. The user either responds with URLs/text (a
 
 ## Adaptation rules
 
-**Small conversation pool (<150 quotes).** Deliver what's supportable. Switching Dynamics may be thin — that's fine, flag it. Do not fabricate personas or forces that aren't in the data.
+**Small conversation pool (<150 insights).** Deliver what's supportable. Switching Dynamics may be thin — that's fine, flag it. Do not fabricate personas or forces that aren't in the data.
 
-**No aggregated answers yet.** A workspace whose topics haven't been through the quant pipeline returns only verbatim quotes at `level: 'any'` — the run works identically; you just do the thematic clustering yourself in Step 7. Never report "no data" off the back of an empty `level: 'aggregated'` call.
+**No insight groups yet.** A workspace Format hasn't finished analysing reports `processing.hasGroups: false`, and `search_insight_groups` answers with `emptyReason: "no_groups_yet"`. The run works identically from `search_insights`; you just do the thematic clustering yourself in Step 7. Never report "no data" off the back of an empty group search — that response says nothing about the question you asked.
 
 **Different topic names.** Map silently via the topic role table. Don't surface the mapping to the user.
 
@@ -267,15 +290,15 @@ See `references/document-template.md` for the exact structure, section headers, 
 
 **The header states the data window.** Right under the title, one line: how many conversations and insights the document draws on AND the period they span (earliest → latest read from the data, e.g. "~6,400 conversations, March 2025 – June 2026"). A count without a period is the single most-asked follow-up question from readers — answer it before it's asked.
 
-**Every claim in the document must be evidence-backed or flagged as a gap.** Every persona pain point has a verbatim customer quote. Every value theme has a quote. Every voice characteristic has a quote. Every JTBD force has 2–3 quotes. If there's no quote to support a claim, either mark it as a gap or omit it. Never fabricate.
+**Every claim in the document must be evidence-backed or flagged as a gap.** Every persona pain point cites a verbatim insight. Every value theme cites one. Every voice characteristic cites one. Every JTBD force cites 2–3. If there's nothing in the data to support a claim, either mark it as a gap or omit it. Never fabricate.
 
 **Voice rules:**
 - Direct, specific, no hedging
 - No generic B2B phrases ("industry-leading", "best-in-class", "enterprise-grade")
 - Use customer language, not marketing language
-- Quotes stay verbatim — don't polish them
-- Thematic clusters in Customer Language, not quote dumps
-- Where a quote came back with a `shareUrl`, link the attribution to it
+- Verbatim stays verbatim — don't polish what customers said
+- Thematic clusters in Customer Language, never an undifferentiated list
+- Link every attribution to the insight's `shareUrl` so teammates can jump to the source conversation
 
 **File output:**
 - Save as `company-context.md` using your environment's file mechanism; inline the same content in chat so the user sees it immediately
@@ -307,11 +330,13 @@ Enrichment content is secondary to customer data. Where they conflict, customer 
 **Don't** invent generic personas not grounded in the data.
 **Don't** write aspirational brand voice — extract what's actually there.
 **Don't** fill data-thin sections with generic B2B copy — flag them as gaps instead.
-**Don't** dump random quotes in the Customer Language section — use the aggregated themes (or cluster yourself) with bolded theme labels.
-**Don't** re-cluster what the quant pipeline already clustered — aggregated answers ARE the themes; drill them for evidence instead.
-**Don't** treat an empty `level: 'aggregated'` result as "no data" — retry at `level: 'any'` or `level: 0` and answer from quotes.
+**Don't** dump an undifferentiated list in the Customer Language section — use the insight groups (or cluster yourself) with bolded theme labels.
+**Don't** re-cluster what Format already clustered — insight groups ARE the themes; drill them with `supportingGroupId` for evidence instead.
+**Don't** treat an empty `search_insight_groups` as "no data" — read `emptyReason`, and answer from `search_insights` when it says `no_groups_yet`.
 **Don't** filter by `lifecycleStates` — lifecycle is context for the prose, not a precondition. Dormant themes are real.
+**Don't** sum `customerCount` across themes — it ranks, it never totals; nested themes count the same customer more than once.
+**Don't** invent parameters. Tool schemas are strict: an unrecognised key fails the call by name instead of being quietly dropped, so a mistyped filter is loud rather than silently unfiltered.
 **Don't** auto-fetch the website on the first run — only fetch in enrichment mode when the user explicitly shares a URL.
 **Don't** re-ask for the org ID or any config — the Format MCP defaults to the user's primary workspace.
-**Don't** let website copy override customer quotes during enrichment — customer data always wins.
+**Don't** let website copy override what customers actually said during enrichment — customer data always wins.
 **Don't** skip the Switching Dynamics section — it's one of the most valuable and Format data almost always supports it.

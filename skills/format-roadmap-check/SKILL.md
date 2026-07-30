@@ -6,7 +6,7 @@ metadata:
   title: Roadmap Check
   personas: [product, leadership]
   image: card.jpg
-  related: [format-ticket-research, format-report-authoring]
+  related: [format-ticket-research]
   use_case: >-
     Hold your roadmap up against what customers have actually said. Paste a
     roadmap (or point at a tracker project) and get an evidence board: what
@@ -151,7 +151,7 @@ Render to the destination settled at the checkpoint:
 
 - **Chat** — the compact board, as markdown.
 - **HTML page** — the full board: as an artifact where the environment supports them, otherwise a saved `.html` file. Every evidence link should be a real, working link into Format — on a page this polished, a dead link is worse than none.
-- **A report in Format** — the full board as a live Format artifact, composed with `create_report`: the board as a `table` block, the strongest insight per item embedded as an `insight` block, remaining citations as inline `{{insight:<id>}}` chips inside the prose — so every count stays clickable at the source — and the calibration block as a closing section. The opener becomes the report's `tldr`. A report is born a draft only you can open; `publish_report` is the separate step that makes it visible to the whole organization. Share the `shareUrl` in chat alongside a two-line summary. If `format-report-authoring` is installed, it carries the composition craft; if `create_report` isn't on the connection at all, report authoring is closed for this organization — fall back to one of the destinations above.
+- **A report in Format** — the full board as a live Format artifact, composed with `create_report`: the board as a `table` block, the strongest insight per item embedded as an `insight` block, remaining citations as inline `{{insight:<id>}}` chips inside the prose — so every count stays clickable at the source — and the calibration block as a closing section. The opener becomes the report's `tldr`. A report is born a draft only you can open; `publish_report` is the separate step that makes it visible to the whole organization. Share the `shareUrl` in chat alongside a two-line summary. If `create_report` isn't on the connection at all, report authoring is closed for this organization — fall back to one of the destinations above.
 - **PDF** — where the environment can produce one: the HTML page's content, laid out for print.
 
 **Open by setting the stage.** The board often lands in front of someone who wasn't in the conversation — pasted into Slack, shared as a link, rediscovered weeks later. So don't drop a cold reader straight into rows and quotes: open with a short plain paragraph that says what they're looking at — the question being answered (which roadmap, checked against what evidence), the period the evidence covers, and the main finding, stated as neutral fact. Two or three sentences, not a section. In a Format report, this opener is the `tldr`.

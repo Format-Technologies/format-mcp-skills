@@ -22,7 +22,6 @@ actually said, draft a case study before the interview.
 | [`format-sales-enablement`](skills/format-sales-enablement/SKILL.md) | Sales | Decks, one-pagers, objection docs, demo scripts, battlecards and persona cards — grounded in the objections and proof points your own deals actually contain. |
 | [`format-blog-post`](skills/format-blog-post/SKILL.md) | Marketing | Posts that answer engines cite, because they carry something no model can fabricate: your customers' real words and honestly counted data. |
 | [`format-sales-call-coaching`](skills/format-sales-call-coaching/SKILL.md) | Sales | A rep scorecard built from every real call they ran in the window — each conversation classified, prospecting calls scored with verbatim evidence, one coaching priority. |
-| [`format-report-authoring`](skills/format-report-authoring/SKILL.md) | Product · Marketing · Research · Leadership | Publish an analysis into Format as a real report with its own share URL, where embedded insights stay clickable and playable at the source. |
 
 More skills land regularly — browse them with previews in the Format app
 under **Settings → MCP**.
@@ -34,12 +33,11 @@ Every skill needs the **Format MCP server** connected to your AI tool:
 Microsoft Copilot: **[useformat.ai/mcp](https://useformat.ai/mcp)**.
 
 Skills read your Format workspace; they don't change it. The one exception is
-report authoring — `format-report-authoring`, and the report destination a few
-research skills offer — which publishes a **new** report into Format when you
-ask for one, and never edits or deletes anything that was already there.
-Report authoring is enabled per organization, so those write tools may not be
-on your connection at all; when they aren't, a skill says so and delivers the
-work another way.
+the report destination a couple of the research skills offer, which publishes
+a **new** report into Format when you ask for one, and never edits or deletes
+anything that was already there. Report authoring is enabled per organization,
+so those write tools may not be on your connection at all; when they aren't, a
+skill says so and delivers the work another way.
 
 ## Install
 

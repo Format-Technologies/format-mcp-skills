@@ -6,7 +6,7 @@ metadata:
   title: Ticket Research
   personas: [product]
   image: card.jpg
-  related: [format-roadmap-check]
+  related: [format-roadmap-check, format-report-authoring]
   use_case: >-
     Ground a ticket in customer reality before you build it. Paste it (or
     point at the tracker issue) and get back what customers have actually
@@ -134,7 +134,7 @@ Deliver to the destination the user named. When they named none, default to **ch
 - **Chat** (default) — the structure below, rendered as markdown.
 - **HTML evidence page** — the same content as a clean, self-contained HTML page: as an artifact where the environment supports them, otherwise a saved `.html` file (tell the user where). Every evidence link should be a real, working link to the insight or record in Format — on a page this polished, a dead link is worse than none.
 - **Comment on the ticket** — when a tracker MCP is connected, post the evidence directly as a comment on the ticket: show the user the comment as it will appear, then post it on their go-ahead. Adapt formatting to what the tracker renders well. Without a tracker connection, provide the comment as copy-ready text instead.
-- **A report in Format** — when `create_report` is available on the connection (it is gated per organization, so it simply won't be there for every workspace), the evidence page can be authored as a first-class Format report with its own share URL: embedded insights stay clickable and playable, and the opener becomes the report's `tldr`. Show the user what you're about to publish before you write it; a report is born a draft visible only to you, and `publish_report` is the separate, explicit step that makes it org-visible. If the tool isn't on the connection, say so and fall back to one of the above.
+- **A report in Format** — when `create_report` is available on the connection (it is gated per organization, so it simply won't be there for every workspace), the evidence page can be authored as a first-class Format report with its own share URL: embedded insights stay clickable and playable, and the opener becomes the report's `tldr`. Show the user what you're about to publish before you write it; a report is born a draft visible only to you, and `publish_report` is the separate, explicit step that makes it org-visible. If the tool isn't on the connection, say so and fall back to one of the above. The `format-report-authoring` skill carries the composition craft if it's installed.
 
 **Open by setting the stage.** The page travels — posted on the ticket, pasted into chat, read weeks later by someone who never saw the request — so don't drop a cold reader straight into the evidence. Open with a couple of plain sentences that say what question was researched, what period the data covers, and the main finding, stated as neutral fact. In a Format report, this opener is the `tldr`.
 

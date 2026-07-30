@@ -15,7 +15,9 @@ Full contract and authoring guide: [CONTRIBUTING.md](CONTRIBUTING.md).
    enforces this).
 4. **Verify every Format MCP tool call** in a skill body against the real tool
    schemas before committing — never write plausible-looking parameters from
-   memory.
+   memory. The schemas are strict: an unrecognised parameter fails the call
+   and names the key, so an invented one breaks the skill outright rather than
+   being ignored.
 5. **This repo is public.** No customer names, internal links, ticket
    references, or strategy notes — in any file, including this one.
 6. **Merging to `main` is publishing** — the app gallery and Claude Code

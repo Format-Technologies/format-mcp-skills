@@ -41,11 +41,18 @@ By the time you get on a call with the customer, you're not fishing for a story.
 Format synthesizes insights across all your customer conversations — calls, emails, tickets, chat. Use it to surface customers who are already saying the right things.
 
 ```
-1. Format MCP → list_companies
-   Pull your customer list (hasInsights: true
-   limits it to companies with conversation data).
+1. Format MCP → describe_org
+   One call to orient: which topics this workspace
+   listens for, the date span of the conversations,
+   and processing.hasGroups — whether Format has
+   already gathered customers' words into themes.
 
-2. Format MCP → search_insights
+2. Format MCP → list_companies
+   Pull your customer list (hasInsights: true
+   limits it to companies with conversation data;
+   nameSearch / domainSearch find a named one).
+
+3. Format MCP → search_insights
    Run searches for case-study signals
    (keywordSearch for exact phrases,
    semanticQuery for fuzzy matching):
@@ -66,14 +73,34 @@ Format synthesizes insights across all your customer conversations — calls, em
    "life-saver," "no-brainer," "couldn't live without,"
    "game-changer," "my favorite," "love"
 
-3. Format MCP → get_record
-   For your top hits, pull the actual conversation
-   snippets with timestamps and full context.
+4. Format MCP → search_insight_groups     (when hasGroups)
+   The themes running across all your customers,
+   each sized by customerCount. A candidate whose
+   story sits inside a big theme is a candidate
+   whose story will land with prospects.
+   search_insights({ supportingGroupId }) then
+   returns every insight underneath a theme.
 
-4. Format MCP → list_records
+5. Format MCP → get_insight
+   For a line you might build the whole piece on:
+   the same insight plus its context (what was
+   happening around it) and followUp (what was
+   said next) — the cheapest way to check a
+   promising line isn't taken out of context.
+
+6. Format MCP → get_record
+   For your top hits, pull the actual conversation
+   with the full transcript and participants.
+
+7. Format MCP → list_records
    Check engagement depth — are they active users
-   or casual ones? Active users tell better stories.
+   or casual ones? Each row carries insightCount,
+   and totalCount says how many conversations that
+   account has in all. Active users tell better
+   stories.
 ```
+
+Every insight comes back with a durable `shareUrl` — keep it beside the line in the Pre-Brief so anyone reviewing the draft can hear the customer say it. And read `person.source` / `company.source`: `linked` means Format knows this customer, `inferred` means the extraction only read the name out of the conversation, which is not yet good enough to put on a public page.
 
 ### Without Format (manual path)
 
@@ -122,10 +149,10 @@ AFTER (what changed):
 - [Result 2]
 - [How they use the product now]
 
-BEST QUOTES (pulled directly from conversations):
-- "[Quote 1]" — [context: which call/email, when]
-- "[Quote 2]"
-- "[Quote 3]"
+BEST LINES (verbatim, pulled directly from conversations):
+- "[verbatim]" — [which call/email, when] [shareUrl]
+- "[verbatim]"
+- "[verbatim]"
 
 GAPS (what you'd still want from an interview):
 - [ ] Permission to use their name and company
@@ -159,7 +186,7 @@ Pull from whatever numbers exist in the data.
 Flag any that need confirmation in the interview.
 
 PULL QUOTE
-The strongest line from the conversation data.
+The strongest verbatim line from the conversation data.
 Will likely be replaced or confirmed in the interview.
 
 CHALLENGE

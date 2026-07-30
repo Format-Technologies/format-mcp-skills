@@ -75,14 +75,15 @@ If a Format company-context document (the output of the `format-company-context`
 
 When reusing a quote from the context doc, keep attribution intact (speaker, company, source, date, link). Never launder quotes into synthesized claims.
 
-### Step 1: Orient (2 calls)
+### Step 1: Orient (1 call)
 
 ```
-list_organizations()   → confirm the org
-list_topics()          → what this workspace listens for
+describe_org()   → the whole picture in one call
 ```
 
-Topic names vary across Format orgs. Map the available topics to the roles below silently and proceed.
+It returns the org that answered, this workspace's `topics` (name, the standing question each one asks, how many insights sit under it), the CRM `attributes` you can filter on, the connected `sources`, the `coverage` date span, and `processing` — whether Format has gathered anything into insight groups yet.
+
+Topic names vary across Format orgs. Map the available topics to the roles below silently and proceed. `topicNames` matches these names case-insensitively; a name that isn't there is refused with the valid list rather than silently returning nothing, so guessing is cheap to correct but never worth doing twice.
 
 | Analytical role | Candidate topic names (pick closest available) |
 |---|---|
@@ -93,16 +94,26 @@ Topic names vary across Format orgs. Map the available topics to the roles below
 
 ### Step 2: Pull the language (4–5 calls)
 
-Pull verbatim customer language per angle category. Use `level: 0` explicitly — angles anchor to individual quotes, not synthesized themes — and `select: "default"` (it carries the quote, attribution, and share link).
+`search_insights` is the tool for this: it returns what one person said, once, in their own words — which is exactly what an anchor has to be. (Its sibling `search_insight_groups` returns themes across customers; that's Step 2b, for deciding *which* angles are worth writing.) Each row carries the `text`, who said it, which company they're from, the conversation it came from, when, and a durable `shareUrl` — everything the angle table needs, with no options to set.
 
 ```
-search_insights({ topicNames: ["<pain topic>"],        level: 0, select: "default", limit: 40 })
-search_insights({ topicNames: ["<outcome topic>"],     level: 0, select: "default", limit: 40 })
-search_insights({ topicNames: ["<competitive topic>"], level: 0, select: "default", limit: 30 })
-search_insights({ semanticQuery: "<core pain in customer words>", level: 0, limit: 20 })
+search_insights({ topicNames: ["<pain topic>"],        limit: 40 })
+search_insights({ topicNames: ["<outcome topic>"],     limit: 40 })
+search_insights({ topicNames: ["<competitive topic>"], limit: 30 })
+search_insights({ semanticQuery: "<core pain in customer words>", limit: 20 })
 ```
 
-Skip any topic that doesn't exist or runs thin — better 3 strong categories than padding with weak ones. **Always include at least one `semanticQuery` pass:** topics are a lens, not the corpus, and the workspace's untopiced insights often hold the freshest in-market phrasing. If the user named a persona, vertical, or product line, add one filtered pull for it.
+Skip any topic that doesn't exist or runs thin — better 3 strong categories than padding with weak ones. **Always include at least one unscoped `semanticQuery` pass:** every insight sits under exactly one topic, so a topic-scoped pull only ever shows you the topics you thought to name — and the freshest in-market phrasing is usually filed somewhere you didn't guess. If the user named a persona, vertical, or product line, add one filtered pull for it (`companyIds`, `personIds`, or `attributeFilters` using the labels and operators `describe_org` listed).
+
+### Step 2b: Let Format's own clustering pick the angles (1 call, when it can)
+
+Clustering what customers said into themes is the work of angle-finding — and where the workspace has been through Format's analysis, it is already done. `search_insight_groups({ limit: 20 })` returns the themes running across this org's customers, each with a `title`, a one-line `subtitle`, and a `customerCount` — how many distinct customers contributed. Rank angles by that number; it is the right basis for "biggest".
+
+**Rank with `customerCount`, never sum it.** Groups nest, and a customer counted in a narrow theme is counted again in every broader theme above it — adding the numbers across rows double-counts people.
+
+Then take the anchor straight from the theme: `search_insights({ supportingGroupId: "<group id>", limit: 10 })` returns every insight gathered under it, and the strongest one is your anchor. Note the group `id`s are handles for this conversation only — Format re-clusters, so never write one into the deliverable or a saved file.
+
+If `search_insight_groups` comes back empty, `emptyReason` says why: `no_groups_yet` means this workspace hasn't been through the analysis (skip this step, cluster the insights yourself — the run is otherwise identical), `filtered_out` means loosen the filter, `empty_org` means there is no customer data to write from at all.
 
 ### Step 3: Note the data window
 
@@ -112,11 +123,11 @@ From the pulled insights' timestamps, note the span actually read (earliest → 
 
 ## How to turn Format data into ad angles
 
-For each angle, you need **one verbatim quote** as the anchor. The angle line is the pain/outcome compressed into a headline-grade statement — not the quote itself. Quotes stay as proof; copy stays as copy.
+For each angle, you need **one verbatim insight** as the anchor. The angle line is the pain/outcome compressed into a headline-grade statement — not the customer's words themselves. Their words stay as proof; copy stays as copy.
 
 **Target: 3–5 angles total across all channels.** The same angle adapts to each channel's specs.
 
-- **Cluster quotes by theme.** Five quotes saying the same thing = one strong angle, not five weak ones.
+- **Cluster by theme.** Five insights saying the same thing = one strong angle, not five weak ones. Where Step 2b found insight groups, that clustering is already done for you.
 - **Prefer specificity** — numbers, tool names, time spans, role-specific workflows. "We used to pull reports every Monday for 3 hours" is signal; "it's great, saves us time" is noise.
 - **Cover distinct motivations.** Mix pain, outcome, competitive displacement, status-quo callout, identity — don't ship five pain angles.
 
@@ -175,9 +186,9 @@ spanning [earliest]–[latest], across [the categories pulled]; M angles,
 channels covered. Company context loaded (last refreshed [date]) — if it was.]
 
 ## The angles
-| # | Angle | Category | Anchor quote | Source |
-[3–5 rows. Anchor quote verbatim, trimmed to the punch with an ellipsis —
-never reworded. Source: speaker, company, channel, date, link.]
+| # | Angle | Category | Anchor insight | Source |
+[3–5 rows. The anchor verbatim, trimmed to the punch with an ellipsis —
+never reworded. Source: speaker, company, channel, date, shareUrl.]
 
 ## LinkedIn Single Image
 [Per angle: intro / headline / description, each with (N chars). Then the CSV block.]
@@ -213,7 +224,7 @@ If the user provides performance data (CSV, pasted table, or "headline X got 2.3
 
 These are the defaults that make the copy defensible. They're guidance, not law — depart when the situation genuinely calls for it, and say so when you do. The two exceptions that stay firm: quotes are never fabricated, and nothing in Format is modified or deleted.
 
-- **Every angle traces to a verbatim quote** — speaker, company, source, date, link. Trim with an ellipsis; never substitute words. The quote anchors the angle; the copy is inspired by its pattern, not a lift.
+- **Every angle traces to one verbatim insight** — speaker, company, source, date, `shareUrl`. Trim with an ellipsis; never substitute words. The insight anchors the angle; the copy is inspired by its pattern, not a lift.
 - **No invented pain points.** If the data doesn't show it, the angle doesn't ship — and generic "save time, save money" angles don't ship either.
 - **Customer names stay out of creative without sign-off.** Quotes with attribution live in the internal angle table; ad copy that names a customer or implies their endorsement needs their approval first — flag it, don't ship it.
 - **Every field validates before shipping.** Character counts shown, overages trimmed in the same response.

@@ -49,19 +49,21 @@ Standard SaaS-discovery rubrics (15–20 discovery questions, talk-ratio targets
 
 Both mandatory inputs above, confirmed in chat. Then run quietly — the next planned chat output is the assessment.
 
-### Step 2: Resolve the rep (1–2 calls)
+### Step 2: Resolve the rep (1 call)
 
-`list_records` and read the `persons` array to find the rep's `person.id` (internal participants usually share the company email domain). A name that matches nobody gets flagged and asked about, not guessed.
+`list_persons({ nameSearch: "<rep name>" })` — a case-insensitive substring match that returns the person's `id`, `email` and linked `company`. `emailSearch` does the same on the address when you were given that instead. Internal people usually share the company's own email domain, which is the tell when two names collide. A name that matches nobody gets flagged and asked about, not guessed; several matches get disambiguated with the user before any records are read.
+
+(`describe_org()` is worth one call here too if you want the workspace's coverage span before committing to a window — it tells you the earliest and latest conversation Format holds.)
 
 ### Step 3: Pull the complete call list
 
-`list_records` with `personIds: [repId]` and the window. **`dateRange.from`/`to` must be full ISO datetimes** (`2026-05-29T00:00:00Z`, not a bare date). **Paginate to the full `totalCount`** — `list_records` caps at 100 per page; a missing last page is missed conversations, which this skill must never have. Note each record's `insightCount` and data source.
+`list_records({ personIds: [repId], dateRange: { from, to } })`. A bare `YYYY-MM-DD` bound is accepted and becomes the right day edge (`from` → start of day, `to` → end of day UTC); a full ISO datetime works too. **Paginate to the full `totalCount`** — that field says how many records matched, not how many came back, and `limit` tops out at 200 (default 50) with `hasMore` saying whether to page on. A missing last page is missed conversations, which this skill must never have. Note each record's `insightCount` and `dataSource`.
 
 ### Step 4: Read and classify every conversation — within a context budget
 
 **Order reads by `insightCount` descending, but read every insight-bearing record — no cap.** `insightCount > 0` reliably marks a real conversation; zero-insight records are usually voicemail/switchboard — count them in the activity table, spot-check borderline short ones.
 
-For each record, `get_record` with insights included. The `content` field is the transcript. **Call duration comes from `media[].duration` (seconds) — convert to `M:SS` for display.** Don't rely on the `context` field for duration or direction; its contents vary by source (on Gong records it often carries the call title).
+For each record, `get_record({ recordId, includeInsights: true })`. The `content` field is the transcript. **Call duration comes from `media[].durationSeconds` — convert to `M:SS` for display; it is `null` where the integration never reported one, so show the duration column blank rather than inventing a number.** Don't rely on the `context` field for duration or direction; its contents vary by source (on Gong records it often carries the call title). `participants` is not `persons`: `persons` is who Format linked to a person record, `participants` is the raw list the source system reported — its entries vary in shape, and a single record can mix `{ email, attendance }` with `{ name, spoke }`.
 
 **Work call-by-call within a context budget.** Transcripts are large and a full window can hold dozens. After reading each call: classify it, score it if eligible, write its complete scorecard row and evidence cells immediately — then drop the transcript and carry only the scorecard forward. Never hold all transcripts simultaneously; never let earlier raw transcripts crowd out the later reads. (Where the environment supports delegating reads to sub-tasks, that's a fine way to parallelize — the contract is that every call gets a full read and an evidenced score, whoever reads it.)
 
@@ -152,7 +154,7 @@ These are the defaults that make the assessment fair. They're guidance, not law 
 
 - **Every conversation gets read.** No cap, no sampling, page to the full count — sampling the "best" calls biases the assessment toward the rep's best work. When the window is too big to read honestly, split the window (proposed at Step 1), don't thin the read.
 - **Classification decides what's scored.** Both axes, before any scoring; the prospecting rubric never touches a deal-management, implementation, or support call.
-- **Every score is substantiated** — evidence cell plus a source link (`sourceUrl` or insight `shareUrl`) per call. A score with no evidence and no link doesn't ship; a link that can't be verified gets dropped, not invented.
+- **Every score is substantiated** — evidence cell plus a source link (the record's `sourceUrl`, or an insight's `shareUrl`) per call. A score with no evidence and no link doesn't ship; a link that can't be verified gets dropped, not invented. `sourceUrl` is nullable, so fall back to the insight link when it is absent.
 - **Quotes are verbatim, in the call's language.** Explanation lives outside the quote marks; a bracketed gloss when the call isn't in the user's language.
 - **One coaching priority, framed SBI** — situation, observable behaviour, consequence. No adjectives about the person; overwhelm kills coaching. If the same weakness recurs across reps in separate runs, name it as a team enablement gap rather than repeating it per rep.
 - **Assess, don't script.** No call scripts or role-play dialogue unless asked separately.

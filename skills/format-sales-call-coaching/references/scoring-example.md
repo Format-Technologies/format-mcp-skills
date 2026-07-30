@@ -22,7 +22,7 @@ Keep cells short. One quote per speaker per cell is usually enough; the `Missing
 Every record from `get_record` carries source links:
 
 - **Call source** — the `sourceUrl` field (the dialer/recording link, e.g. an Aircall or Fathom URL).
-- **Insight source** — each insight in the `insights` array has a `shareUrl` (`https://useformat.ai/share/insight/{id}`). Prefer this when the evidence is a Format-extracted insight; it deep-links to the exact moment and topic.
+- **Insight source** — each insight in the `insights` array has a `shareUrl` (`https://app.useformat.ai/share/insight/{id}`). Prefer this when the evidence is a Format-extracted insight; it deep-links to the exact moment and topic.
 
 Put the **call source link in the card header** (one per call), and drop an insight `shareUrl` inline only on the specific cell it substantiates. Quote **verbatim**, never paraphrased. The plain-language reading goes outside the quotes.
 

@@ -33,6 +33,49 @@
       "files": [
         "skills/format-company-context/SKILL.md",
         "skills/format-company-context/references/document-template.md"
+      ],
+      "frontmatter": {
+        "name": "format-company-context",
+        "description": "Use when a team wants to generate a shared company context document — the foundational brief on their positioning, ICP, personas, voice, and proof points — grounded in real customer conversations from their Format workspace. Trigger phrases include \"build our voice-of-customer doc\", \"build our company context\", \"create a company brief\", \"what's our positioning\", \"extract our brand voice\", \"what do customers say about us\", or \"refresh our positioning doc\". Uses the Format MCP to produce a single markdown document covering product overview, ICP, personas, pain points, competitive landscape, brand voice, and proof points — all backed by verbatim customer quotes. Runs end-to-end in one response; re-run quarterly as the customer base evolves. Not for writing blog posts, emails, ads, or case studies — those are downstream skills that read this context. For a targeting-focused ICP deep-dive (prospect criteria, qualification filters), use format-icp-definition instead.",
+        "metadata": {
+          "display_order": 10,
+          "title": "Voice-of-Customer Context for AI",
+          "personas": [
+            "customer-success",
+            "sales",
+            "marketing",
+            "product",
+            "leadership",
+            "research"
+          ],
+          "image": "card.jpg",
+          "use_case": "Stop re-explaining your company in every chat. One run distills what customers actually say — who you serve, what they struggle with, the words they use — into a context doc your team's AI works from, every claim quote-backed. It won't invent your strategy or pricing; it flags those for you to fill.",
+          "limitations": "Needs roughly 50+ customer conversations in Format for this depth. Some sections (pricing, business model, strategic positioning) can't come from conversations — the skill flags those as gaps for founder input rather than guessing.",
+          "prompts": [
+            "Build our company context from what customers actually say.",
+            "Refresh our positioning doc from the last six months of conversations."
+          ]
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-company-context/SKILL.md",
+          "sha256": "f61b1d5dbce996202ccaa5c0b4ab2beb854a615cf7793b0d1b10f2b7042000de",
+          "bytes": 23095,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-company-context/card.jpg",
+          "sha256": "648e24d97ff5ea1e2267011e970610ff02b025f6b363aed4b45e79fe3fb352ca",
+          "bytes": 451966,
+          "mediaType": "image/jpeg"
+        },
+        {
+          "path": "skills/format-company-context/references/document-template.md",
+          "sha256": "d967933ae3770a39cba1ccd16b4d429c7e934c2f1497cd6b50bdccf9a8d76ec7",
+          "bytes": 12848,
+          "mediaType": "text/markdown"
+        }
       ]
     },
     {
@@ -56,6 +99,42 @@
       "bodyPath": "skills/format-ticket-research/SKILL.md",
       "files": [
         "skills/format-ticket-research/SKILL.md"
+      ],
+      "frontmatter": {
+        "name": "format-ticket-research",
+        "description": "Use when a product manager or engineer wants to ground a ticket (Linear, Jira, or any tracker) in real customer evidence using Format MCP. Canonical invocation: 'using the Format MCP and the format-ticket-research skill, research this ticket' followed by pasted ticket text or a ticket reference. Also triggers on 'what are customers saying about this ticket', 'who's asking for this', 'find customer evidence for [ticket]', 'what requirements are customers implying for [feature]'. Produces a compact evidence page: customer asks grouped by the distinct need expressed, verbatim quotes with links to every piece of evidence, and what the evidence suggests the ticket should account for. It presents evidence and context rather than grading demand or recommending whether to build.",
+        "metadata": {
+          "display_order": 20,
+          "title": "Ticket Research",
+          "personas": [
+            "product"
+          ],
+          "image": "card.jpg",
+          "related": [
+            "format-roadmap-check"
+          ],
+          "use_case": "Ground a ticket in customer reality before you build it. Paste it (or point at the tracker issue) and get back what customers have actually said about the problem behind it: each distinct ask in their own words, who raised it and when, every quote linked to its source — and the requirements the evidence implies but the ticket doesn't spell out.",
+          "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score or rank demand. Quality depends on conversation coverage in Format and on whether a topic is listening for this kind of feedback; the output tells you when either is the limiting factor.",
+          "prompts": [
+            "Using the Format MCP and the format-ticket-research skill, research this ticket: [paste ticket]",
+            "Who's actually asking for this, and what do they expect it to do? [paste ticket]",
+            "Research the ticket about bulk export and post the evidence as a comment on it."
+          ]
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-ticket-research/SKILL.md",
+          "sha256": "d5cde6f806ca176095f28f3bf2dca2dec6696637b1d78732358f228abd4d4313",
+          "bytes": 23274,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-ticket-research/card.jpg",
+          "sha256": "d76cadb19079fb457fd7d02553e16a626eb842a1f7d4b8467e86dec4f18ecbd8",
+          "bytes": 442519,
+          "mediaType": "image/jpeg"
+        }
       ]
     },
     {
@@ -80,6 +159,43 @@
       "bodyPath": "skills/format-roadmap-check/SKILL.md",
       "files": [
         "skills/format-roadmap-check/SKILL.md"
+      ],
+      "frontmatter": {
+        "name": "format-roadmap-check",
+        "description": "Use when a product manager or leader wants to check a roadmap against real customer evidence using Format MCP — answering 'are customers asking for what we're building?' and the inverse, 'what are customers asking for that we're not building?'. Canonical invocation: 'using the Format MCP and the format-roadmap-check skill, check this roadmap' followed by a pasted list of roadmap items or a reference to a tracker project/epic. Also triggers on 'validate this roadmap against customer feedback', 'is there evidence for these roadmap items', 'what are customers asking for that isn't on the roadmap', 'roadmap evidence check', 'gap analysis on our roadmap'. Produces an evidence board: per-item customer evidence with links to every quote, plus the demand themes no roadmap item covers. It presents evidence and context rather than scoring items or recommending what to build or cut.",
+        "metadata": {
+          "display_order": 30,
+          "title": "Roadmap Check",
+          "personas": [
+            "product",
+            "leadership"
+          ],
+          "image": "card.jpg",
+          "related": [
+            "format-ticket-research"
+          ],
+          "use_case": "Hold your roadmap up against what customers have actually said. Paste a roadmap (or point at a tracker project) and get an evidence board: what customers have said about each item with links to every supporting quote, and the things they keep raising that map to nothing you're building.",
+          "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score items or rank the roadmap. Depth per item is survey-level; use the Ticket Research skill for a deep dive on one item. Quality depends on conversation coverage in Format and on which topics the workspace listens for; the board tells you when either is the limiting factor.",
+          "prompts": [
+            "Using the Format MCP and the format-roadmap-check skill, check this roadmap: [paste roadmap items]",
+            "Are customers actually asking for what's on our Q3 roadmap? Build me the evidence board as an HTML page.",
+            "What are customers raising that maps to nothing on this roadmap? [paste roadmap]"
+          ]
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-roadmap-check/SKILL.md",
+          "sha256": "d1c1aa4210a5e56464c49d2d170c42563046f4955b19de294176e735acb7832f",
+          "bytes": 32626,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-roadmap-check/card.jpg",
+          "sha256": "effba371f05a27c6fdc77742f0d74fc301430674c9e42579a106a30075457a67",
+          "bytes": 526699,
+          "mediaType": "image/jpeg"
+        }
       ]
     },
     {
@@ -101,6 +217,44 @@
       "files": [
         "skills/format-account-briefing/SKILL.md",
         "skills/format-account-briefing/references/example-phrases.md"
+      ],
+      "frontmatter": {
+        "name": "format-account-briefing",
+        "description": "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the format-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides a list of accounts and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence, does not prescribe actions.",
+        "metadata": {
+          "display_order": 40,
+          "title": "CS Account Briefing",
+          "personas": [
+            "customer-success"
+          ],
+          "image": "card.jpg",
+          "use_case": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
+          "limitations": "You provide the account list and time window. Surfaces evidence only — it doesn't prescribe actions. Quality depends on how much call/email coverage those accounts have in Format.",
+          "prompts": [
+            "Using the CS account briefing skill, scan Acme, Globex and Initech over the last 30 days.",
+            "Prep me for the QBR with Acme — what's been said across their conversations lately?"
+          ]
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-account-briefing/SKILL.md",
+          "sha256": "91605da44288f79469a2c0db57f083a9edb34d9647dc335c61809b96a4405550",
+          "bytes": 15034,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-account-briefing/card.jpg",
+          "sha256": "fa18dd38be0cbfd81309761e676e7d5f332853b896b54a3595c6a0266f47fe32",
+          "bytes": 452236,
+          "mediaType": "image/jpeg"
+        },
+        {
+          "path": "skills/format-account-briefing/references/example-phrases.md",
+          "sha256": "f369dbb8b6c22c1469a5f95d5256ef06ba29f30d45cd6709f96dd1290915b229",
+          "bytes": 2070,
+          "mediaType": "text/markdown"
+        }
       ]
     },
     {
@@ -123,6 +277,50 @@
         "skills/format-case-study/SKILL.md",
         "skills/format-case-study/references/repurposing-guide.md",
         "skills/format-case-study/references/writing-guide.md"
+      ],
+      "frontmatter": {
+        "name": "format-case-study",
+        "description": "Find your best case study candidates and draft case studies from customer conversation data — before you ever schedule an interview. Use when the user wants to write a case study, customer story, or success story. Also triggers on \"case study,\" \"customer story,\" \"who should we feature,\" \"which customer has a good story,\" \"case study draft,\" \"case study candidate,\" \"social proof,\" \"write up a customer win,\" \"we need case studies,\" \"I don't know where to start with case studies,\" or \"turn customer data into a case study.\" This skill uses customer intelligence data (calls, emails, support tickets, CRM) to identify which customers have the strongest stories and then produces a working draft based on what they've already said — so you walk into the interview with a near-finished piece instead of a blank page. Works best with a customer intelligence platform like Format (MCP server) but also works manually with compiled transcripts and recordings.",
+        "metadata": {
+          "display_order": 50,
+          "title": "B2B Case Study",
+          "personas": [
+            "marketing"
+          ],
+          "image": "card.jpg",
+          "use_case": "Find your strongest case-study candidates from customer conversation data and walk into the interview with a near-finished draft — built from what customers have already said, instead of starting from a blank page.",
+          "limitations": "Drafts are grounded in existing conversations — final quotes still need customer sign-off. Works best with rich call/transcript coverage for the featured account.",
+          "prompts": [
+            "Who are our strongest case-study candidates right now?",
+            "Draft a case study for Acme from what they've already said."
+          ]
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-case-study/SKILL.md",
+          "sha256": "7796c828e18aa4efdcf40582190e883aa0460cc17ce8f0b4ea5d470bdae710e9",
+          "bytes": 12805,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-case-study/card.jpg",
+          "sha256": "fc5a301a35b50e675935b32f2ccd93c958d78ea2994ce0ea5a4df62536762930",
+          "bytes": 255968,
+          "mediaType": "image/jpeg"
+        },
+        {
+          "path": "skills/format-case-study/references/repurposing-guide.md",
+          "sha256": "5f4dba0869730c8be4a6284b55cf10c05721017a9db771aa5a921d399602637c",
+          "bytes": 3265,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-case-study/references/writing-guide.md",
+          "sha256": "eed3fef8a33d07bbd30fb86c71acc8ce275f35c63611d39da8166a8ac81ee2c8",
+          "bytes": 3780,
+          "mediaType": "text/markdown"
+        }
       ]
     },
     {
@@ -145,6 +343,40 @@
       "bodyPath": "skills/format-icp-definition/SKILL.md",
       "files": [
         "skills/format-icp-definition/SKILL.md"
+      ],
+      "frontmatter": {
+        "name": "format-icp-definition",
+        "description": "Use when defining, refining, or analysing the Ideal Customer Profile (ICP), identifying best-fit buyers, extracting buyer personas, or building target account criteria from customer conversation data. Trigger phrases include \"define our ICP\", \"build an ICP\", \"who are our best customers\", \"who should we target\", \"build a persona\", \"what do our best buyers have in common\", \"win/loss from calls\", and \"build a target account list from customer data\". This skill uses the Format MCP to produce an ICP snapshot, prospect list criteria, persona breakdowns, in-market language cues, and a competitive landscape — a cross-functional document for sales, marketing, paid ads, product, and leadership. Runs end-to-end silently without asking the user to configure anything upfront. Does not produce cold email copy, ad creative, or landing page copy — those are downstream skills.",
+        "metadata": {
+          "display_order": 60,
+          "title": "Define Your ICP",
+          "personas": [
+            "marketing",
+            "sales",
+            "leadership"
+          ],
+          "image": "card.jpg",
+          "use_case": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from.",
+          "limitations": "Needs a meaningful base of conversations in Format to be representative. Doesn't produce cold-email copy, ad creative, or landing pages — those are downstream skills.",
+          "prompts": [
+            "Define our ICP from the last 6 months of customer conversations.",
+            "What do our best customers have in common?"
+          ]
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-icp-definition/SKILL.md",
+          "sha256": "d8db792c483950e6ccf8ecbcb9718f27cc0ff13cb29a2fdccba648dcb84a3887",
+          "bytes": 26992,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-icp-definition/card.jpg",
+          "sha256": "7497d6f1fe34968ba5b073f75a7b2d332242c461e8b18db7e982a0f00c95701b",
+          "bytes": 668003,
+          "mediaType": "image/jpeg"
+        }
       ]
     },
     {
@@ -167,6 +399,41 @@
       "bodyPath": "skills/format-ads-copy/SKILL.md",
       "files": [
         "skills/format-ads-copy/SKILL.md"
+      ],
+      "frontmatter": {
+        "name": "format-ads-copy",
+        "description": "Use when drafting, iterating, or refreshing paid ad copy for LinkedIn Ads, Google Ads, or LinkedIn Lead Gen Forms — grounded in real customer language from Format. Trigger phrases include \"write LinkedIn ads\", \"Google ad copy\", \"RSA headlines\", \"Lead Gen Form copy\", \"paid ad variations\", \"refresh our LinkedIn ads\", \"new ad angles\", \"ad creative from customer quotes\", \"ads that sound like our customers\", \"iterate on these ads\", or \"performance is dropping, give me new ads\". This skill uses the Format MCP to source in-market language, pain points, and outcome language directly from customer conversations — then produces spec-compliant ad copy for LinkedIn Single Image Ads, Google RSAs, and LinkedIn Lead Gen Forms. Runs end-to-end in one response. Not for campaign strategy, targeting, budgets, landing pages, or ad visuals — those are separate jobs.",
+        "metadata": {
+          "display_order": 70,
+          "title": "Paid Ads Copy",
+          "personas": [
+            "marketing"
+          ],
+          "image": "card.jpg",
+          "related": [
+            "format-company-context"
+          ],
+          "use_case": "Ship ad copy that sounds like your customers because it is built from them: 3–5 angles each anchored to a verbatim quote, spec-compliant copy for LinkedIn, Google RSA, and Lead Gen Forms, with character counts validated and CSV blocks ready to upload.",
+          "limitations": "Copy only — no visuals, targeting, budgets, or landing pages. Needs roughly 30+ relevant conversations in Format for real language signal. Customer names never appear in creative without sign-off.",
+          "prompts": [
+            "Write LinkedIn ads, Google RSAs and Lead Gen Form copy that sounds like our customers.",
+            "Our ad performance is dropping — give me new angles from real customer language."
+          ]
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-ads-copy/SKILL.md",
+          "sha256": "e80ec6ed8c65f6b420cd7c5bc0bd56ebcdf7bc0aeb2d8989f2bdada5ddf421f9",
+          "bytes": 15936,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-ads-copy/card.jpg",
+          "sha256": "d2124a8c8ab94b93d373893df7d5de2b08fab732caf8b8d4cc4c7d64336568e6",
+          "bytes": 205605,
+          "mediaType": "image/jpeg"
+        }
       ]
     },
     {
@@ -190,6 +457,42 @@
       "bodyPath": "skills/format-sales-enablement/SKILL.md",
       "files": [
         "skills/format-sales-enablement/SKILL.md"
+      ],
+      "frontmatter": {
+        "name": "format-sales-enablement",
+        "description": "Use when a sales team wants collateral built from what their customers and prospects have actually said — pitch decks, one-pagers, objection-handling docs, demo scripts, talk tracks, battlecards, buyer-persona cards, or deal-specific value framing. Trigger phrases include 'sales deck', 'pitch deck', 'one-pager', 'leave-behind', 'objection handling', 'demo script', 'talk track', 'sales playbook', 'buyer persona card', 'battlecard', 'help my sales team', 'sales collateral', or 'what should I give my reps'. The skill asks which asset you want (if you haven't said), then uses the Format MCP to ground it in verbatim customer language, real objections and the responses that worked, and quote-backed proof points. Not for marketing website copy, cold email, or paid ads — those are different jobs.",
+        "metadata": {
+          "display_order": 80,
+          "title": "Sales Enablement",
+          "personas": [
+            "sales"
+          ],
+          "image": "card.jpg",
+          "related": [
+            "format-company-context"
+          ],
+          "use_case": "Sales collateral reps actually trust because it's built from your own deals: pick the asset — deck, one-pager, objection doc, demo script, battlecard, persona card, or ROI framing — and get it grounded in verbatim customer language and the objections and proof points your conversations actually contain.",
+          "limitations": "Grounded in conversation data — claims it can't support from customer language are flagged for you to fill, not invented. Pricing and customer financials heard on calls are internal evidence, never published figures. Not for website copy, cold email, or paid ads.",
+          "prompts": [
+            "Help my sales team — what collateral can you build from our conversations?",
+            "Build an objection-handling doc from what prospects actually say.",
+            "Draft a one-pager and a demo script grounded in our customer calls."
+          ]
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-sales-enablement/SKILL.md",
+          "sha256": "6cfcdfb6d0d3e3b2bcde22d734a8374c263089186730f7fe6689967862c03068",
+          "bytes": 11613,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-sales-enablement/card.jpg",
+          "sha256": "05bd6539f849df1b8ccd4c6b598d0d0162663bac0cf642ba95f812fab55d748c",
+          "bytes": 224295,
+          "mediaType": "image/jpeg"
+        }
       ]
     },
     {
@@ -213,6 +516,42 @@
       "bodyPath": "skills/format-blog-post/SKILL.md",
       "files": [
         "skills/format-blog-post/SKILL.md"
+      ],
+      "frontmatter": {
+        "name": "format-blog-post",
+        "description": "Use when writing B2B blog posts that rank in traditional search AND get cited by AI answer engines (ChatGPT, Perplexity, Google AI Overviews, Claude) — sourcing the original evidence from real customer conversations via Format MCP. Trigger phrases include 'write a blog post', 'draft a blog article', 'SEO blog post', 'AEO blog post', 'AI-optimized post', 'content brief', 'write about [topic]', or 'blog post from our customer data'. The skill proposes a post type and angle grounded in what the workspace's customers actually discuss, checks them with the user once, then writes an answer-first, extractable post whose citable substance — real quotes, honest counts, switching stories — comes from Format. Produces the post draft, the content brief, and an internal evidence appendix. Not for landing pages, ad copy, or case studies — different jobs.",
+        "metadata": {
+          "display_order": 90,
+          "title": "AEO/SEO Blog Post",
+          "personas": [
+            "marketing"
+          ],
+          "image": "card.jpg",
+          "related": [
+            "format-company-context",
+            "format-case-study"
+          ],
+          "use_case": "Blog posts that AI answer engines cite because they contain something no model can fabricate: your customers' real words and honestly counted data. One checkpoint to agree the angle, then a publish-ready draft — answer-first structure, extractable sections, evidence appendix.",
+          "limitations": "The draft anonymizes customers to role/segment unless they're already publicly cited — final naming needs sign-off. Citation outcomes depend on distribution and domain authority, not the draft alone. Needs enough conversation coverage on the chosen topic to be evidence-backed.",
+          "prompts": [
+            "Write a comparison-style blog post grounded in what real users say about us vs the tools they came from.",
+            "Draft an AEO-optimized post about [topic] using our customer conversations as the evidence."
+          ]
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-blog-post/SKILL.md",
+          "sha256": "8c4fc721867569ecc669b408bae2946a69e2a3fcc4a1f205853b6fb6fe8bc80c",
+          "bytes": 12298,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-blog-post/card.jpg",
+          "sha256": "9e9421d9952cd09b4072302d7e0ea35baa341bbdf8b3df3cf063910e389caa07",
+          "bytes": 140957,
+          "mediaType": "image/jpeg"
+        }
       ]
     },
     {
@@ -236,6 +575,56 @@
         "skills/format-sales-call-coaching/references/coaching-frames.md",
         "skills/format-sales-call-coaching/references/rubric.md",
         "skills/format-sales-call-coaching/references/scoring-example.md"
+      ],
+      "frontmatter": {
+        "name": "format-sales-call-coaching",
+        "description": "Use when assessing the selling competency of one sales rep from their real call recordings in Format. Triggers include: 'coach [rep]', 'score [rep]'s calls', 'how is [rep] selling', 'competency assessment for our AEs', 'sales coaching', 'review call quality', 'where is [rep] losing deals', or 'rep scorecard'. The skill requires a single named rep and a time window — it stops and asks if either is missing — then reads every real conversation that rep had in the window via the Format MCP, classifies each by reachability and motion, scores the genuine prospecting conversations against a behavioural rubric, and produces a competency assessment with verbatim evidence and one prioritised coaching focus. Assessment only — it surfaces evidence and a single priority; it does not write call scripts or run the coaching session.",
+        "metadata": {
+          "display_order": 100,
+          "title": "Sales Call Coaching",
+          "personas": [
+            "sales"
+          ],
+          "image": "card.jpg",
+          "use_case": "A rep scorecard built from every real call they ran in the window — not a sampled highlight reel: each conversation classified, prospecting calls scored dimension by dimension with verbatim evidence, and exactly one coaching priority, framed Situation–Behaviour–Impact.",
+          "limitations": "One named rep per run, never a team; both rep and window are asked for, never defaulted. Reads recorded calls only — it can't see emails, in-person meetings, or deals that progressed off-call. The rubric is calibrated for short outbound prospecting; the skill detects when the rep runs a different motion and says so.",
+          "prompts": [
+            "Using the format-sales-call-coaching skill, assess [rep name] over the last 14 days.",
+            "Where is [rep name] losing deals? Score their calls since May 1."
+          ]
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-sales-call-coaching/SKILL.md",
+          "sha256": "419ff76725da288b85d126a855e0999f11c8c6447f6a59b1240d693315ac009a",
+          "bytes": 14741,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-sales-call-coaching/card.jpg",
+          "sha256": "a02dd0282690b99d92182ca32ebc597d84a295f0e2e6439615b8fd45d2b012ab",
+          "bytes": 191930,
+          "mediaType": "image/jpeg"
+        },
+        {
+          "path": "skills/format-sales-call-coaching/references/coaching-frames.md",
+          "sha256": "d3adda4a2c93294bf54594e9c4a671d300f3e8c6227e46e7b7109f705a43671b",
+          "bytes": 3031,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-sales-call-coaching/references/rubric.md",
+          "sha256": "e8a70cee1aa515e56a737173b89851a06fd9c89d51cf850e1f3483aaa85975f2",
+          "bytes": 6362,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-sales-call-coaching/references/scoring-example.md",
+          "sha256": "c1947a6e6c10c95bb374e92e3fe7f3702d5f841d8d1a39f4f14d564aa4c98279",
+          "bytes": 5702,
+          "mediaType": "text/markdown"
+        }
       ]
     }
   ]

@@ -240,7 +240,7 @@ After completing the analysis:
 1. Save the full document as `[company-slug]-icp.md` using your environment's file mechanism (on claude.ai: write to the outputs directory and present the file; in Claude Code/Cursor: write it to the working directory).
 2. Use the same content for the inline chat response — do not abbreviate either version.
 
-The company slug should be lowercase with hyphens — "Kota" becomes `kota`, "Acme Corp" becomes `acme-corp`.
+The company slug should be lowercase with hyphens — "Northwind" becomes `northwind`, "Acme Corp" becomes `acme-corp`.
 
 ### Document structure
 
@@ -319,7 +319,7 @@ No framework jargon. No bullet points inside the paragraph. This reads like a st
 **Why this ICP, not another (2–3 sentences):**
 
 Name the *overlap*, not just exclusions. Example structure:
-- "Kota wins when the buyer has pain on both sides — broker AND platform. Pure-platform buyers (enterprise) won't switch for UX alone. Pure-broker buyers (under 30 employees, single country) don't value the platform and balk at cost. The ICP is the overlap."
+- "Acme wins when the buyer has pain on both sides — dispatch AND invoicing. Pure-dispatch buyers (large fleets) won't switch for scheduling alone. Pure-invoicing buyers (under 10 technicians) don't value the routing and balk at cost. The ICP is the overlap."
 
 This framing is stronger than "we exclude X, Y, Z" because it explains *why* the ICP is narrow, not just that it is.
 
@@ -417,14 +417,14 @@ Rename the section **"In-market language bank"** — that framing reads better t
 
 | Signal phrase | What it tells you | Who uses it |
 |---|---|---|
-| "[Quote A]" / "[Quote B variation]" / "[Quote C variation]" | [What this pattern signals — specific, not abstract] | [Persona + 1–3 named examples, e.g. "People Ops champion (Ghena at OakNorth, Lorraine at Volta)"] |
+| "[Quote A]" / "[Quote B variation]" / "[Quote C variation]" | [What this pattern signals — specific, not abstract] | [Persona + 1–3 named examples, e.g. "Ops champion (Dana at [Account], Priya at [Account])"] |
 | "[Quote]" / "[variation]" | [signal] | [persona + named examples] |
 
 Three things that make this format work:
 
 1. **Slash-grouped variations in a single row** — instead of one row per quote, group 2–4 variations of the same pattern. This compresses the table and shows the pattern is widespread.
-2. **"Who uses it" column names real people from the data** — not just the persona archetype. "People Ops champion (Ghena at OakNorth)" is more useful than "Sales qualifies."
-3. **"What it tells you" is specific and actionable** — "Displaceable broker relationship — Kota's wedge" is better than "Ready to buy."
+2. **"Who uses it" column names real people from the data** — not just the persona archetype. "Ops champion (Dana at [Account])" is more useful than "Sales qualifies." Use the real names from the workspace in the document you produce; this skill's own examples stay generic on purpose.
+3. **"What it tells you" is specific and actionable** — "Displaceable incumbent relationship — Acme's wedge" is better than "Ready to buy."
 
 ---
 
@@ -434,25 +434,27 @@ Three things that make this format work:
 
 | Competitor / alternative | Where it shows up | How best-fit customers describe it | Displaceable? |
 |---|---|---|---|
-| **[Competitor 1]** | [Frequency + context — e.g. "Mentioned in ~40% of evaluations. Strong UI, strong with UK mid-market, 250+ employee minimum."] | ["Quote 1" / "quote 2" / "quote 3" — slash-separated verbatim patterns] | **[High/Medium/Low]** — [one-line reason + specific condition, e.g. "customers love the interface but hit the integration wall. Kota wins with 'both broker AND platform' pitch."] |
+| **[Competitor 1]** | [Frequency + context — e.g. "Mentioned in ~40% of evaluations. Strong UI, strong with mid-market, 250+ employee minimum."] | ["Quote 1" / "quote 2" / "quote 3" — slash-separated verbatim patterns] | **[High/Medium/Low]** — [one-line reason + specific condition, e.g. "customers love the interface but hit the integration wall. Acme wins with the 'both dispatch AND invoicing' pitch."] |
 | [...] | [...] | [...] | [...] |
 
 Three things to include:
 
-1. **Rows for NAMED competitors** (Thanks Ben, Ben, Benifex, Boost Works, etc.)
-2. **Rows for LEGACY/ENTERPRISE incumbents** (Mercer, Aon, Lockton, etc.) — often the real competition, not the named SaaS alternatives
+1. **Rows for NAMED competitors** — the tools prospects bring up by name in evaluations
+2. **Rows for LEGACY/ENTERPRISE incumbents** — the consultancies or legacy vendors already holding the account; often the real competition, not the named SaaS alternatives
 3. **Rows for NON-OBVIOUS alternatives:**
-   - Adjacent category tools that get confused with the product (e.g. "Reward Gateway / Perkbox / Vivup — Discount/perks platforms, not benefits admin")
-   - Status quo as an explicit row: "Spreadsheets + email + multiple provider portals — the actual incumbent in ~50% of deals"
-   - HRIS-native alternatives that might be perceived as competitors but aren't
+   - Adjacent category tools that get confused with the product (e.g. "route-planning apps — logistics tools, not field-service management")
+   - Status quo as an explicit row: "Spreadsheets + email + separate provider portals — the actual incumbent in roughly half of deals"
+   - Platform-native alternatives that might be perceived as competitors but aren't
+
+Name the real ones from the workspace's own conversations. The categories are the durable part; the names change per company, which is why they aren't listed here.
 
 The Displaceable column should be a paragraph per row, not just "High/Medium/Low." Include:
 - **When it's displaceable** (specific conditions)
 - **When it's not** (specific conditions)
-- **Kota's angle against it** (the specific wedge)
+- **[Company]'s angle against it** (the specific wedge)
 
 Example of a rich Displaceable entry:
-> "**High for mid-market (50–500 employees), Low for large enterprise.** Best wedge: 'we ARE the regulated broker — and we also give you the platform.'"
+> "**High for mid-market (50–500 employees), Low for large enterprise.** Best wedge: 'we ARE the dispatch layer — and we invoice from the same job record.'"
 
 This is more useful than a single word rating because it tells sales exactly when to fight and when to walk away.
 
@@ -482,7 +484,7 @@ One sentence. Do not follow it with a methodology note.
 After the next-steps offer, surface the saved `.md` file (download link or file path, per your environment). Example:
 
 On claude.ai: write the file to the outputs directory and present it so a
-download link renders. In Claude Code or Cursor: write `kota-icp.md` to the
+download link renders. In Claude Code or Cursor: write `northwind-icp.md` to the
 working directory and state the path in one line.
 
 No commentary around the file presentation. The user sees the file, and can

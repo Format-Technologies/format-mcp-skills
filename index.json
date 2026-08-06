@@ -367,8 +367,8 @@
       "resources": [
         {
           "path": "skills/format-icp-definition/SKILL.md",
-          "sha256": "d8db792c483950e6ccf8ecbcb9718f27cc0ff13cb29a2fdccba648dcb84a3887",
-          "bytes": 26992,
+          "sha256": "2b14dd982b2efe5078f16ae9a93414bdb7deee1af42427f467bac608f32d4cf6",
+          "bytes": 27340,
           "mediaType": "text/markdown"
         },
         {

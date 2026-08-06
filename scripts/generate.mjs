@@ -14,7 +14,9 @@ import {
   writeFileSync,
   existsSync,
   mkdirSync,
+  statSync,
 } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join, relative, dirname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import yaml from 'js-yaml';
@@ -58,8 +60,8 @@ function parseFrontmatter(raw, skill) {
   }
 }
 
-/** Every file in the skill dir except the card image — what the install zip contains. */
-function listFiles(dir, imageRepoPath) {
+/** Every file in the skill dir, repo-relative POSIX paths, sorted. */
+function listAllFiles(dir) {
   const out = [];
   const walk = (d) => {
     for (const entry of readdirSync(d, { withFileTypes: true })) {
@@ -71,9 +73,63 @@ function listFiles(dir, imageRepoPath) {
     }
   };
   walk(dir);
+  return out.sort();
+}
+
+/** Every file in the skill dir except the card image — what the install zip contains. */
+function listFiles(dir, imageRepoPath) {
   // Exact-path comparison — a basename match would also drop legitimate
   // nested assets that happen to share the card image's filename.
-  return out.filter((p) => p !== imageRepoPath).sort();
+  return listAllFiles(dir).filter((p) => p !== imageRepoPath);
+}
+
+/**
+ * MIME type per served file, published so the MCP server never has to guess.
+ * Extend when a skill gains a new asset kind.
+ */
+function mediaTypeFor(path) {
+  const ext = path.slice(path.lastIndexOf('.')).toLowerCase();
+  switch (ext) {
+    case '.md':
+      return 'text/markdown';
+    case '.txt':
+      return 'text/plain';
+    case '.jpg':
+    case '.jpeg':
+      return 'image/jpeg';
+    case '.png':
+      return 'image/png';
+    default:
+      return 'application/octet-stream';
+  }
+}
+
+/**
+ * The skills-over-MCP extension serves `frontmatter` verbatim and hosts
+ * compare it field-by-field against the SKILL.md they fetch, so every value
+ * must survive a YAML→JSON→YAML round trip. Reject anything JSON can't
+ * represent losslessly (js-yaml turns ISO timestamps into Date, anchors can
+ * yield shared refs, etc.).
+ */
+function assertJsonSafe(value, skill, path = 'frontmatter') {
+  if (value === null) return;
+  const t = typeof value;
+  if (t === 'string' || t === 'boolean') return;
+  if (t === 'number') {
+    if (!Number.isFinite(value)) fail(skill, `${path} is a non-finite number`);
+    return;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((v, i) => assertJsonSafe(v, skill, `${path}[${i}]`));
+    return;
+  }
+  if (t === 'object' && Object.getPrototypeOf(value) === Object.prototype) {
+    for (const [k, v] of Object.entries(value)) {
+      assertJsonSafe(v, skill, `${path}.${k}`);
+    }
+    return;
+  }
+  fail(skill, `${path} holds a value JSON cannot represent (${value?.constructor?.name ?? t})`);
 }
 
 function loadSkill(id) {
@@ -85,7 +141,11 @@ function loadSkill(id) {
   }
   const fm = parseFrontmatter(readFileSync(skillMd, 'utf8'), id);
   if (!fm) return null;
+  assertJsonSafe(fm, id);
 
+  // The skills-over-MCP extension (SEP-2640) also depends on this check: the
+  // final segment of every skill:// URI is the directory name, and the spec
+  // requires it to equal frontmatter.name.
   if (fm.name !== id) fail(id, `frontmatter name "${fm.name}" != directory name`);
   if (!KEBAB.test(id)) fail(id, 'directory name must be kebab-case');
   if (RESERVED_IDS.includes(id)) {
@@ -147,6 +207,19 @@ function loadSkill(id) {
     related: meta.related ?? [],
     bodyPath: `skills/${id}/SKILL.md`,
     files: listFiles(dir, `skills/${id}/${meta.image}`),
+    // Skills-over-MCP extension (additive under the frozen v1 contract):
+    // the parsed frontmatter, verbatim — hosts verify it field-by-field
+    // against the SKILL.md they fetch — and a digest per file so served
+    // bytes are provably the same commit this manifest describes. Unlike
+    // files[] (the install-zip contract), resources[] includes the card
+    // image: the extension enumerates every file in the skill directory.
+    frontmatter: fm,
+    resources: listAllFiles(dir).map((p) => ({
+      path: p,
+      sha256: createHash('sha256').update(readFileSync(join(ROOT, p))).digest('hex'),
+      bytes: statSync(join(ROOT, p)).size,
+      mediaType: mediaTypeFor(p),
+    })),
     displayOrder: meta.display_order,
   };
 }

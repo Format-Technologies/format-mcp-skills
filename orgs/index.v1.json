@@ -131,7 +131,7 @@
         {
           "id": "cube-account-briefing",
           "title": "CS Account Briefing for Cube",
-          "description": "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the cube-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides a list of accounts and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence, does not prescribe actions.",
+          "description": "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the cube-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides their book — an account-owner email or an account list — and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence by default; ask explicitly for recommendations to add them, evidence attached.",
           "personas": [
             "customer-success"
           ],
@@ -140,6 +140,8 @@
           "limitations": "You provide the account list and time window. Surfaces evidence only — it doesn't prescribe actions. Quality depends on how much call/email coverage those accounts have in Format.",
           "prompts": [
             "Using the CS account briefing skill, scan Acme, Globex and Initech over the last 30 days.",
+            "Using the cube-account-briefing skill, brief the book of jane@company.com over the last 14 days.",
+            "Brief the book of jane@company.com over the last 14 days, with recommended actions.",
             "Prep me for the QBR with Acme — what's been said across their conversations lately?"
           ],
           "related": [],
@@ -151,7 +153,7 @@
           ],
           "frontmatter": {
             "name": "cube-account-briefing",
-            "description": "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the cube-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides a list of accounts and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence, does not prescribe actions.",
+            "description": "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the cube-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides their book — an account-owner email or an account list — and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence by default; ask explicitly for recommendations to add them, evidence attached.",
             "metadata": {
               "display_order": 40,
               "overrides": "format-account-briefing",
@@ -164,6 +166,8 @@
               "limitations": "You provide the account list and time window. Surfaces evidence only — it doesn't prescribe actions. Quality depends on how much call/email coverage those accounts have in Format.",
               "prompts": [
                 "Using the CS account briefing skill, scan Acme, Globex and Initech over the last 30 days.",
+                "Using the cube-account-briefing skill, brief the book of jane@company.com over the last 14 days.",
+                "Brief the book of jane@company.com over the last 14 days, with recommended actions.",
                 "Prep me for the QBR with Acme — what's been said across their conversations lately?"
               ]
             }
@@ -171,8 +175,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-account-briefing/SKILL.md",
-              "sha256": "e99aabc001cb460175f5ad56e00dc7792ab224d1b50bed1f761bdd4b62b61c84",
-              "bytes": 15070,
+              "sha256": "45c04efed12722b3bdb182ce4e06692ccefbee298a8f8c23c005e189274ad86a",
+              "bytes": 19629,
               "mediaType": "text/markdown"
             },
             {

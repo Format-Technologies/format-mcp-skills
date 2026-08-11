@@ -42,7 +42,7 @@ Do NOT trigger this skill for scans across the entire Format workspace without a
 
 ## Required inputs
 
-1. **Whose book** — either an **account-owner email**, or an explicit **account list** (names of the customer companies to scan). Cube runs this brief per account owner, each owner covering their own book (typically five accounts or fewer): given an owner email, the skill scopes every pull to that owner's accounts through the workspace's `Account Owner Email` attribute — no pasted list needed. An explicit account list still works, and the two combine — the list is what lets silent accounts be checked (see the silent-accounts note in Step 6).
+1. **Whose book** — either an **account-owner email**, or an explicit **account list** (names of the customer companies to scan). Cube runs this brief per account owner, each owner covering their own book: given an owner email, the skill scopes every pull to that owner's accounts through the workspace's `Account Owner Email` attribute — no pasted list needed. The owner filter can surface far more accounts than a weekly brief covers — when it returns more than ~10 active accounts, say how many it found and ask whether to brief the full book or a focus subset before rendering. An explicit account list still works, and the two combine — the list is what lets silent accounts be checked (see the silent-accounts note in Step 6).
 2. **Time window** — the date range to pull signals from (e.g. "last 14 days", "since April 1")
 
 If the book (owner email or account list) or the time window is missing, **prompt the user before proceeding.** Do not guess or default. Sample prompt:
@@ -124,7 +124,7 @@ Each row comes back ready to cite: `text` (what the person said), `person` and `
 
 ### Step 5: Categorize signals
 
-For each insight, judge which of the 6 categories it belongs to. A single insight can belong to multiple categories (e.g. a churn-risk remark that also mentions a competitor = Risk + Growth flag). Be generous with category assignment but only include an insight if there's clear signal — do not pad.
+For each insight, judge which of the 6 categories it belongs to. A single insight can belong to multiple categories (e.g. a churn-risk remark that also mentions a competitor = Risk + Growth flag). A product blocker severe enough to threaten the relationship — data loss, a failure blocking a close — belongs in Risk & churn drivers as well as Product & process blockers, so it reaches the red-flag rollup. Be generous with category assignment but only include an insight if there's clear signal — do not pad.
 
 For ambiguous insights that don't cleanly fit any category, drop them rather than force-fit. The brief is more valuable if it's tight.
 
@@ -159,7 +159,7 @@ Output structure (markdown, in chat unless user requested file save):
 **Insights captured (distinct):** [N] — some appear in multiple categories below.
 
 **Risk & churn drivers**
-- ⛔/⚠️/▫️ "[verbatim, exactly as the insight's `text` reads]" — [speaker, role], [date], [shareUrl]
+- ⛔/⚠️/▫️ "[verbatim, exactly as the insight's `text` reads]" — [speaker (+role where known)], [date], [shareUrl]
 - ... [tier markers from Step 5; bullets ordered tier-first, then value at stake]
 
 **Product & process blockers**
@@ -202,7 +202,7 @@ By default this brief flags and never prescribes. When the user explicitly asks 
 - **Flag, do not prescribe.** Never recommend a CSM action ("you should follow up with X", "send an education email", "consider asking about Y"). Surface evidence; the CSM decides what to do — unless the user explicitly asked for recommendations (see Prescriptive mode). "Open threads in the data" is evidence framing — it must describe what's unresolved in the conversations, never instruct the CSM what to do about it.
 - **Severity describes the evidence, not the response.** Tiers come from the statement's commitment, its scope of consequence, and the value at stake — never attach actions, owners, or response deadlines to them.
 - **Verbatim only — the insight's own `text`.** Do not paraphrase. Format's extraction layer has already selected the span from the underlying transcript; the skill surfaces that text and does not re-cut it from full transcripts.
-- **Always cite source.** Every signal must have speaker + role + date + the insight's `shareUrl`.
+- **Always cite source.** Every signal must have speaker (+ role where the data provides one) + date + the insight's `shareUrl`.
 - **Never fabricate signals.** If an account has no data, say so. Do not invent words or sentiment.
 - **Hedge inferred attribution.** `person.source` / `company.source` is `linked` when Format knows the customer and `inferred` when the extraction only read a name out of the conversation. An inferred name is a good lead, not a confirmed speaker — say "someone at [company]" rather than asserting a person.
 - **Never default the time window.** Always ask.

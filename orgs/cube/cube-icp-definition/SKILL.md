@@ -74,7 +74,7 @@ If Format MCP isn't connected yet:
 
 ## The run — how the skill executes
 
-Tight sequence. Target: 10–12 tool calls total. Broad topic-first queries, not over-filtered semantic queries.
+Tight sequence. Target: ~12 tool calls total. Broad topic-first queries, not over-filtered semantic queries.
 
 ### Step 1: Orient (1 call)
 
@@ -136,7 +136,7 @@ has no CRM attributes mapped (empty `attributes` arrays), don't fabricate
 firmographics — infer what you can from the conversation content pulled in
 Step 4 and say so in the document.
 
-### Step 4: Core content extraction (4–5 calls)
+### Step 4: Core content extraction (6–7 calls)
 
 Pull the substance for ICP snapshot, personas, in-market signals, competitive landscape with broad queries against the Best cohort. Do not run separate framework passes.
 
@@ -176,13 +176,7 @@ search_insights(
 )
 ```
 
-**Disqualifier content** (feeds Not-Fit account list):
-```
-search_insights(
-  topicNames: [worst-cohort topic],
-  limit: 40
-)
-```
+**Disqualifier content** (feeds the Not-Fit account list): reuse the Step 2 worst-cohort pull — it is the same query; don't re-run it.
 
 **In-market language sweep** (feeds the language bank — always run this one):
 ```
@@ -212,7 +206,7 @@ Where Format has gathered these conversations into insight groups, each group is
 
 Every insight sits under exactly one topic, so a topic-scoped pull only ever returns the topics you thought to name — and pre-purchase language is often filed under one you didn't. One unscoped semantic sweep alongside the topic pulls keeps the language bank from reading only what you guessed at.
 
-6–7 calls. Combined with orientation and cohort-building: 9–12 total — pagination on large company lists may add a call or two; spend them rather than truncating the cohort.
+6–7 calls. Combined with orientation, cohort-building and company resolution: 11–12 total — pagination on large registers adds more; spend the extra calls rather than truncating the cohort.
 
 ### Step 5: Synthesize
 

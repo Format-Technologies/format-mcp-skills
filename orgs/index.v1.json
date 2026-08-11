@@ -53,8 +53,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-ticket-research/SKILL.md",
-              "sha256": "6e79037cddb96d75e68735e69322791325c7fd8cdd3883eb7d417d697be4ab69",
-              "bytes": 24552,
+              "sha256": "c498ce1cf7b51968fd31833e03ad96cbdf8b3956abbe891e2fee150ff854caaf",
+              "bytes": 24708,
               "mediaType": "text/markdown"
             },
             {
@@ -116,8 +116,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-roadmap-check/SKILL.md",
-              "sha256": "328f876c0243dc4053d5c1e8355e57e68cd93256c3035d7d752b39ead3d0fc26",
-              "bytes": 34016,
+              "sha256": "4aa8c7cdfa9c9451ed6bebf2d14a8cabbced02afecfe0ace1e0a3739963882a3",
+              "bytes": 34663,
               "mediaType": "text/markdown"
             },
             {
@@ -175,8 +175,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-account-briefing/SKILL.md",
-              "sha256": "45c04efed12722b3bdb182ce4e06692ccefbee298a8f8c23c005e189274ad86a",
-              "bytes": 19629,
+              "sha256": "01675d12270e8c9253186106c68a01be7be5ee44f2de00d3305424108f8dde31",
+              "bytes": 20073,
               "mediaType": "text/markdown"
             },
             {
@@ -239,8 +239,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-icp-definition/SKILL.md",
-              "sha256": "e5bd657c6ea3dafd44ee2ada9d85c43e4b7d68707be1ca531936c5b318558db0",
-              "bytes": 29663,
+              "sha256": "1c0cd905860e555013969bcbec2bcf41f4cad58e31f9148d6934283cc4f83b13",
+              "bytes": 29682,
               "mediaType": "text/markdown"
             },
             {
@@ -296,8 +296,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-sales-call-coaching/SKILL.md",
-              "sha256": "e389049228dfd444ba48f4ceecdb520bce22035ea3c21702e62ad0d4ac7ef6bd",
-              "bytes": 15963,
+              "sha256": "3606dffae5c3e47f16ec0d080925a493ddbc7f2ac15b7434cffc972389e5e977",
+              "bytes": 16129,
               "mediaType": "text/markdown"
             },
             {

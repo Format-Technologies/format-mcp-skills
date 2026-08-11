@@ -36,6 +36,8 @@ Given a roadmap — a pasted list of items, a document, or a project/epic fetche
 
 It presents evidence and the context needed to weigh it, and deliberately stops short of scoring items, grading demand, ranking the roadmap, or recommending building or cutting anything — whether the evidence is compelling depends on things only the reader can judge: capture quality, how much customers discuss this area in general, strategy, and what else competes for the team's time. The board's job is to make the evidence so legible that the reader's own conclusion is easy.
 
+**The number to lead with, everywhere on the board, is recurrence: how many distinct customers each need recurs across.** That count is the one thing a team can't reliably assemble by hand — hand counts only see the deals someone deep-read, so a need logged at two customers can be visible at fourteen in the conversations. It opens the stage-setting paragraph, leads each item's row, and ranks the unbuilt-demand list, never trailing as a supporting detail. Recurrence is still a fact, not a grade: presenting it first is presentation of what's countable, and the conclusions stay the reader's.
+
 ## When to use it
 
 - Roadmap or quarter planning: "is what we've planned grounded in what customers say?"
@@ -126,7 +128,7 @@ For each customer-facing item, run a compact version of the iterative research l
 2. **Learn the language:** extract how customers actually phrase this need from the first round's hits, re-search with the learned vocabulary, and call `find_similar_insights({ insightId })` on strong hits to reach insights that belong near them — through a shared insight group where the workspace is clustered, by wording where it isn't. At survey depth, a round or two past the initial poke is usually enough — stop when a round adds nothing new.
 3. **Adjudicate strictly.** Semantic similarity is not demand. Bucket every candidate: **direct ask** (explicitly requests the capability), **implied need** (describes pain the item would resolve), **adjacent** (same area, different need — discard), **counter-evidence** (wants the opposite, or describes the item's approach as a problem — keep, shown separately). Judge the words themselves; Format publishes no quality verdict on an insight, and there is none to defer to.
 4. **Flag certainty.** Mark each accepted insight **clear** or **needs context**. For needs-context insights, `get_insight({ insightId })` is the cheap first move — it returns the same insight with its `context` (the extraction's summary of the surrounding conversation), the `groups` it belongs to, and `followUp` (what was said next). When that still doesn't settle it, fetch the whole conversation with `get_record({ recordId })` and read the surrounding exchange — then confirm or discard. At survey depth, deep-dive only where the resolution would change that item's picture. Anything still ambiguous is shown as ambiguous — promoting it silently overstates the evidence.
-5. **Quantify locally — and count moments, not rows.** The accepted insights carry `company`, `person`, `record` and `timestamp` — compute distinct companies, the date spread, and the latest mention from what's already in hand rather than issuing more queries. Three corrections matter for honest numbers: **(a)** Format extracts insights per topic, so one customer statement can exist as several near-identical rows — **dedupe on `record.id`**: insights sharing a record that restate the same ask are one mention, and a record counts more than once only when it genuinely contains distinct asks (different speakers or different needs in the same conversation). **(b)** Company attribution can be partial — `company.source` is `linked` when Format knows the customer and `inferred` when the extraction only read a name out of the conversation, and an inferred one has a `null` id and can carry spelling variants — so count companies by normalized name, and disclose how much of the item's evidence is unattributed or inferred when it's material. **(c)** When the workspace distinguishes prospects from customers and the run is unscoped, count them separately — "6 companies" where five are early-stage prospects is a materially different fact than six paying customers, and the board should say which it is. And where an insight group backs an item, its `customerCount` ranks the item against its peers but must never be added to another group's: nested themes count the same customer more than once.
+5. **Quantify locally — and count moments, not rows.** The accepted insights carry `company`, `person`, `record` and `timestamp` — compute distinct companies, the date spread, and the latest mention from what's already in hand rather than issuing more queries. Three corrections matter for honest numbers: **(a)** Format extracts insights per topic, so one customer statement can exist as several near-identical rows — **dedupe on `record.id`**: insights sharing a record that restate the same ask are one mention, and a record counts more than once only when it genuinely contains distinct asks (different speakers or different needs in the same conversation). **(b)** Company attribution can be partial — `company.source` is `linked` when Format knows the customer and `inferred` when the extraction only read a name out of the conversation, and an inferred one has a `null` id and can carry spelling variants — so count companies by normalized name, and disclose how much of the item's evidence is unattributed or inferred when it's material. **(c)** When the workspace distinguishes prospects from customers and the run is unscoped, count them separately — "6 companies" where five are early-stage prospects is a materially different fact than six paying customers, and the board should say which it is. And where an insight group backs an item, its `customerCount` ranks the item against its peers but must never be added to another group's: nested themes count the same customer more than once. **(d)** Where companies are linked, resolve each distinct one once with `get_company({ companyId })` and carry the deal-relevant mapped attributes — deal value, opportunity stage and close date, account ARR, renewal date, account type — into that item's summary, so they appear with the evidence below. Where nothing is mapped or the company is `inferred`, show the evidence unannotated rather than guessing.
 
 **When an item comes up empty,** name the most likely cause — they mean opposite things:
 
@@ -140,7 +142,7 @@ For each customer-facing item, run a compact version of the iterative research l
 
 Now flip the direction: what are customers raising that maps to nothing on the roadmap?
 
-**With insight groups:** `search_insight_groups({ dateRange, orderBy: "demand", minCustomerCount: 2 })` — `minCustomerCount` exists for exactly this, and `orderBy: "demand"` puts the widest-reaching themes first. Match each theme against the roadmap items — a theme "maps" to an item when the item would plausibly resolve it; be generous toward the roadmap so the unbuilt list isn't padded with stretch mismatches. Generous means crediting plausible *resolution* — not direction-reversed or sibling needs (a bulk-*import* ask does not map to a bulk-*export* item; resolving one does nothing for the other). A need Stage 2 discarded as adjacent to some item belongs here if customers keep raising it. What remains unmatched is the unbuilt-demand list: present each with its `customerCount`, date spread, one representative insight (`search_insights({ supportingGroupId })` fetches the words), and links to its evidence.
+**With insight groups:** `search_insight_groups({ dateRange, orderBy: "demand", minCustomerCount: 2 })` — `minCustomerCount` exists for exactly this, and `orderBy: "demand"` puts the widest-reaching themes first. Match each theme against the roadmap items — a theme "maps" to an item when the item would plausibly resolve it; be generous toward the roadmap so the unbuilt list isn't padded with stretch mismatches. Generous means crediting plausible *resolution* — not direction-reversed or sibling needs (a bulk-*import* ask does not map to a bulk-*export* item; resolving one does nothing for the other). A need Stage 2 discarded as adjacent to some item belongs here if customers keep raising it. What remains unmatched is the unbuilt-demand list, ranked by `customerCount` with the count stated first: present each with its date spread, one representative insight (`search_insights({ supportingGroupId })` fetches the words), and links to its evidence.
 
 Two properties of that page to hold onto: it can come back **shorter than `limit`**, because where themes nest it carries the broadest of each nest rather than both — so `count` is what came back and `hasMore` is whether there was more. And paging deep can resurface a narrower restatement of a theme already shown; narrow the filter rather than paging past the first page or two.
 
@@ -164,12 +166,13 @@ The board, in reading order (identical content in every destination):
 [The stage-setting opener — question, period, finding, as facts not
 judgment: "The Q3 roadmap's 12 items, checked against what customers
 said in conversations from Dec 2025 to Jun 2026. Evidence found for 7
-of the 12; 3 items are internal, where none was expected; 4 recurring
-customer asks map to no roadmap item."]
+of the 12, the widest-recurring need showing up across 14 distinct
+customers; 3 items are internal, where none was expected; 4 recurring
+customer asks map to no roadmap item, the widest across 6."]
 
 ## The board
-| Roadmap item | The need, as customers put it | Companies | Mentions | Latest | Strongest quote (one line) |
-[One row per item, customer-facing items sorted by evidence volume,
+| Roadmap item | Customers | The need, as customers put it | Mentions | Latest | Strongest quote (one line) |
+[One row per item, customer-facing items sorted by distinct-customer count,
 internal items grouped at the bottom marked "internal — evidence not
 expected". Sorting is presentation of fact, not a grade. Each row links
 to its evidence section below. Empty rows carry their cause in place of
@@ -179,7 +182,9 @@ a quote: "outside window — older mentions exist" / "extraction gap" /
 ## Evidence by item
 ### [Item]
 [The asks grouped by distinct need when an item drew more than one. Per
-group: companies and date spread, then at most 2 verbatim quotes — speaker,
+group: all contributing companies, named, each with its deal context where
+mapped ("Acme — $87K open opp, Account Review · Globex — $24K ARR, renews
+Jan · +1 unlinked") and the date spread, then at most 2 verbatim quotes — speaker,
 role, company, date, source link — then one line linking ALL remaining
 evidence: "all N quotes: [links or the search that reproduces them]".
 Counter-evidence in its own marked sub-block. Ambiguous-after-deep-dive
@@ -187,7 +192,8 @@ insights listed as ambiguous. Omit items with nothing to show beyond what
 the board row already says.]
 
 ## What customers raise that maps to no roadmap item
-[The unbuilt-demand list: each entry with customer count, date spread, one
+[The unbuilt-demand list: each entry with customer count (companies
+annotated with deal context where mapped), date spread, one
 representative insight, links to all evidence. In the no-groups fallback,
 open with the lower-confidence label.]
 

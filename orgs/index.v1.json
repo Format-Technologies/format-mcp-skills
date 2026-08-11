@@ -116,8 +116,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-roadmap-check/SKILL.md",
-              "sha256": "bbe8551ebe3192daf2f1207a0eac3c26426018ae5853ccd9d39e0048de4adec0",
-              "bytes": 32655,
+              "sha256": "328f876c0243dc4053d5c1e8355e57e68cd93256c3035d7d752b39ead3d0fc26",
+              "bytes": 34016,
               "mediaType": "text/markdown"
             },
             {

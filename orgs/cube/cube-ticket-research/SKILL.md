@@ -1,13 +1,13 @@
 ---
 name: cube-ticket-research
-description: "Use when a product manager or engineer wants to ground a ticket (Linear, Jira, or any tracker) in real customer evidence using Format MCP. Canonical invocation: 'using the Format MCP and the format-ticket-research skill, research this ticket' followed by pasted ticket text or a ticket reference. Also triggers on 'what are customers saying about this ticket', 'who's asking for this', 'find customer evidence for [ticket]', 'what requirements are customers implying for [feature]'. Produces a compact evidence page: customer asks grouped by the distinct need expressed, verbatim quotes with links to every piece of evidence, and what the evidence suggests the ticket should account for. It presents evidence and context rather than grading demand or recommending whether to build."
+description: "Use when a product manager or engineer wants to ground a ticket (Linear, Jira, or any tracker) in real customer evidence using Format MCP. Canonical invocation: 'using the Format MCP and the cube-ticket-research skill, research this ticket' followed by pasted ticket text or a ticket reference. Also triggers on 'what are customers saying about this ticket', 'who's asking for this', 'find customer evidence for [ticket]', 'what requirements are customers implying for [feature]'. Produces a compact evidence page: customer asks grouped by the distinct need expressed, verbatim quotes with links to every piece of evidence, and what the evidence suggests the ticket should account for. It presents evidence and context rather than grading demand or recommending whether to build."
 metadata:
   display_order: 20
   overrides: format-ticket-research
   title: Ticket Research for Cube
   personas: [product]
   image: card.jpg
-  related: [format-roadmap-check]
+  related: [cube-roadmap-check]
   use_case: >-
     Ground a ticket in customer reality before you build it. Paste it (or
     point at the tracker issue) and get back what customers have actually
@@ -21,7 +21,7 @@ metadata:
     and on whether a topic is listening for this kind of feedback; the output
     tells you when either is the limiting factor.
   prompts:
-    - "Using the Format MCP and the format-ticket-research skill, research this ticket: [paste ticket]"
+    - "Using the Format MCP and the cube-ticket-research skill, research this ticket: [paste ticket]"
     - "Who's actually asking for this, and what do they expect it to do? [paste ticket]"
     - "Research the ticket about bulk export and post the evidence as a comment on it."
 ---
@@ -45,7 +45,7 @@ It presents evidence and the context needed to weigh it, and deliberately stops 
 - An engineer wants to know what customers expect before designing
 - Backlog grooming on a specific item
 
-This skill goes deep on **one** ticket. Validating a whole roadmap or a list of items is a different job — that's what `format-roadmap-check` is for.
+This skill goes deep on **one** ticket. Validating a whole roadmap or a list of items is a different job — that's what `cube-roadmap-check` is for.
 
 ## Inputs
 
@@ -217,7 +217,7 @@ These are the defaults that make the output trustworthy. They're guidance, not l
 ## How to prompt this skill
 
 ```
-Using the Format MCP and the format-ticket-research skill, research this ticket:
+Using the Format MCP and the cube-ticket-research skill, research this ticket:
 
 [paste ticket title + description]
 ```

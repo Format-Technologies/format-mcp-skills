@@ -20,7 +20,7 @@ metadata:
     calibrated for short outbound prospecting; the skill detects when the
     rep runs a different motion and says so.
   prompts:
-    - "Using the format-sales-call-coaching skill, assess [rep name] over the last 14 days."
+    - "Using the cube-sales-call-coaching skill, assess [rep name] over the last 14 days."
     - "Where is [rep name] losing deals? Score their calls since May 1."
 ---
 
@@ -166,7 +166,7 @@ These are the defaults that make the assessment fair. They're guidance, not law 
 ## How to prompt this skill
 
 ```
-Using the Format MCP and the format-sales-call-coaching skill, assess [one rep name] over [time window].
+Using the Format MCP and the cube-sales-call-coaching skill, assess [one rep name] over [time window].
 ```
 
 - *"How are our reps doing on calls?"* → "Which single rep should I assess, and over what window?" — asks for both, never defaults.

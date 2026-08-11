@@ -1,13 +1,13 @@
 ---
 name: cube-roadmap-check
-description: "Use when a product manager or leader wants to check a roadmap against real customer evidence using Format MCP — answering 'are customers asking for what we're building?' and the inverse, 'what are customers asking for that we're not building?'. Canonical invocation: 'using the Format MCP and the format-roadmap-check skill, check this roadmap' followed by a pasted list of roadmap items or a reference to a tracker project/epic. Also triggers on 'validate this roadmap against customer feedback', 'is there evidence for these roadmap items', 'what are customers asking for that isn't on the roadmap', 'roadmap evidence check', 'gap analysis on our roadmap'. Produces an evidence board: per-item customer evidence with links to every quote, plus the demand themes no roadmap item covers. It presents evidence and context rather than scoring items or recommending what to build or cut."
+description: "Use when a product manager or leader wants to check a roadmap against real customer evidence using Format MCP — answering 'are customers asking for what we're building?' and the inverse, 'what are customers asking for that we're not building?'. Canonical invocation: 'using the Format MCP and the cube-roadmap-check skill, check this roadmap' followed by a pasted list of roadmap items or a reference to a tracker project/epic. Also triggers on 'validate this roadmap against customer feedback', 'is there evidence for these roadmap items', 'what are customers asking for that isn't on the roadmap', 'roadmap evidence check', 'gap analysis on our roadmap'. Produces an evidence board: per-item customer evidence with links to every quote, plus the demand themes no roadmap item covers. It presents evidence and context rather than scoring items or recommending what to build or cut."
 metadata:
   display_order: 30
   overrides: format-roadmap-check
   title: Roadmap Check for Cube
   personas: [product, leadership]
   image: card.jpg
-  related: [format-ticket-research]
+  related: [cube-ticket-research]
   use_case: >-
     Hold your roadmap up against what customers have actually said. Paste a
     roadmap (or point at a tracker project) and get an evidence board: what
@@ -22,7 +22,7 @@ metadata:
     conversation coverage in Format and on which topics the workspace listens
     for; the board tells you when either is the limiting factor.
   prompts:
-    - "Using the Format MCP and the format-roadmap-check skill, check this roadmap: [paste roadmap items]"
+    - "Using the Format MCP and the cube-roadmap-check skill, check this roadmap: [paste roadmap items]"
     - "Are customers actually asking for what's on our Q3 roadmap? Build me the evidence board as an HTML page."
     - "What are customers raising that maps to nothing on this roadmap? [paste roadmap]"
 ---
@@ -222,12 +222,12 @@ These are the defaults that make the board trustworthy. They're guidance, not la
 
 ## Related skills
 
-For a deep dive on a single item — full research depth, derived requirements, an evidence page for one ticket — use **`format-ticket-research`** if it's available: suggest it by name when the user zooms into one item ("want me to run format-ticket-research on this one?"). If it isn't installed, don't dead-end: offer to do the deeper pass inline in this conversation, and mention that the skill exists in the Format skills gallery.
+For a deep dive on a single item — full research depth, derived requirements, an evidence page for one ticket — use **`cube-ticket-research`** if it's available: suggest it by name when the user zooms into one item ("want me to run cube-ticket-research on this one?"). If it isn't installed, don't dead-end: offer to do the deeper pass inline in this conversation, and mention that the skill exists in the Format skills gallery.
 
 ## How to prompt this skill
 
 ```
-Using the Format MCP and the format-roadmap-check skill, check this roadmap:
+Using the Format MCP and the cube-roadmap-check skill, check this roadmap:
 
 - [Roadmap item]
 - [Roadmap item]

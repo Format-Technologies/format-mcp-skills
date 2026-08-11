@@ -44,6 +44,10 @@ Standard SaaS-discovery rubrics (15–20 discovery questions, talk-ratio targets
 
 **The skill detects the rep's actual motion before scoring** (Step 4) — if the calls turn out to be scheduled discovery/demo video calls rather than outbound dials, the assessment says so up front in a read-first motion note, presents the scores as directional, and adapts the connect-rate framing to the motion that actually exists. Never fabricate a dial metric for a rep who doesn't dial.
 
+**Detection is not the whole mitigation — scoring adapts to the motion.** The rubric already marks a dimension N/A when a call gives it no opportunity; the same rule applies when the call format satisfies a dimension by default rather than the rep earning it — a scheduled demo "earns permission" and states its reason almost automatically. On a non-outbound call, score only the dimensions the rep's behaviour can actually move, mark the rest N/A, and renormalize the weighted total over what was scored. Free points from the call format inflate the composite by construction.
+
+**Competitive moments are always assessed.** Whenever a competitor or alternative tool comes up, evaluate how the rep handled it — under Objection handling and Value framing, since the rubric has no dedicated competitive dimension. An unsourced blanket dismissal of named competitors is weak objection handling, not strong, especially when the buyer still has a competitor evaluation in play; and a competitive opening the buyer hands over and the rep doesn't take is a miss, even inside an otherwise strong call. A competitive miss must never ride along invisibly inside a high-scoring call.
+
 ## The run
 
 ### Step 1: Confirm inputs

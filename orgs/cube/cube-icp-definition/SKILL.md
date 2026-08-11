@@ -11,8 +11,7 @@ metadata:
     Build an evidence-backed Ideal Customer Profile from real customer
     conversations: an ICP snapshot, buyer personas, in-market language cues,
     target-account criteria, and the competitive landscape — one document the
-    whole go-to-market team can work from. Format's ICP-definition skill,
-    tailored to Cube's go-to-market workflow.
+    whole go-to-market team can work from.
   limitations: >-
     Needs a meaningful base of conversations in Format to be representative.
     Doesn't produce cold-email copy, ad creative, or landing pages — those are
@@ -193,15 +192,6 @@ search_insights(
 )
 ```
 
-**Corpus-wide competitor sweep** (feeds the competitive landscape — always run this one):
-```
-search_insights(
-  keywordSearch: [known competitor and alternative-tool names],
-  limit: 40
-)
-```
-Competitor names surface everywhere — pricing objections, onboarding calls, offhand comparisons — not only under the competitive topic. One unscoped keyword sweep across the whole corpus alongside the topic-scoped pull keeps the landscape built from every mention, not just the ones filed where you thought to look.
-
 **The competitive landscape, sized** (1 call, when `processing.hasGroups` is true):
 ```
 search_insight_groups(
@@ -225,7 +215,7 @@ All five sections built from the pool of extracted insights above. No additional
 
 ## Adaptation rules
 
-**Small cohort (<15 Best cohort companies).** Deliver what's supportable. Note — in the "why this ICP, not another" section or the closing calibration note — that confidence would grow with more data.
+**Small cohort (<15 Best cohort companies).** Deliver what's supportable. Note (in the "why this ICP, not another" section, not in a methodology note) that confidence would grow with more data.
 
 **Different topic names.** Map silently via the topic role table above.
 
@@ -314,8 +304,6 @@ Framing subtitle, summary table, narrative paragraph, and a "why this ICP" note.
 | Emotional state | [Actual emotional language from data in quote marks — e.g. "'I'm the benefits system.' Spreadsheet fatigue. Embarrassed by the employee experience."] |
 
 The **Emotional state** row is what separates this from a generic ICP doc. Pull real customer phrases into it.
-
-Rows are fill-if-supported. Where the conversations genuinely don't reveal a dimension — an employee-size range that never comes up, buyer titles the data doesn't name — write "not supported by the data" for that row rather than inventing a plausible value. A visibly honest gap keeps the rest of the table credible.
 
 **Narrative paragraph (5–7 sentences, prose only, no bullets):**
 
@@ -416,8 +404,6 @@ This signals the hierarchy honestly. Three personas of equal weight reads as a l
 
 **The Example people row matters too.** Pulling real Name (Company) pairs from the best cohort makes the persona concrete. If sales or marketing wants to validate the persona, they can go look at those people's LinkedIn profiles.
 
-Persona rows are fill-if-supported too: **Titles** and **Where they hang out** in particular only carry weight when the data actually supports them. Drop a row (or mark it "not supported by the data") rather than filling it with generic guesses.
-
 ---
 
 ### In-market language bank
@@ -486,9 +472,13 @@ After the full document is displayed inline, add the next-steps offer as a singl
 5. Run win/loss on specific deals
 6. Set up a monthly ICP refresh cadence
 
-One sentence.
+One sentence. Do not follow it with a methodology note.
 
-A short methodology or calibration note is welcome after the next-steps offer where it helps the reader weigh the document — a line or two on how the cohorts were built, what the data could and couldn't support, and where confidence is thin. Keep it to a few sentences: the document is the deliverable, and the note exists to calibrate it, not to narrate the run.
+**Explicitly banned at the end of the deliverable:**
+- "Note: I defined the best cohort using..."
+- "I used a hybrid of X signals because..."
+- "If you'd rather base this on... say the word and I'll rerun"
+- Any assumption check, calibration note, or explanation of how cohorts were constructed
 
 ### Final step: present the file
 
@@ -509,7 +499,7 @@ The run is complete after the file is presented. Nothing follows it.
 
 - Runs silently, completes in one response
 - Uses tables throughout — no bulleted prose deliverables
-- Methodology stays brief — a short closing calibration note is fine; extended narration of the run is not
+- No methodology narration anywhere in the output — including the end
 - No framework names (JTBD, Four Forces, positioning frameworks) in the output
 - No section labels like "Artifact 1" — use human names only
 - No cold email copy, subject lines, ad creative, or landing page copy — those are downstream skills

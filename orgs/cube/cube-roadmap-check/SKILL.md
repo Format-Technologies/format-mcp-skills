@@ -13,8 +13,6 @@ metadata:
     roadmap (or point at a tracker project) and get an evidence board: what
     customers have said about each item with links to every supporting quote,
     and the things they keep raising that map to nothing you're building.
-    Format's roadmap check, tailored for Cube — cross-customer recurrence
-    counts lead the board.
   limitations: >-
     Presents evidence; the conclusions are yours — it deliberately does not
     score items or rank the roadmap. Depth per item is survey-level; use the
@@ -37,8 +35,6 @@ Given a roadmap — a pasted list of items, a document, or a project/epic fetche
 2. **Unbuilt demand** — the things customers keep raising that map to **no** roadmap item
 
 It presents evidence and the context needed to weigh it, and deliberately stops short of scoring items, grading demand, ranking the roadmap, or recommending building or cutting anything — whether the evidence is compelling depends on things only the reader can judge: capture quality, how much customers discuss this area in general, strategy, and what else competes for the team's time. The board's job is to make the evidence so legible that the reader's own conclusion is easy.
-
-**The number to lead with, everywhere on the board, is recurrence: how many distinct customers each need recurs across.** That count is the one thing a team can't reliably assemble by hand from memory and anecdotes — so it opens the stage-setting paragraph, leads each item's row, and ranks the unbuilt-demand list, never trailing as a supporting detail. Recurrence is still a fact, not a grade: presenting it first is presentation of what's countable, and the conclusions stay the reader's.
 
 ## When to use it
 

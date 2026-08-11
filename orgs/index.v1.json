@@ -12,7 +12,7 @@
             "product"
           ],
           "image": "orgs/cube/cube-ticket-research/card.jpg",
-          "useCase": "Ground a ticket in customer reality before you build it. Paste it (or point at the tracker issue) and get back what customers have actually said about the problem behind it: each distinct ask in their own words, who raised it and when, every quote linked to its source — and the requirements the evidence implies but the ticket doesn't spell out. Format's ticket research skill, tailored to Cube's product workflow.",
+          "useCase": "Ground a ticket in customer reality before you build it. Paste it (or point at the tracker issue) and get back what customers have actually said about the problem behind it: each distinct ask in their own words, who raised it and when, every quote linked to its source — and the requirements the evidence implies but the ticket doesn't spell out.",
           "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score or rank demand. Quality depends on conversation coverage in Format and on whether a topic is listening for this kind of feedback; the output tells you when either is the limiting factor.",
           "prompts": [
             "Using the Format MCP and the cube-ticket-research skill, research this ticket: [paste ticket]",
@@ -41,7 +41,7 @@
               "related": [
                 "cube-roadmap-check"
               ],
-              "use_case": "Ground a ticket in customer reality before you build it. Paste it (or point at the tracker issue) and get back what customers have actually said about the problem behind it: each distinct ask in their own words, who raised it and when, every quote linked to its source — and the requirements the evidence implies but the ticket doesn't spell out. Format's ticket research skill, tailored to Cube's product workflow.",
+              "use_case": "Ground a ticket in customer reality before you build it. Paste it (or point at the tracker issue) and get back what customers have actually said about the problem behind it: each distinct ask in their own words, who raised it and when, every quote linked to its source — and the requirements the evidence implies but the ticket doesn't spell out.",
               "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score or rank demand. Quality depends on conversation coverage in Format and on whether a topic is listening for this kind of feedback; the output tells you when either is the limiting factor.",
               "prompts": [
                 "Using the Format MCP and the cube-ticket-research skill, research this ticket: [paste ticket]",
@@ -53,8 +53,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-ticket-research/SKILL.md",
-              "sha256": "82078163b8c5c49ca1023b951ff4638513b7e737bf2e23c0639581361c42e3ce",
-              "bytes": 23592,
+              "sha256": "6e79037cddb96d75e68735e69322791325c7fd8cdd3883eb7d417d697be4ab69",
+              "bytes": 24552,
               "mediaType": "text/markdown"
             },
             {
@@ -74,7 +74,7 @@
             "leadership"
           ],
           "image": "orgs/cube/cube-roadmap-check/card.jpg",
-          "useCase": "Hold your roadmap up against what customers have actually said. Paste a roadmap (or point at a tracker project) and get an evidence board: what customers have said about each item with links to every supporting quote, and the things they keep raising that map to nothing you're building. Format's roadmap check, tailored for Cube — cross-customer recurrence counts lead the board.",
+          "useCase": "Hold your roadmap up against what customers have actually said. Paste a roadmap (or point at a tracker project) and get an evidence board: what customers have said about each item with links to every supporting quote, and the things they keep raising that map to nothing you're building.",
           "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score items or rank the roadmap. Depth per item is survey-level; use the Ticket Research skill for a deep dive on one item. Quality depends on conversation coverage in Format and on which topics the workspace listens for; the board tells you when either is the limiting factor.",
           "prompts": [
             "Using the Format MCP and the cube-roadmap-check skill, check this roadmap: [paste roadmap items]",
@@ -104,7 +104,7 @@
               "related": [
                 "cube-ticket-research"
               ],
-              "use_case": "Hold your roadmap up against what customers have actually said. Paste a roadmap (or point at a tracker project) and get an evidence board: what customers have said about each item with links to every supporting quote, and the things they keep raising that map to nothing you're building. Format's roadmap check, tailored for Cube — cross-customer recurrence counts lead the board.",
+              "use_case": "Hold your roadmap up against what customers have actually said. Paste a roadmap (or point at a tracker project) and get an evidence board: what customers have said about each item with links to every supporting quote, and the things they keep raising that map to nothing you're building.",
               "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score items or rank the roadmap. Depth per item is survey-level; use the Ticket Research skill for a deep dive on one item. Quality depends on conversation coverage in Format and on which topics the workspace listens for; the board tells you when either is the limiting factor.",
               "prompts": [
                 "Using the Format MCP and the cube-roadmap-check skill, check this roadmap: [paste roadmap items]",
@@ -116,8 +116,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-roadmap-check/SKILL.md",
-              "sha256": "9ded69f3d9e6fd13ff6a4e9aee631ad01ee0acca55ae3c1e4ff295b322d7ae1e",
-              "bytes": 33253,
+              "sha256": "bbe8551ebe3192daf2f1207a0eac3c26426018ae5853ccd9d39e0048de4adec0",
+              "bytes": 32655,
               "mediaType": "text/markdown"
             },
             {
@@ -136,7 +136,7 @@
             "customer-success"
           ],
           "image": "orgs/cube/cube-account-briefing/card.jpg",
-          "useCase": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep. Format's CS account briefing, tailored to how Cube runs it — one brief per account owner's own book.",
+          "useCase": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
           "limitations": "You provide the account list and time window. Surfaces evidence only — it doesn't prescribe actions. Quality depends on how much call/email coverage those accounts have in Format.",
           "prompts": [
             "Using the CS account briefing skill, scan Acme, Globex and Initech over the last 30 days.",
@@ -160,7 +160,7 @@
                 "customer-success"
               ],
               "image": "card.jpg",
-              "use_case": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep. Format's CS account briefing, tailored to how Cube runs it — one brief per account owner's own book.",
+              "use_case": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep.",
               "limitations": "You provide the account list and time window. Surfaces evidence only — it doesn't prescribe actions. Quality depends on how much call/email coverage those accounts have in Format.",
               "prompts": [
                 "Using the CS account briefing skill, scan Acme, Globex and Initech over the last 30 days.",
@@ -171,8 +171,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-account-briefing/SKILL.md",
-              "sha256": "8512ea2aff6f7a5c7daa3a7ef26d3404752c37f08549e4bd91b814170f6030e7",
-              "bytes": 15835,
+              "sha256": "e99aabc001cb460175f5ad56e00dc7792ab224d1b50bed1f761bdd4b62b61c84",
+              "bytes": 15070,
               "mediaType": "text/markdown"
             },
             {
@@ -199,7 +199,7 @@
             "leadership"
           ],
           "image": "orgs/cube/cube-icp-definition/card.jpg",
-          "useCase": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from. Format's ICP-definition skill, tailored to Cube's go-to-market workflow.",
+          "useCase": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from.",
           "limitations": "Needs a meaningful base of conversations in Format to be representative. Doesn't produce cold-email copy, ad creative, or landing pages — those are downstream skills.",
           "prompts": [
             "Define our ICP from the last 6 months of customer conversations.",
@@ -224,7 +224,7 @@
                 "leadership"
               ],
               "image": "card.jpg",
-              "use_case": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from. Format's ICP-definition skill, tailored to Cube's go-to-market workflow.",
+              "use_case": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from.",
               "limitations": "Needs a meaningful base of conversations in Format to be representative. Doesn't produce cold-email copy, ad creative, or landing pages — those are downstream skills.",
               "prompts": [
                 "Define our ICP from the last 6 months of customer conversations.",
@@ -235,8 +235,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-icp-definition/SKILL.md",
-              "sha256": "d51da45be5c135d6a741cf436e794b3f91b8d5e2ad35fe250c59d0dd83a966b1",
-              "bytes": 28620,
+              "sha256": "74b1cc6fca5bd5f3c442bee401b9ec0b48c9d72c3982493d3e2381b2b5d3979a",
+              "bytes": 27381,
               "mediaType": "text/markdown"
             },
             {
@@ -255,7 +255,7 @@
             "sales"
           ],
           "image": "orgs/cube/cube-sales-call-coaching/card.jpg",
-          "useCase": "A rep scorecard built from every real call they ran in the window — not a sampled highlight reel: each conversation classified, prospecting calls scored dimension by dimension with verbatim evidence, and exactly one coaching priority, framed Situation–Behaviour–Impact. Format's sales call coaching, calibrated for the motions Cube's reps actually run.",
+          "useCase": "A rep scorecard built from every real call they ran in the window — not a sampled highlight reel: each conversation classified, prospecting calls scored dimension by dimension with verbatim evidence, and exactly one coaching priority, framed Situation–Behaviour–Impact.",
           "limitations": "One named rep per run, never a team; both rep and window are asked for, never defaulted. Reads recorded calls only — it can't see emails, in-person meetings, or deals that progressed off-call. The rubric is calibrated for short outbound prospecting; the skill detects when the rep runs a different motion and says so.",
           "prompts": [
             "Using the cube-sales-call-coaching skill, assess [rep name] over the last 14 days.",
@@ -281,7 +281,7 @@
                 "sales"
               ],
               "image": "card.jpg",
-              "use_case": "A rep scorecard built from every real call they ran in the window — not a sampled highlight reel: each conversation classified, prospecting calls scored dimension by dimension with verbatim evidence, and exactly one coaching priority, framed Situation–Behaviour–Impact. Format's sales call coaching, calibrated for the motions Cube's reps actually run.",
+              "use_case": "A rep scorecard built from every real call they ran in the window — not a sampled highlight reel: each conversation classified, prospecting calls scored dimension by dimension with verbatim evidence, and exactly one coaching priority, framed Situation–Behaviour–Impact.",
               "limitations": "One named rep per run, never a team; both rep and window are asked for, never defaulted. Reads recorded calls only — it can't see emails, in-person meetings, or deals that progressed off-call. The rubric is calibrated for short outbound prospecting; the skill detects when the rep runs a different motion and says so.",
               "prompts": [
                 "Using the cube-sales-call-coaching skill, assess [rep name] over the last 14 days.",
@@ -292,8 +292,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-sales-call-coaching/SKILL.md",
-              "sha256": "b5381e865df40e1b22da1757692fc9f8a8972dff45abadf75d91acf59846e1e3",
-              "bytes": 15723,
+              "sha256": "f2d739d33bb4534b0d1aaf3aafe93c25795ad60a2b6f7fd6d72a6f08c0dfed0b",
+              "bytes": 14784,
               "mediaType": "text/markdown"
             },
             {

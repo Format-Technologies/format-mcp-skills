@@ -11,8 +11,7 @@ metadata:
     A rep scorecard built from every real call they ran in the window — not
     a sampled highlight reel: each conversation classified, prospecting
     calls scored dimension by dimension with verbatim evidence, and exactly
-    one coaching priority, framed Situation–Behaviour–Impact. Format's sales
-    call coaching, calibrated for the motions Cube's reps actually run.
+    one coaching priority, framed Situation–Behaviour–Impact.
   limitations: >-
     One named rep per run, never a team; both rep and window are asked for,
     never defaulted. Reads recorded calls only — it can't see emails,
@@ -44,8 +43,6 @@ Do not pull any records until both are confirmed. One sizing rule at this step: 
 Standard SaaS-discovery rubrics (15–20 discovery questions, talk-ratio targets, MEDDIC multi-threading) assume long video calls with a buying committee. They unfairly fail reps who run short outbound phone calls, where the goal is almost never "close" — it is **earn the next step**. This rubric keeps the behaviours that matter on a short outbound call and drops the volume metrics that don't.
 
 **The skill detects the rep's actual motion before scoring** (Step 4) — if the calls turn out to be scheduled discovery/demo video calls rather than outbound dials, the assessment says so up front in a read-first motion note, presents the scores as directional, and adapts the connect-rate framing to the motion that actually exists. Never fabricate a dial metric for a rep who doesn't dial.
-
-**Cube adaptation — two calibration notes from Cube's own runs.** First, the outbound anchors inflate scores on calls that aren't outbound dials: a scheduled demo "earns permission" and "secures a next step" almost by default. When a call's motion isn't outbound prospecting, score only the dimensions that genuinely apply to that motion, mark the rest N/A, and renormalize the weighted total over what was actually scored — never credit free points for behaviours the call format hands the rep. Second, **always assess competitive positioning**: whenever a competitor or alternative tool comes up on a call, evaluate how the rep handled it (under Objection handling and Value framing) rather than letting a competitive miss ride along inside an otherwise high-scoring call. Neither note redesigns the rubric — the dimensions and weights stand.
 
 ## The run
 

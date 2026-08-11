@@ -11,8 +11,7 @@ metadata:
     Scan your book of business for what's actually been said across customer
     conversations — risks, blockers, adoption, relationships, growth and
     commercial signals — grouped per account with verbatim evidence. Built for
-    weekly briefs and QBR prep. Format's CS account briefing, tailored to how
-    Cube runs it — one brief per account owner's own book.
+    weekly briefs and QBR prep.
   limitations: >-
     You provide the account list and time window. Surfaces evidence only — it
     doesn't prescribe actions. Quality depends on how much call/email coverage
@@ -47,8 +46,6 @@ Do NOT trigger this skill for scans across the entire Format workspace without a
 If either input is missing, **prompt the user for it before proceeding.** Do not guess or default. Sample prompt:
 
 > "Which accounts should I scan, and over what time window? Paste your account list and tell me the date range (e.g. last 14 days, since Apr 1)."
-
-**Cube adaptation.** Cube runs this brief per account owner — each owner covers their own book, typically five accounts or fewer. Format doesn't yet carry an account-owner attribute, so whose accounts are whose can't be derived from the workspace: never assume or reconstruct an owner's book yourself — ask the user for their account list on every run.
 
 ## Optional inputs
 
@@ -96,7 +93,6 @@ If the connection can reach more than one Format workspace, `list_organizations(
 2. Take the `id` off the match; that's what `companyIds` wants downstream.
 3. **If an account name matches nothing**, flag it back to the user: "Couldn't find [name] in Format — skip, or did you mean [closest match]?"
 4. **If a name is ambiguous** (several rows come back), ask the user to disambiguate before proceeding.
-5. **De-duplicate before sectioning.** The same company can resolve more than once — a name variant in the user's list, or duplicate rows in the register. Collapse the resolved list to one company per account before pulling signals: one account gets exactly one section in the briefing, never two.
 
 When you already hold a domain, `get_company({ domain: "acme.com" })` resolves it in one call and returns the account's mapped CRM attributes alongside — useful context for the briefing. A miss there names which key failed and points at `list_companies`.
 

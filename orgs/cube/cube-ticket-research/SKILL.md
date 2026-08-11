@@ -14,7 +14,6 @@ metadata:
     said about the problem behind it: each distinct ask in their own words,
     who raised it and when, every quote linked to its source — and the
     requirements the evidence implies but the ticket doesn't spell out.
-    Format's ticket research skill, tailored to Cube's product workflow.
   limitations: >-
     Presents evidence; the conclusions are yours — it deliberately does not
     score or rank demand. Quality depends on conversation coverage in Format
@@ -118,6 +117,7 @@ For needs-context insights whose resolution would change the picture — they're
 **Leave demand strength to the reader.** Labels like "strong demand" and "weak signal" feel helpful but aren't: whether evidence is compelling depends on relative volume, capture quality, and how much this area gets discussed at all — judgments that belong to the reader, not the page. The skill's job is to make that judgment easy:
 
 - Per group: the raw facts (how many companies, who, the date span, latest mention — and, when an insight group matched the group, that group's `customerCount`, the cheapest scale signal available; rank with it, never sum it across groups, since nested themes count the same customer more than once) and a link to **every** supporting insight — the best one or two inline, the rest as links, rather than an unverifiable summary.
+- **Carry the linked company's CRM attributes with its evidence.** An insight's `company` is identity only — after adjudication, resolve each distinct linked company once with `get_company({ companyId })`, which returns the org's mapped `attributes`. Put the deal-relevant ones (deal value, opportunity stage and close date, account ARR, renewal date, account type — whatever this workspace maps) in the evidence map's deal-context column and the per-need company lines: "$87K open opp at Account Review" next to the company that said it is the difference between a quote and a priority, and it lets the reader's own register consume the page without a manual CRM join. Where the org maps nothing, or the company is `inferred` rather than `linked`, show the evidence unannotated rather than guessing.
 - Expect attribution gaps: many insights have no linked company, and some carry a company name without a linked company record. Count distinct companies by **name**, and surface unattributed evidence on its own line ("plus [N] mentions from speakers not linked to a company") rather than silently dropping it.
 - A calibration block: total workspace volume over the same span, whether any topic listens for this area, and whether insight groups were available — the denominators a reader needs to weigh the numerators.
 
@@ -131,11 +131,11 @@ Empty results have three different causes that lead to opposite conclusions, so 
 
 ## Stage 4 — Render
 
-Deliver to the destination the user named. When they named none, default to **chat** rather than asking — a destination question at render time costs a round-trip exactly when the user wants the answer; instead, offer the alternatives in one line alongside the delivered output ("want this as an HTML page, a comment on the ticket, or a report published in Format?"). The destinations:
+Deliver to the destination the user named. When they named none, default to **chat** rather than asking — a destination question at render time costs a round-trip exactly when the user wants the answer; instead, offer the alternatives in one line alongside the delivered output ("want this as an HTML page, or a report published in Format?"). The destinations:
 
 - **Chat** (default) — the structure below, rendered as markdown.
 - **HTML evidence page** — the same content as a clean, self-contained HTML page: as an artifact where the environment supports them, otherwise a saved `.html` file (tell the user where). Every evidence link should be a real, working link to the insight or record in Format — on a page this polished, a dead link is worse than none.
-- **Comment on the ticket** — **opt-in only: post to the tracker when the user explicitly asks for it, never as a default.** An evidence page sitting on a ticket reads as a vetted assertion to everyone who finds it there, so findings stay in chat until the user asks to post them. When they do ask and a tracker MCP is connected, show the user the comment as it will appear, then post it on their go-ahead. Adapt formatting to what the tracker renders well. Without a tracker connection, provide the comment as copy-ready text instead.
+- **Comment on the ticket** — opt-in only: post to the tracker only when the user has explicitly asked for it, never as a default and never as a suggestion. This is a write to the team's system of record — an unreviewed evidence page landing on an issue reads as an assertion about product status, so the user decides when it goes there. When they do ask and a tracker MCP is connected, show the comment as it will appear, then post it on their go-ahead. Adapt formatting to what the tracker renders well. Without a tracker connection, provide the comment as copy-ready text instead.
 - **A report in Format** — when `create_report` is available on the connection (it is gated per organization, so it simply won't be there for every workspace), the evidence page can be authored as a first-class Format report with its own share URL: embedded insights stay clickable and playable, and the opener becomes the report's `tldr`. Show the user what you're about to publish before you write it; a report is born a draft visible only to you, and `publish_report` is the separate, explicit step that makes it org-visible. If the tool isn't on the connection, say so and fall back to one of the above.
 
 **Open by setting the stage.** The page travels — posted on the ticket, pasted into chat, read weeks later by someone who never saw the request — so don't drop a cold reader straight into the evidence. Open with a couple of plain sentences that say what question was researched, what period the data covers, and the main finding, stated as neutral fact. In a Format report, this opener is the `tldr`.
@@ -162,14 +162,15 @@ vs. area, if the distinction exists.]
 
 ## Evidence map
 
-| What customers are asking for | Companies | Mentions | Latest | Certainty |
-|---|---|---|---|---|
-| [need, customer language] | 2 ([names]) +1 unlinked | 8 | [date] | clear, source-verified |
-| [need, customer language] | 1 ([name]) | 3 | [date] | partly ambiguous |
+| What customers are asking for | Companies | Deal context | Mentions | Latest | Certainty |
+|---|---|---|---|---|---|
+| [need, customer language] | 2 ([names]) +1 unlinked | $87K opp (Account Review, closes Sep) · $24K ARR (renews Jan) | 8 | [date] | clear, source-verified |
+| [need, customer language] | 1 ([name]) | — | 3 | [date] | partly ambiguous |
 
 ## [Need 1, named as in the table]
 > "[best verbatim quote]" — [name], [company], [date] ([link])
 [A line or two of commentary — only what the quote can't say itself.]
+Companies: [name] ($87K open opp — Account Review, closes Sep) · [name] ($24K ARR, renews Jan) · +1 unlinked
 All evidence: [link] · [link] · [link] ...
 
 ## [Need 2...]

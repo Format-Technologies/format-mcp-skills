@@ -86,10 +86,12 @@ orgs/<org-slug>/<skill-id>/…    ← one folder per skill, exactly like skills/
   customer has a **different Format org id per environment** — prod and dev
   run separate databases — and non-prod app environments read this repo's
   `dev` branch, so appending the customer's dev-environment org id is how you
-  test there. **Reaching `dev` is a manual step**: PRs in this repo target
-  `main` only; after a merge, sync the `dev` branch by hand
-  (`git push origin main:dev`, or a merge if `dev` has diverged) — nothing
-  automates it, and non-prod environments serve whatever `dev` last received. The generator emits one `orgs/index.v1.json` entry per listed
+  test there. **Branching mirrors the app repo — feature → `dev`, `dev` →
+  `main`**: every PR targets `dev` (non-prod environments pick a merge up
+  immediately); production reads `main`, which only moves via a deliberate
+  `dev` → `main` promotion (release PR or manual push). Nothing automates
+  that step, so a skill ships to customers only when someone consciously
+  promotes it. The generator emits one `orgs/index.v1.json` entry per listed
   id, each carrying the same slug and skills (the consumer's lookup stays a
   plain map hit); an id may be bound by only one org folder. The folder name
   is the org's slug — kebab-case, like skill ids.

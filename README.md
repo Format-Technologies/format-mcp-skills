@@ -77,7 +77,10 @@ Studio agent — or just into the chat.
 ## Contributing
 
 Want to improve a skill or understand how this repo is put together? See
-[CONTRIBUTING.md](CONTRIBUTING.md).
+[CONTRIBUTING.md](CONTRIBUTING.md). Besides the generic catalogue above, the
+repo also carries **org-scoped skills** under `orgs/` — bespoke versions
+served only to a specific Format organization; the layout and rules are in
+CONTRIBUTING.md → "Org-scoped skills".
 
 ## License
 

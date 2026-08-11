@@ -6,10 +6,15 @@ Full contract and authoring guide: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Hard rules
 
-1. **Never hand-edit `index.json`, `index.v1.json`, or `.claude-plugin/marketplace.json`** —
-   both are generated from `SKILL.md` frontmatter.
-2. **After any change under `skills/`, run `npm run generate`** and commit the
-   regenerated manifests with it. `npm run check` must pass before pushing.
+1. **Never hand-edit `index.json`, `index.v1.json`, `orgs/index.v1.json`, or
+   `.claude-plugin/marketplace.json`** — all are generated from `SKILL.md`
+   frontmatter.
+2. **After any change under `skills/` or `orgs/`, run `npm run generate`** and
+   commit the regenerated manifests with it. `npm run check` must pass before
+   pushing. Changes under `orgs/` must leave `index.json`, `index.v1.json`,
+   and `.claude-plugin/marketplace.json` byte-identical (org skills live only
+   in `orgs/index.v1.json` and never in the marketplace) — see
+   [CONTRIBUTING.md](CONTRIBUTING.md) → "Org-scoped skills".
 3. **One folder per skill** — `skills/<id>/SKILL.md`, where `id` is kebab-case
    and equals the frontmatter `name`. Persona names are reserved (validator
    enforces this).
@@ -18,7 +23,11 @@ Full contract and authoring guide: [CONTRIBUTING.md](CONTRIBUTING.md).
    memory. The schemas are strict: an unrecognised parameter fails the call
    and names the key, so an invented one breaks the skill outright rather than
    being ignored.
-5. **This repo is public.** No customer names, internal links, ticket
-   references, or strategy notes — in any file, including this one.
+5. **This repo is public.** No internal links, ticket references, or strategy
+   notes — in any file, including this one. Customer names appear only where
+   the org-scoped design requires them (`orgs/<slug>/` and its skills); even
+   there, nothing confidential — no customer data, metrics, or internal
+   process details beyond what the customer has agreed to keep in a public
+   skill.
 6. **Merging to `main` is publishing** — the app gallery and Claude Code
    installs update from `main` directly. There is no staging branch.

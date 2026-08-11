@@ -12,15 +12,20 @@ and everything else is generated from it.**
 │       ├── SKILL.md                 ← the skill: frontmatter (metadata) + body (the prompt)
 │       ├── card.png                 ← gallery image (display only, not part of the install)
 │       └── references/…             ← optional supporting files, installed with the skill
+├── orgs/
+│   ├── index.v1.json                ← GENERATED — org-scoped skills manifest
+│   └── <org-slug>/
+│       ├── org.json                 ← binds the folder to a Format org id
+│       └── <skill-id>/…             ← an org skill: same shape as a generic skill folder
 ├── index.json                       ← GENERATED — gallery manifest
 ├── index.v1.json                    ← GENERATED — frozen v1 twin (the Format app reads this)
 ├── .claude-plugin/marketplace.json  ← GENERATED — Claude Code marketplace, one plugin per skill
-└── scripts/generate.mjs             ← frontmatter → both manifests; also the CI validator
+└── scripts/generate.mjs             ← frontmatter → all manifests; also the CI validator
 ```
 
-**Never edit `index.json`, `index.v1.json`, or `.claude-plugin/marketplace.json` by hand.** They
-are derived from `SKILL.md` frontmatter; CI rejects PRs where they're out of
-sync with the skills.
+**Never edit `index.json`, `index.v1.json`, `orgs/index.v1.json`, or
+`.claude-plugin/marketplace.json` by hand.** They are derived from `SKILL.md`
+frontmatter; CI rejects PRs where they're out of sync with the skills.
 
 ## Adding or changing a skill
 
@@ -65,6 +70,41 @@ sync with the skills.
   skill body that names a related skill must still degrade gracefully when
   that skill isn't installed (suggest it if available; otherwise do the work
   inline and point at the gallery).
+
+## Org-scoped skills (`orgs/`)
+
+Some customers get bespoke skills served only to their Format organization,
+alongside the generic catalogue. The layout mirrors `skills/`:
+
+```
+orgs/<org-slug>/org.json        ← { "orgId": "<Format org id>" } — the binding
+orgs/<org-slug>/<skill-id>/…    ← one folder per skill, exactly like skills/<id>/
+```
+
+- **`org.json` is mandatory** and holds exactly one key: a non-empty string
+  `orgId`. The folder name is the org's slug — kebab-case, like skill ids.
+- **Org skills follow every generic-skill rule** (frontmatter fields, kebab
+  ids, reserved ids, description length, image, …) and are validated by the
+  same generator. Within one org, skill ids are unique; `metadata.related` may
+  reference generic skills or siblings in the same org.
+- **Location is the only scope authority.** Nothing in a skill's frontmatter
+  says which org it belongs to — the generator rejects any org-ish frontmatter
+  key so scope is never declared in two places.
+- **Same id as a generic skill = override.** An org skill whose id matches a
+  generic skill replaces the generic one for that org (the app serves the org
+  version to that org, the generic version to everyone else). Any other id is
+  a net-new skill visible only to that org.
+- **Generated output: `orgs/index.v1.json`.** Entries use the exact same shape
+  as `index.v1.json` skill entries (including `frontmatter` and per-file
+  `resources` digests), with repo-relative paths under `orgs/<slug>/…`. Same
+  freeze discipline: additive-only under version 1; a breaking change ships as
+  `orgs/index.v2.json`. The file exists even with no org folders (empty map).
+- **The purity invariant:** org additions must never perturb the generic
+  manifests — `index.json`, `index.v1.json`, and
+  `.claude-plugin/marketplace.json` stay byte-identical whatever happens under
+  `orgs/`. Org skills never appear in the Claude Code marketplace.
+- **Offboarding is deletion.** Removing `orgs/<slug>/` (and regenerating)
+  fully offboards an org — no other file references it.
 
 ## Writing guidelines
 

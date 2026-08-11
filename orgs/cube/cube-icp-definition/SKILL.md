@@ -11,8 +11,7 @@ metadata:
     Build an evidence-backed Ideal Customer Profile from real customer
     conversations: an ICP snapshot, buyer personas, in-market language cues,
     target-account criteria, and the competitive landscape — one document the
-    whole go-to-market team can work from. Format's ICP-definition skill,
-    tailored to Cube's go-to-market workflow.
+    whole go-to-market team can work from.
   limitations: >-
     Needs a meaningful base of conversations in Format to be representative.
     Doesn't produce cold-email copy, ad creative, or landing pages — those are
@@ -75,7 +74,7 @@ If Format MCP isn't connected yet:
 
 ## The run — how the skill executes
 
-Tight sequence. Target: 10–12 tool calls total. Broad topic-first queries, not over-filtered semantic queries.
+Tight sequence. Target: ~12 tool calls total. Broad topic-first queries, not over-filtered semantic queries.
 
 ### Step 1: Orient (1 call)
 
@@ -137,7 +136,7 @@ has no CRM attributes mapped (empty `attributes` arrays), don't fabricate
 firmographics — infer what you can from the conversation content pulled in
 Step 4 and say so in the document.
 
-### Step 4: Core content extraction (4–5 calls)
+### Step 4: Core content extraction (6–7 calls)
 
 Pull the substance for ICP snapshot, personas, in-market signals, competitive landscape with broad queries against the Best cohort. Do not run separate framework passes.
 
@@ -177,13 +176,7 @@ search_insights(
 )
 ```
 
-**Disqualifier content** (feeds Not-Fit account list):
-```
-search_insights(
-  topicNames: [worst-cohort topic],
-  limit: 40
-)
-```
+**Disqualifier content** (feeds the Not-Fit account list): reuse the Step 2 worst-cohort pull — it is the same query; don't re-run it.
 
 **In-market language sweep** (feeds the language bank — always run this one):
 ```
@@ -213,7 +206,7 @@ Where Format has gathered these conversations into insight groups, each group is
 
 Every insight sits under exactly one topic, so a topic-scoped pull only ever returns the topics you thought to name — and pre-purchase language is often filed under one you didn't. One unscoped semantic sweep alongside the topic pulls keeps the language bank from reading only what you guessed at.
 
-6–7 calls. Combined with orientation and cohort-building: 9–12 total — pagination on large company lists may add a call or two; spend them rather than truncating the cohort.
+6–7 calls. Combined with orientation, cohort-building and company resolution: 11–12 total — pagination on large registers adds more; spend the extra calls rather than truncating the cohort.
 
 ### Step 5: Synthesize
 
@@ -230,6 +223,10 @@ All five sections built from the pool of extracted insights above. No additional
 **Different topic names.** Map silently via the topic role table above.
 
 **Heavy prospect skew (mostly pre-sales conversations).** Treat "high-intent prospects who chose us" as the Best cohort. The analysis is about who fits, not how long they've been customers.
+
+**Heavy customer skew (mostly existing-customer conversations).** The Best cohort degrades into "whoever happened to be on a call recently" unless fit is separated from presence. Recency of conversations is not evidence of fit: pick the Best cohort from retention and expansion evidence — expansion signals and customer-love content, and the CRM attributes where mapped (ARR, renewal outcome, churn score) — rather than from appearing in the window. Say in the calibration note that the corpus skews to existing customers and how the cohort was chosen because of it.
+
+**Short coverage window.** Outcome- and trend-shaped claims — displaceability ratings, win/loss patterns, geographic or segment trends — need history the window may not hold. When `describe_org`'s coverage span is weeks rather than quarters, don't assert them: state what customers say and under what conditions they'd move, mark anything that depends on pre-window evidence as outside coverage, and name the gated claims in the calibration note.
 
 **Different verticals (HR-tech, dev-tools, vertical SaaS, etc).** Trigger language varies. Use customer's own words from the data, not generic B2B phrases.
 
@@ -305,7 +302,7 @@ Framing subtitle, summary table, narrative paragraph, and a "why this ICP" note.
 | Dimension | Profile |
 |---|---|
 | Primary geography | [Primary regions — mark mandatory vs. pull. E.g. "Ireland + UK (mandatory). Growing pull from EU/global distributed teams."] |
-| Company size | [Employee range with sweet spot, plus *why* above/below doesn't work — e.g. "30–500 (sweet spot 50–250). Below 30 = price-sensitive. Above 500 = RFP-heavy and slow."] |
+| Company size | [Employee range with sweet spot — from the workspace's employee-count attribute (e.g. `Employees`) where mapped — plus *why* above/below doesn't work: e.g. "30–500 (sweet spot 50–250). Below 30 = price-sensitive. Above 500 = RFP-heavy and slow."] |
 | Stage & funding | [E.g. "Seed–Series C scaleups AND mid-market private businesses (agencies, legal, pharma)"] |
 | Vertical breadth | [Named examples across verticals — e.g. "Not vertical-specific. Wins span SaaS (A, B, C), agencies (X, Y), fintech (P, Q), pharma (R, S)..."] |
 | Tech stack (strong fit) | [Specific tools that indicate fit — e.g. "HiBob, Bamboo, Rippling, Workday (fragmented regions), Deel (as EOR pass-through)"] |
@@ -315,7 +312,7 @@ Framing subtitle, summary table, narrative paragraph, and a "why this ICP" note.
 
 The **Emotional state** row is what separates this from a generic ICP doc. Pull real customer phrases into it.
 
-Rows are fill-if-supported. Where the conversations genuinely don't reveal a dimension — an employee-size range that never comes up, buyer titles the data doesn't name — write "not supported by the data" for that row rather than inventing a plausible value. A visibly honest gap keeps the rest of the table credible.
+Every row in this document's tables is fill-if-supported: where neither the conversations nor the CRM attributes genuinely support a dimension, write "not supported by the data" rather than a plausible value — an honest gap keeps the rest of the table credible.
 
 **Narrative paragraph (5–7 sentences, prose only, no bullets):**
 
@@ -398,7 +395,7 @@ This signals the hierarchy honestly. Three personas of equal weight reads as a l
 | Field | Persona 1 | Persona 2 | Persona 3 |
 |---|---|---|---|
 | Name | **[Memorable plain-English name with a clear archetype]** | [...] | [...] |
-| Titles | [4–6 title variations this persona goes by] | [...] | [...] |
+| Titles | [4–6 title variations this persona goes by — from person-scoped CRM attributes (job title) where mapped] | [...] | [...] |
 | Example people (from data) | [6–10 Name (Company) pairs pulled from best cohort] | [typically fewer named — often unnamed if secondary persona] | [may be 1–2 examples or "typically unnamed"] |
 | Company context | [Size range, team structure, where they sit organisationally] | [...] | [...] |
 | Day-to-day reality | [What their actual job looks like — specific hours/tasks, not abstractions] | [...] | [...] |
@@ -407,16 +404,11 @@ This signals the hierarchy honestly. Three personas of equal weight reads as a l
 | What's broken (their words) | [Verbatim quotes from data, slash-separated — e.g. "I'm the benefits system." / "Everything's on Excel."] | [...] | [...] |
 | What they want | [Top outcomes in their language] | [...] | [...] |
 | What they worry about | [Stall-the-deal anxieties, specific] | [...] | [...] |
-| Where they hang out | [LinkedIn communities, Slack groups, podcasts, events — channels to reach them] | [...] | [...] |
-| Content that resonates | [What content format lands with this persona — e.g. "before/after operational walkthroughs, HRIS integration demos, benchmarking data"] | [...] | [...] |
 
-**The two rows that make this artifact usable for marketing, not just sales:**
+**The row that makes this artifact usable for marketing, not just sales:**
 - **What's broken (their words)** — verbatim customer lines with slashes between them give marketers drop-in headline material
-- **Content that resonates** — tells content and marketing teams exactly what formats to produce for this persona
 
 **The Example people row matters too.** Pulling real Name (Company) pairs from the best cohort makes the persona concrete. If sales or marketing wants to validate the persona, they can go look at those people's LinkedIn profiles.
-
-Persona rows are fill-if-supported too: **Titles** and **Where they hang out** in particular only carry weight when the data actually supports them. Drop a row (or mark it "not supported by the data") rather than filling it with generic guesses.
 
 ---
 
@@ -473,6 +465,8 @@ Example of a rich Displaceable entry:
 
 This is more useful than a single word rating because it tells sales exactly when to fight and when to walk away.
 
+The rating itself is gated on coverage: displaceability is an outcome claim, and when `describe_org`'s coverage span is weeks rather than quarters, replace High/Medium/Low with the conditions customers describe — no rating word — and say so in the calibration note (see the Short coverage window adaptation rule).
+
 ---
 
 ### Close with next-steps offer
@@ -489,6 +483,10 @@ After the full document is displayed inline, add the next-steps offer as a singl
 One sentence.
 
 A short methodology or calibration note is welcome after the next-steps offer where it helps the reader weigh the document — a line or two on how the cohorts were built, what the data could and couldn't support, and where confidence is thin. Keep it to a few sentences: the document is the deliverable, and the note exists to calibrate it, not to narrate the run.
+
+**Still banned at the end of the deliverable** (the note calibrates the document; it never describes the assistant's process):
+- Rerun offers — "If you'd rather base this on... say the word and I'll rerun"
+- Run narration — "I used a hybrid of X signals because..."
 
 ### Final step: present the file
 
@@ -522,6 +520,6 @@ The run is complete after the file is presented. Nothing follows it.
 - ICP snapshot stands alone — could be pasted into a positioning doc
 - Prospect criteria copy-paste ready for Apollo
 - Personas usable by sales, marketing, and paid ads — not just SDRs
-- Competitive landscape has Displaceable? ratings
+- Competitive landscape has Displaceable? ratings (or, under a short coverage window, the conditions customers describe in place of a rating)
 - Closing line offers next steps from the standard menu
 - **Markdown file `[company-slug]-icp.md` saved and surfaced (download link or file path) as the final action — skipped only if the environment cannot produce files**

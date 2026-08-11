@@ -192,6 +192,15 @@ search_insights(
 )
 ```
 
+**Corpus-wide competitor sweep** (feeds the competitive landscape — always run this one):
+```
+search_insights(
+  keywordSearch: [known competitor and alternative-tool names],
+  limit: 40
+)
+```
+Competitor names surface everywhere — pricing objections, onboarding calls, offhand comparisons — not only under the competitive topic. One unscoped keyword sweep across the whole corpus alongside the topic-scoped pull keeps the landscape built from every mention, not just the ones filed where you thought to look.
+
 **The competitive landscape, sized** (1 call, when `processing.hasGroups` is true):
 ```
 search_insight_groups(
@@ -215,11 +224,15 @@ All five sections built from the pool of extracted insights above. No additional
 
 ## Adaptation rules
 
-**Small cohort (<15 Best cohort companies).** Deliver what's supportable. Note (in the "why this ICP, not another" section, not in a methodology note) that confidence would grow with more data.
+**Small cohort (<15 Best cohort companies).** Deliver what's supportable. Note — in the "why this ICP, not another" section or the closing calibration note — that confidence would grow with more data.
 
 **Different topic names.** Map silently via the topic role table above.
 
 **Heavy prospect skew (mostly pre-sales conversations).** Treat "high-intent prospects who chose us" as the Best cohort. The analysis is about who fits, not how long they've been customers.
+
+**Heavy customer skew (mostly existing-customer conversations).** The Best cohort degrades into "whoever happened to be on a call recently" unless fit is separated from presence. Recency of conversations is not evidence of fit: pick the Best cohort from retention and expansion evidence — expansion signals and customer-love content, and the CRM attributes where mapped (ARR, renewal outcome, churn score) — rather than from appearing in the window. Say in the calibration note that the corpus skews to existing customers and how the cohort was chosen because of it.
+
+**Short coverage window.** Outcome- and trend-shaped claims — displaceability ratings, win/loss patterns, geographic or segment trends — need history the window may not hold. When `describe_org`'s coverage span is weeks rather than quarters, don't assert them: state what customers say and under what conditions they'd move, mark anything that depends on pre-window evidence as outside coverage, and name the gated claims in the calibration note.
 
 **Different verticals (HR-tech, dev-tools, vertical SaaS, etc).** Trigger language varies. Use customer's own words from the data, not generic B2B phrases.
 
@@ -295,7 +308,7 @@ Framing subtitle, summary table, narrative paragraph, and a "why this ICP" note.
 | Dimension | Profile |
 |---|---|
 | Primary geography | [Primary regions — mark mandatory vs. pull. E.g. "Ireland + UK (mandatory). Growing pull from EU/global distributed teams."] |
-| Company size | [Employee range with sweet spot, plus *why* above/below doesn't work — e.g. "30–500 (sweet spot 50–250). Below 30 = price-sensitive. Above 500 = RFP-heavy and slow."] |
+| Company size | [Employee range with sweet spot — from the workspace's employee-count attribute (e.g. `Employees`) where mapped — plus *why* above/below doesn't work: e.g. "30–500 (sweet spot 50–250). Below 30 = price-sensitive. Above 500 = RFP-heavy and slow."] |
 | Stage & funding | [E.g. "Seed–Series C scaleups AND mid-market private businesses (agencies, legal, pharma)"] |
 | Vertical breadth | [Named examples across verticals — e.g. "Not vertical-specific. Wins span SaaS (A, B, C), agencies (X, Y), fintech (P, Q), pharma (R, S)..."] |
 | Tech stack (strong fit) | [Specific tools that indicate fit — e.g. "HiBob, Bamboo, Rippling, Workday (fragmented regions), Deel (as EOR pass-through)"] |
@@ -304,6 +317,8 @@ Framing subtitle, summary table, narrative paragraph, and a "why this ICP" note.
 | Emotional state | [Actual emotional language from data in quote marks — e.g. "'I'm the benefits system.' Spreadsheet fatigue. Embarrassed by the employee experience."] |
 
 The **Emotional state** row is what separates this from a generic ICP doc. Pull real customer phrases into it.
+
+Every row in this document's tables is fill-if-supported: where neither the conversations nor the CRM attributes genuinely support a dimension, write "not supported by the data" rather than a plausible value — an honest gap keeps the rest of the table credible.
 
 **Narrative paragraph (5–7 sentences, prose only, no bullets):**
 
@@ -386,7 +401,7 @@ This signals the hierarchy honestly. Three personas of equal weight reads as a l
 | Field | Persona 1 | Persona 2 | Persona 3 |
 |---|---|---|---|
 | Name | **[Memorable plain-English name with a clear archetype]** | [...] | [...] |
-| Titles | [4–6 title variations this persona goes by] | [...] | [...] |
+| Titles | [4–6 title variations this persona goes by — from person-scoped CRM attributes (job title) where mapped] | [...] | [...] |
 | Example people (from data) | [6–10 Name (Company) pairs pulled from best cohort] | [typically fewer named — often unnamed if secondary persona] | [may be 1–2 examples or "typically unnamed"] |
 | Company context | [Size range, team structure, where they sit organisationally] | [...] | [...] |
 | Day-to-day reality | [What their actual job looks like — specific hours/tasks, not abstractions] | [...] | [...] |
@@ -395,12 +410,9 @@ This signals the hierarchy honestly. Three personas of equal weight reads as a l
 | What's broken (their words) | [Verbatim quotes from data, slash-separated — e.g. "I'm the benefits system." / "Everything's on Excel."] | [...] | [...] |
 | What they want | [Top outcomes in their language] | [...] | [...] |
 | What they worry about | [Stall-the-deal anxieties, specific] | [...] | [...] |
-| Where they hang out | [LinkedIn communities, Slack groups, podcasts, events — channels to reach them] | [...] | [...] |
-| Content that resonates | [What content format lands with this persona — e.g. "before/after operational walkthroughs, HRIS integration demos, benchmarking data"] | [...] | [...] |
 
-**The two rows that make this artifact usable for marketing, not just sales:**
+**The row that makes this artifact usable for marketing, not just sales:**
 - **What's broken (their words)** — verbatim customer lines with slashes between them give marketers drop-in headline material
-- **Content that resonates** — tells content and marketing teams exactly what formats to produce for this persona
 
 **The Example people row matters too.** Pulling real Name (Company) pairs from the best cohort makes the persona concrete. If sales or marketing wants to validate the persona, they can go look at those people's LinkedIn profiles.
 
@@ -459,6 +471,8 @@ Example of a rich Displaceable entry:
 
 This is more useful than a single word rating because it tells sales exactly when to fight and when to walk away.
 
+The rating itself is gated on coverage: displaceability is an outcome claim, and when `describe_org`'s coverage span is weeks rather than quarters, replace High/Medium/Low with the conditions customers describe — no rating word — and say so in the calibration note (see the Short coverage window adaptation rule).
+
 ---
 
 ### Close with next-steps offer
@@ -472,13 +486,13 @@ After the full document is displayed inline, add the next-steps offer as a singl
 5. Run win/loss on specific deals
 6. Set up a monthly ICP refresh cadence
 
-One sentence. Do not follow it with a methodology note.
+One sentence.
 
-**Explicitly banned at the end of the deliverable:**
-- "Note: I defined the best cohort using..."
-- "I used a hybrid of X signals because..."
-- "If you'd rather base this on... say the word and I'll rerun"
-- Any assumption check, calibration note, or explanation of how cohorts were constructed
+A short methodology or calibration note is welcome after the next-steps offer where it helps the reader weigh the document — a line or two on how the cohorts were built, what the data could and couldn't support, and where confidence is thin. Keep it to a few sentences: the document is the deliverable, and the note exists to calibrate it, not to narrate the run.
+
+**Still banned at the end of the deliverable** (the note calibrates the document; it never describes the assistant's process):
+- Rerun offers — "If you'd rather base this on... say the word and I'll rerun"
+- Run narration — "I used a hybrid of X signals because..."
 
 ### Final step: present the file
 
@@ -499,7 +513,7 @@ The run is complete after the file is presented. Nothing follows it.
 
 - Runs silently, completes in one response
 - Uses tables throughout — no bulleted prose deliverables
-- No methodology narration anywhere in the output — including the end
+- Methodology stays brief — a short closing calibration note is fine; extended narration of the run is not
 - No framework names (JTBD, Four Forces, positioning frameworks) in the output
 - No section labels like "Artifact 1" — use human names only
 - No cold email copy, subject lines, ad creative, or landing page copy — those are downstream skills
@@ -512,6 +526,6 @@ The run is complete after the file is presented. Nothing follows it.
 - ICP snapshot stands alone — could be pasted into a positioning doc
 - Prospect criteria copy-paste ready for Apollo
 - Personas usable by sales, marketing, and paid ads — not just SDRs
-- Competitive landscape has Displaceable? ratings
+- Competitive landscape has Displaceable? ratings (or, under a short coverage window, the conditions customers describe in place of a rating)
 - Closing line offers next steps from the standard menu
 - **Markdown file `[company-slug]-icp.md` saved and surfaced (download link or file path) as the final action — skipped only if the environment cannot produce files**

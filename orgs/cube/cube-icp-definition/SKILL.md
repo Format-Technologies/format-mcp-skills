@@ -1,16 +1,18 @@
 ---
-name: format-icp-definition
+name: cube-icp-definition
 description: Use when defining, refining, or analysing the Ideal Customer Profile (ICP), identifying best-fit buyers, extracting buyer personas, or building target account criteria from customer conversation data. Trigger phrases include "define our ICP", "build an ICP", "who are our best customers", "who should we target", "build a persona", "what do our best buyers have in common", "win/loss from calls", and "build a target account list from customer data". This skill uses the Format MCP to produce an ICP snapshot, prospect list criteria, persona breakdowns, in-market language cues, and a competitive landscape — a cross-functional document for sales, marketing, paid ads, product, and leadership. Runs end-to-end silently without asking the user to configure anything upfront. Does not produce cold email copy, ad creative, or landing page copy — those are downstream skills.
 metadata:
   display_order: 60
-  title: Define Your ICP
+  overrides: format-icp-definition
+  title: ICP Definition for Cube
   personas: [marketing, sales, leadership]
   image: card.jpg
   use_case: >-
     Build an evidence-backed Ideal Customer Profile from real customer
     conversations: an ICP snapshot, buyer personas, in-market language cues,
     target-account criteria, and the competitive landscape — one document the
-    whole go-to-market team can work from.
+    whole go-to-market team can work from. Format's ICP-definition skill,
+    tailored to Cube's go-to-market workflow.
   limitations: >-
     Needs a meaningful base of conversations in Format to be representative.
     Doesn't produce cold-email copy, ad creative, or landing pages — those are

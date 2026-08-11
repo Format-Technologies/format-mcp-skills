@@ -1,16 +1,18 @@
 ---
-name: format-sales-call-coaching
+name: cube-sales-call-coaching
 description: "Use when assessing the selling competency of one sales rep from their real call recordings in Format. Triggers include: 'coach [rep]', 'score [rep]'s calls', 'how is [rep] selling', 'competency assessment for our AEs', 'sales coaching', 'review call quality', 'where is [rep] losing deals', or 'rep scorecard'. The skill requires a single named rep and a time window — it stops and asks if either is missing — then reads every real conversation that rep had in the window via the Format MCP, classifies each by reachability and motion, scores the genuine prospecting conversations against a behavioural rubric, and produces a competency assessment with verbatim evidence and one prioritised coaching focus. Assessment only — it surfaces evidence and a single priority; it does not write call scripts or run the coaching session."
 metadata:
   display_order: 100
-  title: Sales Call Coaching
+  overrides: format-sales-call-coaching
+  title: Sales Call Coaching for Cube
   personas: [sales]
   image: card.jpg
   use_case: >-
     A rep scorecard built from every real call they ran in the window — not
     a sampled highlight reel: each conversation classified, prospecting
     calls scored dimension by dimension with verbatim evidence, and exactly
-    one coaching priority, framed Situation–Behaviour–Impact.
+    one coaching priority, framed Situation–Behaviour–Impact. Format's sales
+    call coaching, calibrated for the motions Cube's reps actually run.
   limitations: >-
     One named rep per run, never a team; both rep and window are asked for,
     never defaulted. Reads recorded calls only — it can't see emails,

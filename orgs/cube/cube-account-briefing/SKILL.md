@@ -1,16 +1,18 @@
 ---
-name: format-account-briefing
+name: cube-account-briefing
 description: "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the format-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides a list of accounts and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence, does not prescribe actions."
 metadata:
   display_order: 40
-  title: CS Account Briefing
+  overrides: format-account-briefing
+  title: CS Account Briefing for Cube
   personas: [customer-success]
   image: card.jpg
   use_case: >-
     Scan your book of business for what's actually been said across customer
     conversations — risks, blockers, adoption, relationships, growth and
     commercial signals — grouped per account with verbatim evidence. Built for
-    weekly briefs and QBR prep.
+    weekly briefs and QBR prep. Format's CS account briefing, tailored to how
+    Cube runs it — one brief per account owner's own book.
   limitations: >-
     You provide the account list and time window. Surfaces evidence only — it
     doesn't prescribe actions. Quality depends on how much call/email coverage

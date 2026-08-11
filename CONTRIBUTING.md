@@ -97,10 +97,24 @@ orgs/<org-slug>/<skill-id>/…    ← one folder per skill, exactly like skills/
 - **Location is the only scope authority.** Nothing in a skill's frontmatter
   says which org it belongs to — the generator rejects any org-ish frontmatter
   key so scope is never declared in two places.
-- **Same id as a generic skill = override.** An org skill whose id matches a
-  generic skill replaces the generic one for that org (the app serves the org
-  version to that org, the generic version to everyone else). Any other id is
-  a net-new skill visible only to that org.
+- **Overrides — two forms.** An org skill can replace a generic skill for
+  that org (the app serves the org version to that org, the generic version
+  to everyone else):
+  - **Explicit (preferred):** the org skill declares
+    `metadata.overrides: <generic-skill-id>` and keeps its own bespoke id and
+    title (e.g. `cube-ticket-research`, "Ticket Research for Cube"). This is
+    the form to use whenever the org wants custom naming or branding. The
+    target must be an existing generic skill id, and the field is emitted
+    verbatim as `overrides` on the entry in `orgs/index.v1.json` (additive to
+    the contract; absent on generic and non-override entries).
+  - **Implicit:** the org skill simply reuses the generic skill's id. Still
+    legal, but the org skill then carries the generic identity.
+
+  A generic skill may be overridden at most once per org (counting both
+  forms), a skill may not use both forms at once (a generic id plus
+  `metadata.overrides` is rejected), and `metadata.overrides` is invalid in
+  generic skills. An org skill that overrides nothing is a net-new skill
+  visible only to that org.
 - **Generated output: `orgs/index.v1.json`.** Entries use the exact same shape
   as `index.v1.json` skill entries (including `frontmatter` and per-file
   `resources` digests), with repo-relative paths under `orgs/<slug>/…`. Same

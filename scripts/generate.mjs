@@ -219,6 +219,16 @@ function loadSkill(id, dir, prefix, label = id) {
   ) {
     fail(label, 'metadata.display_order must be a non-negative integer when present');
   }
+  if (meta.overrides !== undefined) {
+    // Explicit override declaration — org skills only. Target existence,
+    // one-override-per-target, and the no-double-override rule are checked
+    // in loadOrgs, where the generic id list is in scope.
+    if (!prefix.startsWith('orgs/')) {
+      fail(label, 'metadata.overrides is only valid in org skills (orgs/<slug>/…)');
+    } else if (typeof meta.overrides !== 'string' || !meta.overrides.trim()) {
+      fail(label, 'metadata.overrides must be a non-empty string naming a generic skill id');
+    }
+  }
 
   return {
     id,
@@ -230,6 +240,10 @@ function loadSkill(id, dir, prefix, label = id) {
     limitations: (meta.limitations ?? '').trim(),
     prompts: meta.prompts ?? [],
     related: meta.related ?? [],
+    // Explicit override target (org skills only; additive to the contract).
+    // Undefined on generic skills, and JSON.stringify drops undefined values,
+    // so the frozen generic manifests never see the field.
+    overrides: meta.overrides,
     bodyPath: `${prefix}/SKILL.md`,
     files: listFiles(dir, `${prefix}/${meta.image}`),
     // Skills-over-MCP extension (additive under the frozen v1 contract):
@@ -393,6 +407,32 @@ function loadOrgs() {
         } else if (!ids.includes(rel) && !skillIds.includes(rel)) {
           fail(`${label}/${s.id}`, `metadata.related references unknown skill "${rel}"`);
         }
+      }
+    }
+
+    // Overrides come in two forms — implicit (the org skill reuses a generic
+    // id) and explicit (metadata.overrides names the generic id under a
+    // bespoke one). A generic skill may be overridden at most once per org,
+    // counting both forms, and a skill may not use both forms at once.
+    const overrideTarget = new Map();
+    for (const s of orgSkills) {
+      if (ids.includes(s.id)) overrideTarget.set(s.id, s.id);
+    }
+    for (const s of orgSkills) {
+      if (s.overrides === undefined) continue;
+      const sl = `${label}/${s.id}`;
+      if (!ids.includes(s.overrides)) {
+        fail(sl, `metadata.overrides names unknown generic skill "${s.overrides}"`);
+        continue;
+      }
+      if (ids.includes(s.id)) {
+        fail(sl, `"${s.id}" is a generic skill id and therefore already an implicit override — drop metadata.overrides or rename the skill`);
+        continue;
+      }
+      if (overrideTarget.has(s.overrides)) {
+        fail(sl, `"${s.overrides}" is already overridden by "${overrideTarget.get(s.overrides)}" in this org`);
+      } else {
+        overrideTarget.set(s.overrides, s.id);
       }
     }
 

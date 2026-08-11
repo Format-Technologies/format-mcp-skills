@@ -1,9 +1,10 @@
 ---
-name: format-ticket-research
+name: cube-ticket-research
 description: "Use when a product manager or engineer wants to ground a ticket (Linear, Jira, or any tracker) in real customer evidence using Format MCP. Canonical invocation: 'using the Format MCP and the format-ticket-research skill, research this ticket' followed by pasted ticket text or a ticket reference. Also triggers on 'what are customers saying about this ticket', 'who's asking for this', 'find customer evidence for [ticket]', 'what requirements are customers implying for [feature]'. Produces a compact evidence page: customer asks grouped by the distinct need expressed, verbatim quotes with links to every piece of evidence, and what the evidence suggests the ticket should account for. It presents evidence and context rather than grading demand or recommending whether to build."
 metadata:
   display_order: 20
-  title: Ticket Research
+  overrides: format-ticket-research
+  title: Ticket Research for Cube
   personas: [product]
   image: card.jpg
   related: [format-roadmap-check]
@@ -13,6 +14,7 @@ metadata:
     said about the problem behind it: each distinct ask in their own words,
     who raised it and when, every quote linked to its source — and the
     requirements the evidence implies but the ticket doesn't spell out.
+    Format's ticket research skill, tailored to Cube's product workflow.
   limitations: >-
     Presents evidence; the conclusions are yours — it deliberately does not
     score or rank demand. Quality depends on conversation coverage in Format

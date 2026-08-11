@@ -1,0 +1,328 @@
+{
+  "version": 1,
+  "orgs": {
+    "org_umm63nqtab3qr2potjccs8sh": {
+      "slug": "cube",
+      "skills": [
+        {
+          "id": "cube-ticket-research",
+          "title": "Ticket Research for Cube",
+          "description": "Use when a product manager or engineer wants to ground a ticket (Linear, Jira, or any tracker) in real customer evidence using Format MCP. Canonical invocation: 'using the Format MCP and the cube-ticket-research skill, research this ticket' followed by pasted ticket text or a ticket reference. Also triggers on 'what are customers saying about this ticket', 'who's asking for this', 'find customer evidence for [ticket]', 'what requirements are customers implying for [feature]'. Produces a compact evidence page: customer asks grouped by the distinct need expressed, verbatim quotes with links to every piece of evidence, and what the evidence suggests the ticket should account for. It presents evidence and context rather than grading demand or recommending whether to build.",
+          "personas": [
+            "product"
+          ],
+          "image": "orgs/cube/cube-ticket-research/card.jpg",
+          "useCase": "Ground a ticket in customer reality before you build it. Paste it (or point at the tracker issue) and get back what customers have actually said about the problem behind it: each distinct ask in their own words, who raised it and when, every quote linked to its source — and the requirements the evidence implies but the ticket doesn't spell out. Format's ticket research skill, tailored to Cube's product workflow.",
+          "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score or rank demand. Quality depends on conversation coverage in Format and on whether a topic is listening for this kind of feedback; the output tells you when either is the limiting factor.",
+          "prompts": [
+            "Using the Format MCP and the cube-ticket-research skill, research this ticket: [paste ticket]",
+            "Who's actually asking for this, and what do they expect it to do? [paste ticket]",
+            "Research the ticket about bulk export and post the evidence as a comment on it."
+          ],
+          "related": [
+            "cube-roadmap-check"
+          ],
+          "overrides": "format-ticket-research",
+          "bodyPath": "orgs/cube/cube-ticket-research/SKILL.md",
+          "files": [
+            "orgs/cube/cube-ticket-research/SKILL.md"
+          ],
+          "frontmatter": {
+            "name": "cube-ticket-research",
+            "description": "Use when a product manager or engineer wants to ground a ticket (Linear, Jira, or any tracker) in real customer evidence using Format MCP. Canonical invocation: 'using the Format MCP and the cube-ticket-research skill, research this ticket' followed by pasted ticket text or a ticket reference. Also triggers on 'what are customers saying about this ticket', 'who's asking for this', 'find customer evidence for [ticket]', 'what requirements are customers implying for [feature]'. Produces a compact evidence page: customer asks grouped by the distinct need expressed, verbatim quotes with links to every piece of evidence, and what the evidence suggests the ticket should account for. It presents evidence and context rather than grading demand or recommending whether to build.",
+            "metadata": {
+              "display_order": 20,
+              "overrides": "format-ticket-research",
+              "title": "Ticket Research for Cube",
+              "personas": [
+                "product"
+              ],
+              "image": "card.jpg",
+              "related": [
+                "cube-roadmap-check"
+              ],
+              "use_case": "Ground a ticket in customer reality before you build it. Paste it (or point at the tracker issue) and get back what customers have actually said about the problem behind it: each distinct ask in their own words, who raised it and when, every quote linked to its source — and the requirements the evidence implies but the ticket doesn't spell out. Format's ticket research skill, tailored to Cube's product workflow.",
+              "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score or rank demand. Quality depends on conversation coverage in Format and on whether a topic is listening for this kind of feedback; the output tells you when either is the limiting factor.",
+              "prompts": [
+                "Using the Format MCP and the cube-ticket-research skill, research this ticket: [paste ticket]",
+                "Who's actually asking for this, and what do they expect it to do? [paste ticket]",
+                "Research the ticket about bulk export and post the evidence as a comment on it."
+              ]
+            }
+          },
+          "resources": [
+            {
+              "path": "orgs/cube/cube-ticket-research/SKILL.md",
+              "sha256": "82078163b8c5c49ca1023b951ff4638513b7e737bf2e23c0639581361c42e3ce",
+              "bytes": 23592,
+              "mediaType": "text/markdown"
+            },
+            {
+              "path": "orgs/cube/cube-ticket-research/card.jpg",
+              "sha256": "d76cadb19079fb457fd7d02553e16a626eb842a1f7d4b8467e86dec4f18ecbd8",
+              "bytes": 442519,
+              "mediaType": "image/jpeg"
+            }
+          ]
+        },
+        {
+          "id": "cube-roadmap-check",
+          "title": "Roadmap Check for Cube",
+          "description": "Use when a product manager or leader wants to check a roadmap against real customer evidence using Format MCP — answering 'are customers asking for what we're building?' and the inverse, 'what are customers asking for that we're not building?'. Canonical invocation: 'using the Format MCP and the cube-roadmap-check skill, check this roadmap' followed by a pasted list of roadmap items or a reference to a tracker project/epic. Also triggers on 'validate this roadmap against customer feedback', 'is there evidence for these roadmap items', 'what are customers asking for that isn't on the roadmap', 'roadmap evidence check', 'gap analysis on our roadmap'. Produces an evidence board: per-item customer evidence with links to every quote, plus the demand themes no roadmap item covers. It presents evidence and context rather than scoring items or recommending what to build or cut.",
+          "personas": [
+            "product",
+            "leadership"
+          ],
+          "image": "orgs/cube/cube-roadmap-check/card.jpg",
+          "useCase": "Hold your roadmap up against what customers have actually said. Paste a roadmap (or point at a tracker project) and get an evidence board: what customers have said about each item with links to every supporting quote, and the things they keep raising that map to nothing you're building. Format's roadmap check, tailored for Cube — cross-customer recurrence counts lead the board.",
+          "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score items or rank the roadmap. Depth per item is survey-level; use the Ticket Research skill for a deep dive on one item. Quality depends on conversation coverage in Format and on which topics the workspace listens for; the board tells you when either is the limiting factor.",
+          "prompts": [
+            "Using the Format MCP and the cube-roadmap-check skill, check this roadmap: [paste roadmap items]",
+            "Are customers actually asking for what's on our Q3 roadmap? Build me the evidence board as an HTML page.",
+            "What are customers raising that maps to nothing on this roadmap? [paste roadmap]"
+          ],
+          "related": [
+            "cube-ticket-research"
+          ],
+          "overrides": "format-roadmap-check",
+          "bodyPath": "orgs/cube/cube-roadmap-check/SKILL.md",
+          "files": [
+            "orgs/cube/cube-roadmap-check/SKILL.md"
+          ],
+          "frontmatter": {
+            "name": "cube-roadmap-check",
+            "description": "Use when a product manager or leader wants to check a roadmap against real customer evidence using Format MCP — answering 'are customers asking for what we're building?' and the inverse, 'what are customers asking for that we're not building?'. Canonical invocation: 'using the Format MCP and the cube-roadmap-check skill, check this roadmap' followed by a pasted list of roadmap items or a reference to a tracker project/epic. Also triggers on 'validate this roadmap against customer feedback', 'is there evidence for these roadmap items', 'what are customers asking for that isn't on the roadmap', 'roadmap evidence check', 'gap analysis on our roadmap'. Produces an evidence board: per-item customer evidence with links to every quote, plus the demand themes no roadmap item covers. It presents evidence and context rather than scoring items or recommending what to build or cut.",
+            "metadata": {
+              "display_order": 30,
+              "overrides": "format-roadmap-check",
+              "title": "Roadmap Check for Cube",
+              "personas": [
+                "product",
+                "leadership"
+              ],
+              "image": "card.jpg",
+              "related": [
+                "cube-ticket-research"
+              ],
+              "use_case": "Hold your roadmap up against what customers have actually said. Paste a roadmap (or point at a tracker project) and get an evidence board: what customers have said about each item with links to every supporting quote, and the things they keep raising that map to nothing you're building. Format's roadmap check, tailored for Cube — cross-customer recurrence counts lead the board.",
+              "limitations": "Presents evidence; the conclusions are yours — it deliberately does not score items or rank the roadmap. Depth per item is survey-level; use the Ticket Research skill for a deep dive on one item. Quality depends on conversation coverage in Format and on which topics the workspace listens for; the board tells you when either is the limiting factor.",
+              "prompts": [
+                "Using the Format MCP and the cube-roadmap-check skill, check this roadmap: [paste roadmap items]",
+                "Are customers actually asking for what's on our Q3 roadmap? Build me the evidence board as an HTML page.",
+                "What are customers raising that maps to nothing on this roadmap? [paste roadmap]"
+              ]
+            }
+          },
+          "resources": [
+            {
+              "path": "orgs/cube/cube-roadmap-check/SKILL.md",
+              "sha256": "9ded69f3d9e6fd13ff6a4e9aee631ad01ee0acca55ae3c1e4ff295b322d7ae1e",
+              "bytes": 33253,
+              "mediaType": "text/markdown"
+            },
+            {
+              "path": "orgs/cube/cube-roadmap-check/card.jpg",
+              "sha256": "effba371f05a27c6fdc77742f0d74fc301430674c9e42579a106a30075457a67",
+              "bytes": 526699,
+              "mediaType": "image/jpeg"
+            }
+          ]
+        },
+        {
+          "id": "cube-account-briefing",
+          "title": "CS Account Briefing for Cube",
+          "description": "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the cube-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides a list of accounts and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence, does not prescribe actions.",
+          "personas": [
+            "customer-success"
+          ],
+          "image": "orgs/cube/cube-account-briefing/card.jpg",
+          "useCase": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep. Format's CS account briefing, tailored to how Cube runs it — one brief per account owner's own book.",
+          "limitations": "You provide the account list and time window. Surfaces evidence only — it doesn't prescribe actions. Quality depends on how much call/email coverage those accounts have in Format.",
+          "prompts": [
+            "Using the CS account briefing skill, scan Acme, Globex and Initech over the last 30 days.",
+            "Prep me for the QBR with Acme — what's been said across their conversations lately?"
+          ],
+          "related": [],
+          "overrides": "format-account-briefing",
+          "bodyPath": "orgs/cube/cube-account-briefing/SKILL.md",
+          "files": [
+            "orgs/cube/cube-account-briefing/SKILL.md",
+            "orgs/cube/cube-account-briefing/references/example-phrases.md"
+          ],
+          "frontmatter": {
+            "name": "cube-account-briefing",
+            "description": "Use when a Customer Success Manager wants to scan their book of business for signals across customer conversations using Format MCP. Canonical invocation: 'using the Format MCP and the cube-account-briefing skill, apply it to these accounts over the last [N days/weeks]' followed by a list. Also triggers on 'weekly CS brief', 'scan these accounts for churn risks', 'what's been said across my accounts', 'prep me for QBR with [account]', 'book of business check', 'account health briefing', 'find risks across [accounts]'. The CSM provides a list of accounts and a time window; the skill pulls verbatim signals from calls/emails/notes via Format MCP and groups them under 6 locked CS categories (risk, blockers, adoption, relationships, growth, commercial). Surfaces evidence, does not prescribe actions.",
+            "metadata": {
+              "display_order": 40,
+              "overrides": "format-account-briefing",
+              "title": "CS Account Briefing for Cube",
+              "personas": [
+                "customer-success"
+              ],
+              "image": "card.jpg",
+              "use_case": "Scan your book of business for what's actually been said across customer conversations — risks, blockers, adoption, relationships, growth and commercial signals — grouped per account with verbatim evidence. Built for weekly briefs and QBR prep. Format's CS account briefing, tailored to how Cube runs it — one brief per account owner's own book.",
+              "limitations": "You provide the account list and time window. Surfaces evidence only — it doesn't prescribe actions. Quality depends on how much call/email coverage those accounts have in Format.",
+              "prompts": [
+                "Using the CS account briefing skill, scan Acme, Globex and Initech over the last 30 days.",
+                "Prep me for the QBR with Acme — what's been said across their conversations lately?"
+              ]
+            }
+          },
+          "resources": [
+            {
+              "path": "orgs/cube/cube-account-briefing/SKILL.md",
+              "sha256": "8512ea2aff6f7a5c7daa3a7ef26d3404752c37f08549e4bd91b814170f6030e7",
+              "bytes": 15835,
+              "mediaType": "text/markdown"
+            },
+            {
+              "path": "orgs/cube/cube-account-briefing/card.jpg",
+              "sha256": "fa18dd38be0cbfd81309761e676e7d5f332853b896b54a3595c6a0266f47fe32",
+              "bytes": 452236,
+              "mediaType": "image/jpeg"
+            },
+            {
+              "path": "orgs/cube/cube-account-briefing/references/example-phrases.md",
+              "sha256": "f369dbb8b6c22c1469a5f95d5256ef06ba29f30d45cd6709f96dd1290915b229",
+              "bytes": 2070,
+              "mediaType": "text/markdown"
+            }
+          ]
+        },
+        {
+          "id": "cube-icp-definition",
+          "title": "ICP Definition for Cube",
+          "description": "Use when defining, refining, or analysing the Ideal Customer Profile (ICP), identifying best-fit buyers, extracting buyer personas, or building target account criteria from customer conversation data. Trigger phrases include \"define our ICP\", \"build an ICP\", \"who are our best customers\", \"who should we target\", \"build a persona\", \"what do our best buyers have in common\", \"win/loss from calls\", and \"build a target account list from customer data\". This skill uses the Format MCP to produce an ICP snapshot, prospect list criteria, persona breakdowns, in-market language cues, and a competitive landscape — a cross-functional document for sales, marketing, paid ads, product, and leadership. Runs end-to-end silently without asking the user to configure anything upfront. Does not produce cold email copy, ad creative, or landing page copy — those are downstream skills.",
+          "personas": [
+            "marketing",
+            "sales",
+            "leadership"
+          ],
+          "image": "orgs/cube/cube-icp-definition/card.jpg",
+          "useCase": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from. Format's ICP-definition skill, tailored to Cube's go-to-market workflow.",
+          "limitations": "Needs a meaningful base of conversations in Format to be representative. Doesn't produce cold-email copy, ad creative, or landing pages — those are downstream skills.",
+          "prompts": [
+            "Define our ICP from the last 6 months of customer conversations.",
+            "What do our best customers have in common?"
+          ],
+          "related": [],
+          "overrides": "format-icp-definition",
+          "bodyPath": "orgs/cube/cube-icp-definition/SKILL.md",
+          "files": [
+            "orgs/cube/cube-icp-definition/SKILL.md"
+          ],
+          "frontmatter": {
+            "name": "cube-icp-definition",
+            "description": "Use when defining, refining, or analysing the Ideal Customer Profile (ICP), identifying best-fit buyers, extracting buyer personas, or building target account criteria from customer conversation data. Trigger phrases include \"define our ICP\", \"build an ICP\", \"who are our best customers\", \"who should we target\", \"build a persona\", \"what do our best buyers have in common\", \"win/loss from calls\", and \"build a target account list from customer data\". This skill uses the Format MCP to produce an ICP snapshot, prospect list criteria, persona breakdowns, in-market language cues, and a competitive landscape — a cross-functional document for sales, marketing, paid ads, product, and leadership. Runs end-to-end silently without asking the user to configure anything upfront. Does not produce cold email copy, ad creative, or landing page copy — those are downstream skills.",
+            "metadata": {
+              "display_order": 60,
+              "overrides": "format-icp-definition",
+              "title": "ICP Definition for Cube",
+              "personas": [
+                "marketing",
+                "sales",
+                "leadership"
+              ],
+              "image": "card.jpg",
+              "use_case": "Build an evidence-backed Ideal Customer Profile from real customer conversations: an ICP snapshot, buyer personas, in-market language cues, target-account criteria, and the competitive landscape — one document the whole go-to-market team can work from. Format's ICP-definition skill, tailored to Cube's go-to-market workflow.",
+              "limitations": "Needs a meaningful base of conversations in Format to be representative. Doesn't produce cold-email copy, ad creative, or landing pages — those are downstream skills.",
+              "prompts": [
+                "Define our ICP from the last 6 months of customer conversations.",
+                "What do our best customers have in common?"
+              ]
+            }
+          },
+          "resources": [
+            {
+              "path": "orgs/cube/cube-icp-definition/SKILL.md",
+              "sha256": "d51da45be5c135d6a741cf436e794b3f91b8d5e2ad35fe250c59d0dd83a966b1",
+              "bytes": 28620,
+              "mediaType": "text/markdown"
+            },
+            {
+              "path": "orgs/cube/cube-icp-definition/card.jpg",
+              "sha256": "7497d6f1fe34968ba5b073f75a7b2d332242c461e8b18db7e982a0f00c95701b",
+              "bytes": 668003,
+              "mediaType": "image/jpeg"
+            }
+          ]
+        },
+        {
+          "id": "cube-sales-call-coaching",
+          "title": "Sales Call Coaching for Cube",
+          "description": "Use when assessing the selling competency of one sales rep from their real call recordings in Format. Triggers include: 'coach [rep]', 'score [rep]'s calls', 'how is [rep] selling', 'competency assessment for our AEs', 'sales coaching', 'review call quality', 'where is [rep] losing deals', or 'rep scorecard'. The skill requires a single named rep and a time window — it stops and asks if either is missing — then reads every real conversation that rep had in the window via the Format MCP, classifies each by reachability and motion, scores the genuine prospecting conversations against a behavioural rubric, and produces a competency assessment with verbatim evidence and one prioritised coaching focus. Assessment only — it surfaces evidence and a single priority; it does not write call scripts or run the coaching session.",
+          "personas": [
+            "sales"
+          ],
+          "image": "orgs/cube/cube-sales-call-coaching/card.jpg",
+          "useCase": "A rep scorecard built from every real call they ran in the window — not a sampled highlight reel: each conversation classified, prospecting calls scored dimension by dimension with verbatim evidence, and exactly one coaching priority, framed Situation–Behaviour–Impact. Format's sales call coaching, calibrated for the motions Cube's reps actually run.",
+          "limitations": "One named rep per run, never a team; both rep and window are asked for, never defaulted. Reads recorded calls only — it can't see emails, in-person meetings, or deals that progressed off-call. The rubric is calibrated for short outbound prospecting; the skill detects when the rep runs a different motion and says so.",
+          "prompts": [
+            "Using the cube-sales-call-coaching skill, assess [rep name] over the last 14 days.",
+            "Where is [rep name] losing deals? Score their calls since May 1."
+          ],
+          "related": [],
+          "overrides": "format-sales-call-coaching",
+          "bodyPath": "orgs/cube/cube-sales-call-coaching/SKILL.md",
+          "files": [
+            "orgs/cube/cube-sales-call-coaching/SKILL.md",
+            "orgs/cube/cube-sales-call-coaching/references/coaching-frames.md",
+            "orgs/cube/cube-sales-call-coaching/references/rubric.md",
+            "orgs/cube/cube-sales-call-coaching/references/scoring-example.md"
+          ],
+          "frontmatter": {
+            "name": "cube-sales-call-coaching",
+            "description": "Use when assessing the selling competency of one sales rep from their real call recordings in Format. Triggers include: 'coach [rep]', 'score [rep]'s calls', 'how is [rep] selling', 'competency assessment for our AEs', 'sales coaching', 'review call quality', 'where is [rep] losing deals', or 'rep scorecard'. The skill requires a single named rep and a time window — it stops and asks if either is missing — then reads every real conversation that rep had in the window via the Format MCP, classifies each by reachability and motion, scores the genuine prospecting conversations against a behavioural rubric, and produces a competency assessment with verbatim evidence and one prioritised coaching focus. Assessment only — it surfaces evidence and a single priority; it does not write call scripts or run the coaching session.",
+            "metadata": {
+              "display_order": 100,
+              "overrides": "format-sales-call-coaching",
+              "title": "Sales Call Coaching for Cube",
+              "personas": [
+                "sales"
+              ],
+              "image": "card.jpg",
+              "use_case": "A rep scorecard built from every real call they ran in the window — not a sampled highlight reel: each conversation classified, prospecting calls scored dimension by dimension with verbatim evidence, and exactly one coaching priority, framed Situation–Behaviour–Impact. Format's sales call coaching, calibrated for the motions Cube's reps actually run.",
+              "limitations": "One named rep per run, never a team; both rep and window are asked for, never defaulted. Reads recorded calls only — it can't see emails, in-person meetings, or deals that progressed off-call. The rubric is calibrated for short outbound prospecting; the skill detects when the rep runs a different motion and says so.",
+              "prompts": [
+                "Using the cube-sales-call-coaching skill, assess [rep name] over the last 14 days.",
+                "Where is [rep name] losing deals? Score their calls since May 1."
+              ]
+            }
+          },
+          "resources": [
+            {
+              "path": "orgs/cube/cube-sales-call-coaching/SKILL.md",
+              "sha256": "b5381e865df40e1b22da1757692fc9f8a8972dff45abadf75d91acf59846e1e3",
+              "bytes": 15723,
+              "mediaType": "text/markdown"
+            },
+            {
+              "path": "orgs/cube/cube-sales-call-coaching/card.jpg",
+              "sha256": "a02dd0282690b99d92182ca32ebc597d84a295f0e2e6439615b8fd45d2b012ab",
+              "bytes": 191930,
+              "mediaType": "image/jpeg"
+            },
+            {
+              "path": "orgs/cube/cube-sales-call-coaching/references/coaching-frames.md",
+              "sha256": "d3adda4a2c93294bf54594e9c4a671d300f3e8c6227e46e7b7109f705a43671b",
+              "bytes": 3031,
+              "mediaType": "text/markdown"
+            },
+            {
+              "path": "orgs/cube/cube-sales-call-coaching/references/rubric.md",
+              "sha256": "e8a70cee1aa515e56a737173b89851a06fd9c89d51cf850e1f3483aaa85975f2",
+              "bytes": 6362,
+              "mediaType": "text/markdown"
+            },
+            {
+              "path": "orgs/cube/cube-sales-call-coaching/references/scoring-example.md",
+              "sha256": "c1947a6e6c10c95bb374e92e3fe7f3702d5f841d8d1a39f4f14d564aa4c98279",
+              "bytes": 5702,
+              "mediaType": "text/markdown"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

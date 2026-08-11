@@ -15,7 +15,7 @@ and everything else is generated from it.**
 ├── orgs/
 │   ├── index.v1.json                ← GENERATED — org-scoped skills manifest
 │   └── <org-slug>/
-│       ├── org.json                 ← binds the folder to a Format org id
+│       ├── org.json                 ← binds the folder to the org's Format ids
 │       └── <skill-id>/…             ← an org skill: same shape as a generic skill folder
 ├── index.json                       ← GENERATED — gallery manifest
 ├── index.v1.json                    ← GENERATED — frozen v1 twin (the Format app reads this)
@@ -77,12 +77,19 @@ Some customers get bespoke skills served only to their Format organization,
 alongside the generic catalogue. The layout mirrors `skills/`:
 
 ```
-orgs/<org-slug>/org.json        ← { "orgId": "<Format org id>" } — the binding
+orgs/<org-slug>/org.json        ← { "orgIds": ["<Format org id>", …] } — the binding
 orgs/<org-slug>/<skill-id>/…    ← one folder per skill, exactly like skills/<id>/
 ```
 
-- **`org.json` is mandatory** and holds exactly one key: a non-empty string
-  `orgId`. The folder name is the org's slug — kebab-case, like skill ids.
+- **`org.json` is mandatory** and holds exactly one key: `orgIds`, a
+  non-empty array of unique, non-empty strings. It's an array because the same
+  customer has a **different Format org id per environment** — prod and dev
+  run separate databases — and non-prod app environments read this repo's
+  `dev` branch, so appending the customer's dev-environment org id is how you
+  test there. The generator emits one `orgs/index.v1.json` entry per listed
+  id, each carrying the same slug and skills (the consumer's lookup stays a
+  plain map hit); an id may be bound by only one org folder. The folder name
+  is the org's slug — kebab-case, like skill ids.
 - **Org skills follow every generic-skill rule** (frontmatter fields, kebab
   ids, reserved ids, description length, image, …) and are validated by the
   same generator. Within one org, skill ids are unique; `metadata.related` may

@@ -298,11 +298,14 @@ for (const s of skills) {
 applyDisplayOrder(skills, (id) => id);
 
 /**
- * Org-scoped skills: orgs/<slug>/org.json binds a folder to a Format org id;
- * every subdirectory is a skill validated by the exact rules generic skills
- * follow. An org skill whose id matches a generic skill is an override (the
- * app swaps the generic skill for the org version, for that org only); any
- * other id is a net-new org skill. Returns [{ orgId, slug, skills }].
+ * Org-scoped skills: orgs/<slug>/org.json binds a folder to the customer's
+ * Format org ids — plural, because the same customer has a different Orgs id
+ * per environment (prod vs dev databases), and non-prod app environments read
+ * this repo's dev branch. Every subdirectory is a skill validated by the
+ * exact rules generic skills follow. An org skill whose id matches a generic
+ * skill is an override (the app swaps the generic skill for the org version,
+ * for that org only); any other id is a net-new org skill.
+ * Returns [{ orgIds, slug, skills }].
  */
 function loadOrgs() {
   if (!existsSync(ORGS_DIR)) return [];
@@ -335,19 +338,34 @@ function loadOrgs() {
       if (typeof org !== 'object' || Array.isArray(org)) {
         fail(label, 'org.json must be a JSON object');
         org = null;
-      } else if (typeof org.orgId !== 'string' || !org.orgId.trim()) {
-        fail(label, 'org.json must have a non-empty string "orgId"');
+      } else if (
+        !Array.isArray(org.orgIds) ||
+        org.orgIds.length === 0 ||
+        org.orgIds.some((id) => typeof id !== 'string' || !id.trim())
+      ) {
+        fail(label, 'org.json must have "orgIds": a non-empty array of non-empty strings');
         org = null;
       } else {
-        const unknown = Object.keys(org).filter((k) => k !== 'orgId');
+        const unknown = Object.keys(org).filter((k) => k !== 'orgIds');
         if (unknown.length > 0) {
           fail(label, `org.json has unknown key(s): ${unknown.join(', ')}`);
         }
-        if (orgIdOwner.has(org.orgId)) {
-          fail(label, `orgId "${org.orgId}" is already bound to orgs/${orgIdOwner.get(org.orgId)}`);
-          org = null;
-        } else {
-          orgIdOwner.set(org.orgId, slug);
+        // Every id — across all orgs and within one org.json — may be bound
+        // exactly once: the emitted map is keyed by org id, so a duplicate
+        // would silently drop an entry.
+        for (const id of org.orgIds) {
+          if (orgIdOwner.has(id)) {
+            const owner = orgIdOwner.get(id);
+            fail(
+              label,
+              owner === slug
+                ? `orgId "${id}" is listed more than once in org.json`
+                : `orgId "${id}" is already bound to orgs/${owner}`,
+            );
+            org = null;
+          } else {
+            orgIdOwner.set(id, slug);
+          }
         }
       }
     }
@@ -380,12 +398,9 @@ function loadOrgs() {
 
     applyDisplayOrder(orgSkills, (id) => `${label}/${id}`);
 
-    if (org !== null) loaded.push({ orgId: org.orgId, slug, skills: orgSkills });
+    if (org !== null) loaded.push({ orgIds: org.orgIds, slug, skills: orgSkills });
   }
 
-  // Deterministic output: the orgs map is keyed by orgId, emitted in sorted
-  // key order.
-  loaded.sort((a, b) => a.orgId.localeCompare(b.orgId));
   return loaded;
 }
 
@@ -424,8 +439,14 @@ const marketplaceJson = {
 
 const orgsIndexJson = {
   version: 1,
+  // One map entry per org id — an org folder listing several ids (one per
+  // environment) is emitted once per id, each entry carrying the same slug
+  // and skills, so the consumer's lookup stays a plain map hit. Keys are
+  // emitted in sorted order for deterministic output.
   orgs: Object.fromEntries(
-    orgs.map((o) => [o.orgId, { slug: o.slug, skills: o.skills }]),
+    orgs
+      .flatMap((o) => o.orgIds.map((id) => [id, { slug: o.slug, skills: o.skills }]))
+      .sort(([a], [b]) => a.localeCompare(b)),
   ),
 };
 

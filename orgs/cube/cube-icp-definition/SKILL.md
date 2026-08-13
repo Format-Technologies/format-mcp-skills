@@ -118,6 +118,8 @@ search_insights(
 
 Each row carries the `company` that said it (with `source: 'linked'` when Format knows the customer and `'inferred'` when the name was only read out of the conversation — the `id` is `null` in exactly that case). Extract unique company names from each cohort and dedupe companies appearing in both.
 
+Rows also carry `isAiRejected` — Format's quality filter's verdict on the extraction. Read it as a caution, not a gate: don't rest a claim on flagged rows alone, but never silently drop a flagged quote whose words are clear — the filter judges extraction quality, not relevance.
+
 ### Step 3: Resolve companies, firmographics and roles (2 calls)
 
 ```

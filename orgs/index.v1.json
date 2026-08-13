@@ -53,8 +53,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-ticket-research/SKILL.md",
-              "sha256": "c498ce1cf7b51968fd31833e03ad96cbdf8b3956abbe891e2fee150ff854caaf",
-              "bytes": 24708,
+              "sha256": "7e756e79aee53fcff0d95ade9f04bc0932c19f5458db34333ecb8dbb23e27c4b",
+              "bytes": 25109,
               "mediaType": "text/markdown"
             },
             {
@@ -116,8 +116,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-roadmap-check/SKILL.md",
-              "sha256": "4aa8c7cdfa9c9451ed6bebf2d14a8cabbced02afecfe0ace1e0a3739963882a3",
-              "bytes": 34663,
+              "sha256": "506560d6e1695718a929773e4c32bbc6c34f9b17b5b2ef499ca2d7d8c7003b48",
+              "bytes": 35050,
               "mediaType": "text/markdown"
             },
             {
@@ -175,8 +175,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-account-briefing/SKILL.md",
-              "sha256": "01675d12270e8c9253186106c68a01be7be5ee44f2de00d3305424108f8dde31",
-              "bytes": 20073,
+              "sha256": "be52de5f77cf9044a303834e83a63221c1d1cf31391c9dc6b1d05b5e95353183",
+              "bytes": 20461,
               "mediaType": "text/markdown"
             },
             {
@@ -239,8 +239,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-icp-definition/SKILL.md",
-              "sha256": "1c0cd905860e555013969bcbec2bcf41f4cad58e31f9148d6934283cc4f83b13",
-              "bytes": 29682,
+              "sha256": "4303481bb99b88c45a2ab1d555c2e9ee5932b7cc2acba7681e575c37f4fc3b85",
+              "bytes": 29966,
               "mediaType": "text/markdown"
             },
             {

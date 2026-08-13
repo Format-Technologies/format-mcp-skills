@@ -128,6 +128,8 @@ For each insight, judge which of the 6 categories it belongs to. A single insigh
 
 For ambiguous insights that don't cleanly fit any category, drop them rather than force-fit. The brief is more valuable if it's tight.
 
+Each insight also carries `isAiRejected` — Format's quality filter's verdict on the extraction. Treat it as a prompt to read that signal more carefully (set `includeContext: true` if needed), never as a silent discard: a flagged insight whose words clearly carry a signal still belongs in the brief — a non-renewal notice is a red flag whatever the filter thought of the extraction.
+
 **Tier the risk signals.** Every signal landing in Risk & churn drivers or Commercial & viability risk gets a severity tier, read off observable properties of the evidence — the commitment of the statement (a formal notice or dated ultimatum vs. hedging vs. grumbling), the scope of consequence (legal, reputational, or ethical allegations and exec-level escalation vs. routine friction), and the value and timeline at stake (the account's ARR and renewal date, from its CRM attributes):
 
 - ⛔ **Escalation** — formal non-renewal or cancellation notices, dated ultimatums, allegations of unethical conduct, reputational or legal threats, exec-level escalation

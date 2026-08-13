@@ -90,7 +90,7 @@ The make-or-break problem is vocabulary: customers rarely use the ticket's words
 
 **Read an insight in full when it's load-bearing.** `get_insight({ insightId })` returns one insight with three things a search row doesn't carry unconditionally: `context` (the extraction's summary of the surrounding conversation), `groups` (which themes it belongs to), and `followUp` (what was said next — the reply, the objection, or where the thread went). Read `followUp` as a description of the conversation, never as a recommended action.
 
-**Deduplicate across all rounds — by ID and by content.** ID-level dedup is not enough: the same customer statement is often extracted under multiple topics as separate insights with different IDs. Treat near-identical text from the same `record.id` as **one** piece of evidence — count it once, cite it once (any of its `shareUrl`s works).
+**Deduplicate across all rounds.** Different probes return the same insight — dedupe by ID. Cross-topic restatements are already folded server-side (one statement is one row, with `alsoUnderTopics` naming its other topics), but a customer restating the same ask later in the same conversation is still separate rows: treat near-identical text from the same `record.id` as **one** piece of evidence — count it once, cite it once.
 
 ### Adjudicate every candidate
 
@@ -100,6 +100,8 @@ Semantic similarity is not demand. Judge each candidate insight and bucket it:
 - **Implied need** — the customer describes pain this ticket would resolve, without asking for it
 - **Adjacent** — same area, different need → **discard**
 - **Counter-evidence** — the customer wants the opposite, or describes the ticket's approach as a problem → keep, presented separately
+
+Each row carries `isAiRejected` — Format's quality filter's verdict on the extraction. Treat it as a prompt to read that candidate more closely (pull `context`, check the record), never as a gate: a flagged insight that adjudication accepts on its words still counts, and none is discarded for the flag alone.
 
 ### Flag certainty — and resolve it from the source
 

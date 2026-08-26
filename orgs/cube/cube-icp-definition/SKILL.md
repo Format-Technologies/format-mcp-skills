@@ -303,14 +303,14 @@ Framing subtitle, summary table, narrative paragraph, and a "why this ICP" note.
 
 | Dimension | Profile |
 |---|---|
-| Primary geography | [Primary regions — mark mandatory vs. pull. E.g. "Ireland + UK (mandatory). Growing pull from EU/global distributed teams."] |
-| Company size | [Employee range with sweet spot — from the workspace's employee-count attribute (e.g. `Employees`) where mapped — plus *why* above/below doesn't work: e.g. "30–500 (sweet spot 50–250). Below 30 = price-sensitive. Above 500 = RFP-heavy and slow."] |
-| Stage & funding | [E.g. "Seed–Series C scaleups AND mid-market private businesses (agencies, legal, pharma)"] |
-| Vertical breadth | [Named examples across verticals — e.g. "Not vertical-specific. Wins span SaaS (A, B, C), agencies (X, Y), fintech (P, Q), pharma (R, S)..."] |
-| Tech stack (strong fit) | [Specific tools that indicate fit — e.g. "HiBob, Bamboo, Rippling, Workday (fragmented regions), Deel (as EOR pass-through)"] |
-| Buyer | [Exact roles + who signs — e.g. "Head of People / People Ops — *always* the economic champion. CFO is the approver."] |
-| Headcount/timing trigger | [Observable events — e.g. "Recent acquisition, international expansion, scale from 30 to 100+, new HR hire inherits fragmented setup, renewal 60–90 days out"] |
-| Emotional state | [Actual emotional language from data in quote marks — e.g. "'I'm the benefits system.' Spreadsheet fatigue. Embarrassed by the employee experience."] |
+| Primary geography | [Primary regions — mark mandatory vs. pull. E.g. "Midwest + Northeast (mandatory). Growing pull from operators consolidating branches across state lines."] |
+| Company size | [Employee range with sweet spot, plus *why* above/below doesn't work — e.g. "20–300 technicians (sweet spot 40–120). Below 20 = the owner still dispatches by hand. Above 300 = RFP-heavy and slow."] |
+| Stage & funding | [E.g. "Owner-operated regional businesses AND private-equity roll-ups consolidating several branches"] |
+| Vertical breadth | [Named examples across verticals — e.g. "Not vertical-specific within field service. Wins span HVAC (A, B, C), plumbing (X, Y), electrical (P, Q), pest control (R, S)..."] |
+| Tech stack (strong fit) | [Specific tools that indicate fit — name the real ones from the workspace. E.g. "an off-the-shelf accounting package, a spreadsheet dispatch board, a scheduling tool bought for one branch and never rolled out"] |
+| Buyer | [Exact roles + who signs — e.g. "Operations Manager / Service Manager — *always* the economic champion. The owner is the approver."] |
+| Headcount/timing trigger | [Observable events — e.g. "Recent acquisition, first out-of-state job, scale from 20 to 60+ technicians, new ops hire inherits a fragmented setup, renewal 60–90 days out"] |
+| Emotional state | [Actual emotional language from data in quote marks — e.g. "'I'm the dispatch board.' Spreadsheet fatigue. Embarrassed by what customers hear when they call."] |
 
 The **Emotional state** row is what separates this from a generic ICP doc. Pull real customer phrases into it.
 
@@ -347,7 +347,7 @@ Four components: a single Primary/Secondary/Exclude criteria table, a short disq
 |---|---|---|---|
 | HQ / employee base | [Primary regions] | [Secondary regions or mixed footprints] | [Regions that don't work] |
 | Employee count | [Tight sweet-spot range] | [Wider acceptable range] | [Sizes that don't work + one-line reason] |
-| Tech stack in use | [HRIS / ops tools that signal strong fit] | [Tools that work but aren't primary signal] | [Stacks that indicate misfit] |
+| Tech stack in use | [Ops / back-office tools that signal strong fit] | [Tools that work but aren't primary signal] | [Stacks that indicate misfit] |
 | Current setup / status quo | [What the prospect currently uses that creates buying pressure] | [Adjacent setups worth testing] | [Setups that mean no pain yet, or locked-in pain] |
 | Trigger events | [Observable events — funding, hire, expansion, renewal] | [Softer signals — growth rate, job posts] | — |
 | Industry | [Named verticals that show up in Best cohort] | [Adjacent verticals worth testing] | [Verticals that never convert — named] |
@@ -361,7 +361,7 @@ Not a separate table — a prose list of 4–6 bullets, each naming a real examp
 - [Disqualifier 2] ([Named Account] pattern)
 - [Disqualifier 3] ([Named Account] pattern)
 
-This format makes the list usable — sales hears "oh, this feels like a Sons UK pattern" and knows to disqualify.
+This format makes the list usable — sales hears "oh, this feels like a [Named Account] pattern" and knows to disqualify.
 
 **Seed accounts — a single comma-separated paragraph, not a table:**
 
@@ -403,7 +403,7 @@ This signals the hierarchy honestly. Three personas of equal weight reads as a l
 | Day-to-day reality | [What their actual job looks like — specific hours/tasks, not abstractions] | [...] | [...] |
 | What they own | [Scope of their responsibility in specific terms] | [...] | [...] |
 | What they care about | [Top 3 priorities, specific] | [...] | [...] |
-| What's broken (their words) | [Verbatim quotes from data, slash-separated — e.g. "I'm the benefits system." / "Everything's on Excel."] | [...] | [...] |
+| What's broken (their words) | [Verbatim quotes from data, slash-separated — e.g. "I'm the dispatch board." / "Everything's on a spreadsheet."] | [...] | [...] |
 | What they want | [Top outcomes in their language] | [...] | [...] |
 | What they worry about | [Stall-the-deal anxieties, specific] | [...] | [...] |
 

@@ -28,6 +28,8 @@ Full contract and authoring guide: [CONTRIBUTING.md](CONTRIBUTING.md).
    the org-scoped design requires them (`orgs/<slug>/` and its skills); even
    there, nothing confidential — no customer data, metrics, or internal
    process details beyond what the customer has agreed to keep in a public
-   skill.
+   skill. Commit messages and branch names are public too — same rule.
+   **Worked examples in a skill body are invented**, never real output with
+   the names taken out: the shape survives anonymising, the data doesn't.
 6. **Merging to `main` is publishing** — the app gallery and Claude Code
    installs update from `main` directly. There is no staging branch.

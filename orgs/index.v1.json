@@ -239,8 +239,8 @@
           "resources": [
             {
               "path": "orgs/cube/cube-icp-definition/SKILL.md",
-              "sha256": "4303481bb99b88c45a2ab1d555c2e9ee5932b7cc2acba7681e575c37f4fc3b85",
-              "bytes": 29966,
+              "sha256": "78af4ea02ff887f9cc005d9905c40d10bfa66de5cab3e1df1c537ca232aa05e9",
+              "bytes": 30130,
               "mediaType": "text/markdown"
             },
             {

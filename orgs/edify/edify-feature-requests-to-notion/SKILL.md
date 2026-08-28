@@ -3,7 +3,7 @@ name: edify-feature-requests-to-notion
 description: Pulls customer feature requests from Format (support, chat and call-recording conversations) for a given period and appends them to the Feature Requests database on Edify's Notion Feature Requests page — one row per request with a one-line summary, date, customer and company linked to their Format profiles, product area tags, improvement-vs-new-feature type, major/minor scope, sentiment, CRM stage, and a link to the Format insight. Customers only; leads and prospects are filtered out via the CRM lifecycle stage. Use whenever the user asks to log, round up, sync, or write feature requests from Format into Notion, asks "what did customers ask for this week", or asks for the weekly/monthly feature request roundup. Trigger even if they only say "update the feature requests page" or "pull last week's requests into Notion".
 metadata:
   display_order: 10
-  title: Feature Requests to Notion for Edify
+  title: Feature Requests to Notion
   personas: [product]
   image: card.jpg
   use_case: >-

@@ -67,6 +67,12 @@
       "description": "A rep scorecard built from every real call they ran in the window — not a sampled highlight reel: each conversation classified, prospecting calls scored dimension by dimension with verbatim evidence, and exactly one coaching priority, framed Situation–Behaviour–Impact.",
       "source": "./skills/format-sales-call-coaching",
       "strict": false
+    },
+    {
+      "name": "format-demand-trigger-research",
+      "description": "Find out what actually starts a buying cycle — the moment, the breakage, the mandate, the recommendation. Get the patterns ranked by how many customers each reaches, split by what those buyers were trying to fix, as a Format report where every claim plays back the quote it came from.",
+      "source": "./skills/format-demand-trigger-research",
+      "strict": false
     }
   ]
 }

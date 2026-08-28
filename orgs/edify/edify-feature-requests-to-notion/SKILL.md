@@ -33,7 +33,6 @@ Operations).
 
 **Notion page ID:** `<notion-feature-requests-page-id>`
 **Format topic:** `Feature Requests`
-**Format org:** Edify
 
 ## If the page ID above is a placeholder
 

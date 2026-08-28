@@ -1,6 +1,6 @@
 ---
 name: edify-feature-requests-to-notion
-description: Pulls customer feature requests from Format (Intercom, Fireflies and Kixie conversations) for a given period and appends them to the Feature Requests database on Edify's Notion Feature Requests page — one row per request with a one-line summary, date, customer and company linked to their Format profiles, product area tags, improvement-vs-new-feature type, major/minor scope, sentiment, CRM stage, and a link to the Format insight. Customers only; leads and prospects are filtered out via the HubSpot lifecycle stage. Use whenever the user asks to log, round up, sync, or write feature requests from Format into Notion, asks "what did customers ask for this week", or asks for the weekly/monthly feature request roundup. Trigger even if they only say "update the feature requests page" or "pull last week's requests into Notion".
+description: Pulls customer feature requests from Format (Intercom, Fireflies and Kixie conversations) for a given period and appends them to the Feature Requests database on Edify's Notion Feature Requests page — one row per request with a one-line summary, date, customer and company linked to their Format profiles, product area tags, improvement-vs-new-feature type, major/minor scope, sentiment, CRM stage, and a link to the Format insight. Customers only; leads and prospects are filtered out via the CRM lifecycle stage. Use whenever the user asks to log, round up, sync, or write feature requests from Format into Notion, asks "what did customers ask for this week", or asks for the weekly/monthly feature request roundup. Trigger even if they only say "update the feature requests page" or "pull last week's requests into Notion".
 metadata:
   display_order: 10
   title: Feature Requests to Notion for Edify
@@ -14,7 +14,7 @@ metadata:
     conversation with playback.
   limitations: >-
     Appends to one Notion database on one page; it never creates tickets or
-    edits the roadmap. Prospect requests are filtered out via the HubSpot
+    edits the roadmap. Prospect requests are filtered out via the CRM
     lifecycle stage, so rows from companies not synced to the CRM land as
     "Unknown" for spot-checking rather than being dropped. Needs the Format
     and Notion MCP servers connected, and a one-time confirmation of the
@@ -151,8 +151,8 @@ Notes that matter:
 
 Fireflies and Kixie also record the business development team's prospect
 calls, and the product team does not want prospect requests in this log.
-The signal is the **`Lifecycle Stage`** company attribute (synced from
-HubSpot, present on `companyAttributes` when the company is CRM-linked):
+The signal is the **`Lifecycle Stage`** company attribute (synced from the
+CRM, present on `companyAttributes` when the company is CRM-linked):
 
 - Value is `customer` (compare case-insensitively) → **keep**, `CRM stage:
   Customer`.

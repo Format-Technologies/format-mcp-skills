@@ -5,7 +5,7 @@ metadata:
   display_order: 10
   title: Feature Requests to Notion for Edify
   personas: [product]
-  image: card.png
+  image: card.jpg
   use_case: >-
     Every feature request customers raised on support tickets, chats and
     calls, logged weekly into the Notion database the product team already

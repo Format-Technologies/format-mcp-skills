@@ -11,7 +11,7 @@
           "personas": [
             "product"
           ],
-          "image": "orgs/edify/edify-feature-requests-to-notion/card.png",
+          "image": "orgs/edify/edify-feature-requests-to-notion/card.jpg",
           "useCase": "Every feature request customers raised on support tickets, chats and calls, logged weekly into the Notion database the product team already reviews — summarized to one line, tagged by product area, scope and sentiment, deduped against earlier runs, and linked back to the original conversation with playback.",
           "limitations": "Appends to one Notion database on one page; it never creates tickets or edits the roadmap. Prospect requests are filtered out via the HubSpot lifecycle stage, so rows from companies not synced to the CRM land as \"Unknown\" for spot-checking rather than being dropped. Needs the Format and Notion MCP servers connected, and a one-time confirmation of the Notion page on the first run.",
           "prompts": [
@@ -33,7 +33,7 @@
               "personas": [
                 "product"
               ],
-              "image": "card.png",
+              "image": "card.jpg",
               "use_case": "Every feature request customers raised on support tickets, chats and calls, logged weekly into the Notion database the product team already reviews — summarized to one line, tagged by product area, scope and sentiment, deduped against earlier runs, and linked back to the original conversation with playback.",
               "limitations": "Appends to one Notion database on one page; it never creates tickets or edits the roadmap. Prospect requests are filtered out via the HubSpot lifecycle stage, so rows from companies not synced to the CRM land as \"Unknown\" for spot-checking rather than being dropped. Needs the Format and Notion MCP servers connected, and a one-time confirmation of the Notion page on the first run.",
               "prompts": [
@@ -46,15 +46,15 @@
           "resources": [
             {
               "path": "orgs/edify/edify-feature-requests-to-notion/SKILL.md",
-              "sha256": "e65d3981ddb63d20844d9f4216ef6b7b3d8cc1d4d6f254b07ebcb5405417a411",
+              "sha256": "6c07608b752f56e821320e9a05e993004abe295a0084781037db506e4fc79e09",
               "bytes": 14498,
               "mediaType": "text/markdown"
             },
             {
-              "path": "orgs/edify/edify-feature-requests-to-notion/card.png",
-              "sha256": "fcb6113524a658a59f7b61aa6f1faf9d8b1bdd8254067a913bc7249742f18290",
-              "bytes": 31992,
-              "mediaType": "image/png"
+              "path": "orgs/edify/edify-feature-requests-to-notion/card.jpg",
+              "sha256": "d76cadb19079fb457fd7d02553e16a626eb842a1f7d4b8467e86dec4f18ecbd8",
+              "bytes": 442519,
+              "mediaType": "image/jpeg"
             }
           ]
         }

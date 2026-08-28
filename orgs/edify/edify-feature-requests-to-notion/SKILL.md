@@ -33,7 +33,9 @@ Operations).
 
 **Notion page ID:** `<notion-feature-requests-page-id>`
 **Format topic:** `Feature Requests`
-**Format org:** Edify (`org_cxuyfe28rn1spv8gfgjgyrmk`)
+**Format org:** Edify — the org this skill is bound to via `org.json`. If
+your Format access reaches more than one org, pass that org id explicitly on
+every Format MCP call.
 
 ## If the page ID above is a placeholder
 

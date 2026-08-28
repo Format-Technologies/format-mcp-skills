@@ -46,8 +46,8 @@
           "resources": [
             {
               "path": "orgs/edify/edify-feature-requests-to-notion/SKILL.md",
-              "sha256": "7ebe167e2597743dade1feb7b03e60254dc5d9ad9dcb11b8bc5914d51c49717c",
-              "bytes": 14374,
+              "sha256": "981e672751cecb6f78d845f0a33d0afc2515c12ff884823d775570b5a81dc0a6",
+              "bytes": 14495,
               "mediaType": "text/markdown"
             },
             {

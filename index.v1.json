@@ -125,8 +125,8 @@
       "resources": [
         {
           "path": "skills/format-ticket-research/SKILL.md",
-          "sha256": "d5cde6f806ca176095f28f3bf2dca2dec6696637b1d78732358f228abd4d4313",
-          "bytes": 23274,
+          "sha256": "782ec19faba73719e102107d8984ff67b69883fe3d81c7e2293158e1b31d88ac",
+          "bytes": 24383,
           "mediaType": "text/markdown"
         },
         {
@@ -186,8 +186,8 @@
       "resources": [
         {
           "path": "skills/format-roadmap-check/SKILL.md",
-          "sha256": "d1c1aa4210a5e56464c49d2d170c42563046f4955b19de294176e735acb7832f",
-          "bytes": 32626,
+          "sha256": "dfb220b6ddd64a65f5964b5eb71ee7717ed7f27b935843f51b3163072edcd31f",
+          "bytes": 33748,
           "mediaType": "text/markdown"
         },
         {

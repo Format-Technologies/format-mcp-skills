@@ -1,6 +1,6 @@
 ---
 name: edify-feature-requests-to-notion
-description: Pulls customer feature requests from Format (Intercom, Fireflies and Kixie conversations) for a given period and appends them to the Feature Requests database on Edify's Notion Feature Requests page — one row per request with a one-line summary, date, customer and company linked to their Format profiles, product area tags, improvement-vs-new-feature type, major/minor scope, sentiment, CRM stage, and a link to the Format insight. Customers only; leads and prospects are filtered out via the CRM lifecycle stage. Use whenever the user asks to log, round up, sync, or write feature requests from Format into Notion, asks "what did customers ask for this week", or asks for the weekly/monthly feature request roundup. Trigger even if they only say "update the feature requests page" or "pull last week's requests into Notion".
+description: Pulls customer feature requests from Format (support, chat and call-recording conversations) for a given period and appends them to the Feature Requests database on Edify's Notion Feature Requests page — one row per request with a one-line summary, date, customer and company linked to their Format profiles, product area tags, improvement-vs-new-feature type, major/minor scope, sentiment, CRM stage, and a link to the Format insight. Customers only; leads and prospects are filtered out via the CRM lifecycle stage. Use whenever the user asks to log, round up, sync, or write feature requests from Format into Notion, asks "what did customers ask for this week", or asks for the weekly/monthly feature request roundup. Trigger even if they only say "update the feature requests page" or "pull last week's requests into Notion".
 metadata:
   display_order: 10
   title: Feature Requests to Notion for Edify
@@ -143,14 +143,14 @@ Notes that matter:
 - **Drop rows where `isAiRejected` is true.** These are Format's
   low-confidence extractions. Count them — the count goes in the run log.
 - If `hasMore` is true, page with `offset` until it isn't.
-- Sources in this org are Intercom, Fireflies and **Kixie** (call recordings
-  used by the business development team). Count the per-source split for the
-  run log; don't assume the source list is fixed.
+- Count the per-source split for the run log — each insight's
+  `record.sourceType` names its source; don't assume the source list is
+  fixed.
 
 ### Filter out leads and prospects
 
-Fireflies and Kixie also record the business development team's prospect
-calls, and the product team does not want prospect requests in this log.
+The call-recording sources also capture the sales team's prospect calls,
+and the product team does not want prospect requests in this log.
 The signal is the **`Lifecycle Stage`** company attribute (synced from the
 CRM, present on `companyAttributes` when the company is CRM-linked):
 
@@ -198,7 +198,7 @@ Four judgment calls per request, all grounded in the quote alone:
 
 ## 7. Handle imperfect attribution honestly
 
-- `person` absent entirely (common on Fireflies transcripts with no linked
+- `person` absent entirely (common on call transcripts with no linked
   participants) → **"Unattributed speaker"**. Don't guess from the transcript.
 - `person.source` or `company.source` is `"inferred"` → the name was read out
   of the conversation, not matched to the CRM. Use it, but if the inferred
@@ -215,7 +215,7 @@ add another one per run. Its canonical text (create it on first run; if the
 page's callout says something materially different, align it to this):
 
 > 💡 **How to read this database:** Rows are pulled automatically from
-> customer conversations in Format (Intercom, Fireflies and Kixie). People
+> customer conversations in Format. People
 > and companies are matched to the CRM where possible; rows marked
 > `CRM stage: Unknown`, "Unattributed speaker", or an inferred company name
 > couldn't be fully matched and deserve a spot-check. Each row links to the
@@ -260,8 +260,8 @@ and move it below the table if a legacy page still has it above. Append one
 bullet per run, newest last:
 
 ```
-- **22–28 Aug 2026** — 22 added (10 companies; 11 Fireflies, 9 Intercom,
-  2 Kixie). Excluded: 2 low-confidence, 3 from leads/prospects.
+- **22–28 Aug 2026** — 22 added (10 companies; 11 calls, 9 support,
+  2 chat). Excluded: 2 low-confidence, 3 from leads/prospects.
 ```
 
 This replaces the shaded period rows the legacy table used.

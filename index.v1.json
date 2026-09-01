@@ -626,6 +626,55 @@
           "mediaType": "text/markdown"
         }
       ]
+    },
+    {
+      "id": "format-report-authoring",
+      "title": "Report Authoring",
+      "description": "Use when you are about to write a report into Format with create_report or replace_report — the craft guide for authoring one well. Read it BEFORE your first authoring write, not after. Covers the block-tree document model and which block does which job, the entity-mention law (companies, people and records are linked chips, never plain text), evidence discipline for quoting real customers, the cover fields (title, scope, conclusion, tldr), the reach-bar chart convention, the image upload handshake, and the draft → publish → send lifecycle. Triggers on 'write this up as a report', 'put this in Format as a report', 'create a report from these findings', and on any revision of a report you authored.",
+      "personas": [
+        "product",
+        "research",
+        "leadership"
+      ],
+      "image": "skills/format-report-authoring/card.png",
+      "useCase": "Turn findings you have already gathered into a real Format report — rendered, shareable, with playable insight audio and live links to the companies and people it names. This is the craft guide: what makes a Format report read like a report rather than a data dump, and how to use each block for the job it is good at.",
+      "limitations": "Does not do the research — bring findings you have already gathered. Authoring tools must be on your connection; if create_report is not in your tool list, this workspace has not enabled report authoring for you. It writes new reports you were asked for and revises reports you authored; it never edits or deletes anyone else's work.",
+      "prompts": [],
+      "related": [],
+      "bodyPath": "skills/format-report-authoring/SKILL.md",
+      "files": [
+        "skills/format-report-authoring/SKILL.md"
+      ],
+      "frontmatter": {
+        "name": "format-report-authoring",
+        "description": "Use when you are about to write a report into Format with create_report or replace_report — the craft guide for authoring one well. Read it BEFORE your first authoring write, not after. Covers the block-tree document model and which block does which job, the entity-mention law (companies, people and records are linked chips, never plain text), evidence discipline for quoting real customers, the cover fields (title, scope, conclusion, tldr), the reach-bar chart convention, the image upload handshake, and the draft → publish → send lifecycle. Triggers on 'write this up as a report', 'put this in Format as a report', 'create a report from these findings', and on any revision of a report you authored.",
+        "metadata": {
+          "display_order": 120,
+          "title": "Report Authoring",
+          "personas": [
+            "product",
+            "research",
+            "leadership"
+          ],
+          "image": "card.png",
+          "use_case": "Turn findings you have already gathered into a real Format report — rendered, shareable, with playable insight audio and live links to the companies and people it names. This is the craft guide: what makes a Format report read like a report rather than a data dump, and how to use each block for the job it is good at.",
+          "limitations": "Does not do the research — bring findings you have already gathered. Authoring tools must be on your connection; if create_report is not in your tool list, this workspace has not enabled report authoring for you. It writes new reports you were asked for and revises reports you authored; it never edits or deletes anyone else's work."
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-report-authoring/SKILL.md",
+          "sha256": "8f331acd172a166911f5c846aed9ded21707e2ce103ef67d694b17ade01d7098",
+          "bytes": 19529,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-report-authoring/card.png",
+          "sha256": "f2f28f64a423fee0f31a6b73922161720460427f08c757c643537225b4fb1bd9",
+          "bytes": 1683491,
+          "mediaType": "image/png"
+        }
+      ]
     }
   ]
 }

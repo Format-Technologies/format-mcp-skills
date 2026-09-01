@@ -67,6 +67,12 @@
       "description": "A rep scorecard built from every real call they ran in the window — not a sampled highlight reel: each conversation classified, prospecting calls scored dimension by dimension with verbatim evidence, and exactly one coaching priority, framed Situation–Behaviour–Impact.",
       "source": "./skills/format-sales-call-coaching",
       "strict": false
+    },
+    {
+      "name": "format-report-authoring",
+      "description": "Turn findings you have already gathered into a real Format report — rendered, shareable, with playable insight audio and live links to the companies and people it names. This is the craft guide: what makes a Format report read like a report rather than a data dump, and how to use each block for the job it is good at.",
+      "source": "./skills/format-report-authoring",
+      "strict": false
     }
   ]
 }

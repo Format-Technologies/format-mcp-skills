@@ -5,7 +5,7 @@ metadata:
   display_order: 120
   title: Report Authoring
   personas: [product, research, leadership]
-  image: card.jpg
+  image: card.png
   use_case: >-
     Turn findings you have already gathered into a real Format report —
     rendered, shareable, with playable insight audio and live links to the

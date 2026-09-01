@@ -628,6 +628,66 @@
       ]
     },
     {
+      "id": "format-demand-trigger-research",
+      "title": "Demand Trigger Research",
+      "description": "Report on what made customers start looking for a solution like yours, over a period the user names — the moment something broke, the tool that hit a wall, the mandate from above, the peer who showed them, or nothing at all beyond an outbound call that landed. Reads voice-of-customer evidence in Format, ranks the trigger patterns by how many companies each reaches, segments them by what those buyers were trying to fix, and writes an authored Format report where every claim carries the customer's own words. Read-only except the single report it authors, left as a draft. Trigger phrases: \"demand triggers report\", \"why did customers come to us\", \"what made people start looking\", \"what drives buying decisions\", \"why now\", \"what triggers demand\", \"why are prospects evaluating us\", \"what prompted them to look\", \"buying trigger analysis\".\n",
+      "personas": [
+        "marketing",
+        "product",
+        "sales",
+        "leadership"
+      ],
+      "image": "skills/format-demand-trigger-research/card.png",
+      "useCase": "Find out what actually starts a buying cycle — the moment, the breakage, the mandate, the recommendation. Get the patterns ranked by how many customers each reaches, split by what those buyers were trying to fix, as a Format report where every claim plays back the quote it came from.",
+      "limitations": "Reports what customers said started their search; it doesn't measure channel attribution or predict pipeline. Needs enough conversations in the period to be representative — a thin period makes a thin report, and the report says so rather than padding. Roles come from what Format knows about each person, which is usually partial.",
+      "prompts": [
+        "What made customers start looking for us, over the last quarter?",
+        "Build me a demand triggers report for the first half of the year.",
+        "Why are prospects coming to us right now, and does it differ by buyer?"
+      ],
+      "related": [],
+      "bodyPath": "skills/format-demand-trigger-research/SKILL.md",
+      "files": [
+        "skills/format-demand-trigger-research/SKILL.md"
+      ],
+      "frontmatter": {
+        "name": "format-demand-trigger-research",
+        "description": "Report on what made customers start looking for a solution like yours, over a period the user names — the moment something broke, the tool that hit a wall, the mandate from above, the peer who showed them, or nothing at all beyond an outbound call that landed. Reads voice-of-customer evidence in Format, ranks the trigger patterns by how many companies each reaches, segments them by what those buyers were trying to fix, and writes an authored Format report where every claim carries the customer's own words. Read-only except the single report it authors, left as a draft. Trigger phrases: \"demand triggers report\", \"why did customers come to us\", \"what made people start looking\", \"what drives buying decisions\", \"why now\", \"what triggers demand\", \"why are prospects evaluating us\", \"what prompted them to look\", \"buying trigger analysis\".\n",
+        "metadata": {
+          "display_order": 110,
+          "title": "Demand Trigger Research",
+          "personas": [
+            "marketing",
+            "product",
+            "sales",
+            "leadership"
+          ],
+          "image": "card.png",
+          "use_case": "Find out what actually starts a buying cycle — the moment, the breakage, the mandate, the recommendation. Get the patterns ranked by how many customers each reaches, split by what those buyers were trying to fix, as a Format report where every claim plays back the quote it came from.",
+          "limitations": "Reports what customers said started their search; it doesn't measure channel attribution or predict pipeline. Needs enough conversations in the period to be representative — a thin period makes a thin report, and the report says so rather than padding. Roles come from what Format knows about each person, which is usually partial.",
+          "prompts": [
+            "What made customers start looking for us, over the last quarter?",
+            "Build me a demand triggers report for the first half of the year.",
+            "Why are prospects coming to us right now, and does it differ by buyer?"
+          ]
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-demand-trigger-research/SKILL.md",
+          "sha256": "008e1a2efa06205f5d500728711eb81312ea6f24699f248ffec78cee8ea57332",
+          "bytes": 22650,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-demand-trigger-research/card.png",
+          "sha256": "b7532d48a734fda38467204fbb8fd5ac640465d77a9e4a760721b5b1591d372a",
+          "bytes": 2148651,
+          "mediaType": "image/png"
+        }
+      ]
+    },
+    {
       "id": "format-report-authoring",
       "title": "Report Authoring",
       "description": "Use when you are about to write a report into Format with create_report or replace_report — the craft guide for authoring one well. Read it BEFORE your first authoring write, not after. Covers the block-tree document model and which block does which job, the entity-mention law (companies, people and records are linked chips, never plain text), evidence discipline for quoting real customers, the cover fields (title, scope, conclusion, tldr), the reach-bar chart convention, the image upload handshake, and the draft → publish → send lifecycle. Triggers on 'write this up as a report', 'put this in Format as a report', 'create a report from these findings', and on any revision of a report you authored.",

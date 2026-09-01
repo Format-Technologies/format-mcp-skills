@@ -3,8 +3,10 @@ name: format-report-authoring
 description: "Use when you are about to write a report into Format with create_report or replace_report — the craft guide for authoring one well. Read it BEFORE your first authoring write, not after. Covers the block-tree document model and which block does which job, the entity-mention law (companies, people and records are linked chips, never plain text), evidence discipline for quoting real customers, the cover fields (title, scope, conclusion, tldr), the reach-bar chart convention, the image upload handshake, and the draft → publish → send lifecycle. Triggers on 'write this up as a report', 'put this in Format as a report', 'create a report from these findings', and on any revision of a report you authored."
 metadata:
   display_order: 120
+  version: '1.0.0'
   title: Report Authoring
   personas: [product, research, leadership]
+  related: [format-analysis]
   prompts:
     - "Write these findings up as a report in Format."
     - "Create a Format report from this analysis, with real quotes and linked companies."
@@ -34,6 +36,10 @@ cards carry real context, and the share URL keeps working. Everything below
 exists to make you use that, instead of writing a Word document into a JSON
 field.
 
+**Read `format-analysis` alongside this one** — it is the method for gathering
+the evidence a report is written from, and this skill assumes what you bring is
+already sound. If it is not installed, the Format skill gallery has it.
+
 ## The five laws
 
 1. **Never write a name in plain text that could be a chip.** Companies,
@@ -54,9 +60,9 @@ field.
 Have these in hand. If you don't, go back and search — authoring is the last
 step, not the research step.
 
-- **The insights you will cite, with their ids.** From `search_insights`,
-  `search_insight_groups` + `search_insights({ supportingGroupId })`,
-  `find_similar_insights`, `get_insight`.
+- **The insights you will cite, with their ids**, gathered and checked the
+  `format-analysis` way — which altitude to search at, and how to keep the
+  numbers honest, is its job rather than this skill's.
 - **The entity ids attached to them.** Every insight row carries `company.id`
   and `person.id`. Keep them as you gather — going back for them later is
   the step people skip, and skipping it is what produces a plaintext report.

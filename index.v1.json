@@ -774,7 +774,9 @@
         "Create a Format report from this analysis, with real quotes and linked companies.",
         "Revise the report you authored — fold in the advisories and republish."
       ],
-      "related": [],
+      "related": [
+        "format-analysis"
+      ],
       "bodyPath": "skills/format-report-authoring/SKILL.md",
       "files": [
         "skills/format-report-authoring/SKILL.md"
@@ -784,11 +786,15 @@
         "description": "Use when you are about to write a report into Format with create_report or replace_report — the craft guide for authoring one well. Read it BEFORE your first authoring write, not after. Covers the block-tree document model and which block does which job, the entity-mention law (companies, people and records are linked chips, never plain text), evidence discipline for quoting real customers, the cover fields (title, scope, conclusion, tldr), the reach-bar chart convention, the image upload handshake, and the draft → publish → send lifecycle. Triggers on 'write this up as a report', 'put this in Format as a report', 'create a report from these findings', and on any revision of a report you authored.",
         "metadata": {
           "display_order": 120,
+          "version": "1.0.0",
           "title": "Report Authoring",
           "personas": [
             "product",
             "research",
             "leadership"
+          ],
+          "related": [
+            "format-analysis"
           ],
           "prompts": [
             "Write these findings up as a report in Format.",
@@ -803,8 +809,8 @@
       "resources": [
         {
           "path": "skills/format-report-authoring/SKILL.md",
-          "sha256": "60731f1799be695da537406d6ed068479cd2dcfc6355ea54cbe5a47e1624b07b",
-          "bytes": 19990,
+          "sha256": "1c07f102efc796d22d2c07809bb2a85657043dea09285454fda2f78b669484ed",
+          "bytes": 20293,
           "mediaType": "text/markdown"
         },
         {

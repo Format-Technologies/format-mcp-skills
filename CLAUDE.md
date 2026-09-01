@@ -30,4 +30,5 @@ Full contract and authoring guide: [CONTRIBUTING.md](CONTRIBUTING.md).
    process details beyond what the customer has agreed to keep in a public
    skill.
 6. **Merging to `main` is publishing** — the app gallery and Claude Code
-   installs update from `main` directly. There is no staging branch.
+   installs update from `main` directly. Non-production app environments read
+   `dev`, so merging there stages a skill; `main` is the public release.

@@ -125,8 +125,8 @@
       "resources": [
         {
           "path": "skills/format-ticket-research/SKILL.md",
-          "sha256": "d5cde6f806ca176095f28f3bf2dca2dec6696637b1d78732358f228abd4d4313",
-          "bytes": 23274,
+          "sha256": "782ec19faba73719e102107d8984ff67b69883fe3d81c7e2293158e1b31d88ac",
+          "bytes": 24383,
           "mediaType": "text/markdown"
         },
         {
@@ -186,8 +186,8 @@
       "resources": [
         {
           "path": "skills/format-roadmap-check/SKILL.md",
-          "sha256": "d1c1aa4210a5e56464c49d2d170c42563046f4955b19de294176e735acb7832f",
-          "bytes": 32626,
+          "sha256": "dfb220b6ddd64a65f5964b5eb71ee7717ed7f27b935843f51b3163072edcd31f",
+          "bytes": 33748,
           "mediaType": "text/markdown"
         },
         {
@@ -684,6 +684,64 @@
           "sha256": "b7532d48a734fda38467204fbb8fd5ac640465d77a9e4a760721b5b1591d372a",
           "bytes": 2148651,
           "mediaType": "image/png"
+        }
+      ]
+    },
+    {
+      "id": "format-report-authoring",
+      "title": "Report Authoring",
+      "description": "Use when you are about to write a report into Format with create_report or replace_report — the craft guide for authoring one well. Read it BEFORE your first authoring write, not after. Covers the block-tree document model and which block does which job, the entity-mention law (companies, people and records are linked chips, never plain text), evidence discipline for quoting real customers, the cover fields (title, scope, conclusion, tldr), the reach-bar chart convention, the image upload handshake, and the draft → publish → send lifecycle. Triggers on 'write this up as a report', 'put this in Format as a report', 'create a report from these findings', and on any revision of a report you authored.",
+      "personas": [
+        "product",
+        "research",
+        "leadership"
+      ],
+      "image": "skills/format-report-authoring/card.jpg",
+      "useCase": "Turn findings you have already gathered into a real Format report — rendered, shareable, with playable insight audio and live links to the companies and people it names. This is the craft guide: what makes a Format report read like a report rather than a data dump, and how to use each block for the job it is good at.",
+      "limitations": "Does not do the research — bring findings you have already gathered. Authoring tools must be on your connection; if create_report is not in your tool list, your credential is read-scoped. It writes new reports you were asked for and revises reports you authored; it never edits or deletes anyone else's work.",
+      "prompts": [
+        "Write these findings up as a report in Format.",
+        "Create a Format report from this analysis, with real quotes and linked companies.",
+        "Revise the report you authored — fold in the advisories and republish."
+      ],
+      "related": [],
+      "bodyPath": "skills/format-report-authoring/SKILL.md",
+      "files": [
+        "skills/format-report-authoring/SKILL.md"
+      ],
+      "frontmatter": {
+        "name": "format-report-authoring",
+        "description": "Use when you are about to write a report into Format with create_report or replace_report — the craft guide for authoring one well. Read it BEFORE your first authoring write, not after. Covers the block-tree document model and which block does which job, the entity-mention law (companies, people and records are linked chips, never plain text), evidence discipline for quoting real customers, the cover fields (title, scope, conclusion, tldr), the reach-bar chart convention, the image upload handshake, and the draft → publish → send lifecycle. Triggers on 'write this up as a report', 'put this in Format as a report', 'create a report from these findings', and on any revision of a report you authored.",
+        "metadata": {
+          "display_order": 120,
+          "title": "Report Authoring",
+          "personas": [
+            "product",
+            "research",
+            "leadership"
+          ],
+          "prompts": [
+            "Write these findings up as a report in Format.",
+            "Create a Format report from this analysis, with real quotes and linked companies.",
+            "Revise the report you authored — fold in the advisories and republish."
+          ],
+          "image": "card.jpg",
+          "use_case": "Turn findings you have already gathered into a real Format report — rendered, shareable, with playable insight audio and live links to the companies and people it names. This is the craft guide: what makes a Format report read like a report rather than a data dump, and how to use each block for the job it is good at.",
+          "limitations": "Does not do the research — bring findings you have already gathered. Authoring tools must be on your connection; if create_report is not in your tool list, your credential is read-scoped. It writes new reports you were asked for and revises reports you authored; it never edits or deletes anyone else's work."
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-report-authoring/SKILL.md",
+          "sha256": "60731f1799be695da537406d6ed068479cd2dcfc6355ea54cbe5a47e1624b07b",
+          "bytes": 19990,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-report-authoring/card.jpg",
+          "sha256": "7635d3cfa67fdf8024d5baa7682e37ba1645ffd9789301941ba49043b819b6af",
+          "bytes": 325101,
+          "mediaType": "image/jpeg"
         }
       ]
     }

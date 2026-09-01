@@ -73,6 +73,12 @@
       "description": "Find out what actually starts a buying cycle — the moment, the breakage, the mandate, the recommendation. Get the patterns ranked by how many customers each reaches, split by what those buyers were trying to fix, as a Format report where every claim plays back the quote it came from.",
       "source": "./skills/format-demand-trigger-research",
       "strict": false
+    },
+    {
+      "name": "format-report-authoring",
+      "description": "Turn findings you have already gathered into a real Format report — rendered, shareable, with playable insight audio and live links to the companies and people it names. This is the craft guide: what makes a Format report read like a report rather than a data dump, and how to use each block for the job it is good at.",
+      "source": "./skills/format-report-authoring",
+      "strict": false
     }
   ]
 }

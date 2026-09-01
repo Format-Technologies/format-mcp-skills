@@ -256,8 +256,8 @@
       "resources": [
         {
           "path": "skills/format-roadmap-check/SKILL.md",
-          "sha256": "dfb220b6ddd64a65f5964b5eb71ee7717ed7f27b935843f51b3163072edcd31f",
-          "bytes": 33748,
+          "sha256": "ae2f45bec9a9e32dafae39dc40bb256dc3bc57103aa5200880501ac12ae51ff1",
+          "bytes": 33985,
           "mediaType": "text/markdown"
         },
         {

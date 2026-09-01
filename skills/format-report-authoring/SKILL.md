@@ -5,7 +5,11 @@ metadata:
   display_order: 120
   title: Report Authoring
   personas: [product, research, leadership]
-  image: card.png
+  prompts:
+    - "Write these findings up as a report in Format."
+    - "Create a Format report from this analysis, with real quotes and linked companies."
+    - "Revise the report you authored — fold in the advisories and republish."
+  image: card.jpg
   use_case: >-
     Turn findings you have already gathered into a real Format report —
     rendered, shareable, with playable insight audio and live links to the
@@ -15,7 +19,7 @@ metadata:
   limitations: >-
     Does not do the research — bring findings you have already gathered.
     Authoring tools must be on your connection; if create_report is not in
-    your tool list, this workspace has not enabled report authoring for you.
+    your tool list, your credential is read-scoped.
     It writes new reports you were asked for and revises reports you
     authored; it never edits or deletes anyone else's work.
 ---
@@ -105,10 +109,13 @@ role, the company's card — and the report stops being a wall of strings.
   click opens the full insight.
 
 The ids are already on the insights you cited (`company.id`, `person.id`). A
-null id means the entity was inferred rather than matched — keep that one as
-plain text. Otherwise: chip it. Mentions work in text bodies **and in table
-cells**. They are verified at write time, and a bad id fails the write naming
-the block — so a mention that survives is a mention that resolves.
+missing `person`/`company`, or a null id, means the entity was inferred rather
+than matched — keep that one as plain text. Otherwise: chip it. Mentions work in text bodies, **table
+cells**, and callout bodies. They do **not** work in a section's `summary` —
+that field gets no markdown pass, so a chip there renders as a dead string and
+nothing fails the write; keep summaries to plain prose. Everywhere else they
+are verified at write time, and a bad id fails the write naming the block — so
+a mention that survives is a mention that resolves.
 
 ### The canonical mistake
 

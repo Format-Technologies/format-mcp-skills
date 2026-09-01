@@ -1,6 +1,6 @@
 ---
 name: format-analysis
-description: "Use before answering anything from Format's customer-conversation data, and alongside whatever you are producing from it — a brief, a ticket write-up, a report. The method: form the question, orient once with describe_org, pick the altitude (search_insight_groups for themes, search_insights for evidence, count_insights for magnitude, find_similar_insights to probe, ask for a routed question), narrow the filter instead of paging deep, verify every number with a count, read a failure body before retrying, and keep evidence honest — customers' own words, ids carried, one voice never reported as a theme. Skipping it ships counts taken off a page, demand inflated by counting one remark under every topic it was filed under, and quotes that misread the verdict and resolution flags they carry. Triggers on 'what are customers saying about…', 'how many customers asked for…', 'is X a real theme or one loud account', and on any Format search you are about to summarise for a human."
+description: "Use before answering anything from Format's customer-conversation data, and alongside whatever you are producing from it — a brief, a ticket write-up, a report. The method: form the question, orient once with describe_org, pick the altitude (search_insight_groups for themes, search_insights for evidence, count_insights for magnitude, find_similar_insights to probe, ask where the connection has it), narrow the filter instead of paging deep, verify every number with a count, read a failure body before retrying, and keep evidence honest — customers' own words, ids carried, one voice never reported as a theme. Skipping it ships counts taken off a page, demand inflated by counting one remark under every topic it was filed under, and quotes that misread the verdict and resolution flags they carry. Triggers on 'what are customers saying about…', 'how many customers asked for…', 'is X a real theme or one loud account', and on any Format search you are about to summarise for a human."
 metadata:
   display_order: 5
   version: '1.0.0'
@@ -29,15 +29,14 @@ metadata:
 
 Format holds what customers actually said. This is the method for turning that
 into an answer someone can act on rather than a confident wrong one. Read it
-alongside the skill doing the work — it is the evidence half of every other
-Format skill.
+alongside the skill doing the work — it is the evidence half of every Format
+skill.
 
 ## 1. Form the question before you search
 
 Write it in one sentence, naming the **population** (everyone, one segment, one
 account?), the **window**, and the **shape of the answer** (a ranking, a
-number, verbatim evidence, a yes/no?). A question you cannot write down is one
-you cannot check an answer against.
+number, verbatim evidence, a yes/no?).
 
 ## 2. Orient once
 
@@ -52,11 +51,12 @@ honestly claim:
 - **`attributes`** — the filterable company and person fields, spelled as
   `attributeFilters` takes them.
 - **`processing`** — `hasGroups: false` means nothing here has been gathered
-  into themes **at all**, so an empty theme search says nothing about your
+  into themes **at all** — an empty theme search then says nothing about your
   question; the evidence is in `search_insights`.
 
-Where a connection reaches several workspaces, each response echoes the `org`
-that answered — check it.
+Pass `orgId` on every call if your connection reaches more than one workspace —
+the default is arbitrary. `list_organizations` enumerates them; every response
+echoes the `org` that answered.
 
 ## 3. Choose the altitude — the tool is the dial
 
@@ -68,19 +68,22 @@ There is no level parameter. The verb you call is the altitude you get.
 | What one person actually said, in their own words | `search_insights` |
 | How big is this — sizing, cross-tabs | `count_insights` |
 | Who else said something like this | `find_similar_insights` |
-| The user's whole question, routed for you | `ask` |
+| The user's whole question, routed for you (not on every connection) | `ask` |
+
+Re-read what you already hold by id: `get_insight` / `get_insight_group`, or
+`insightIds` on a search.
 
 **Never page a search to count it.** `count_insights` answers "how many" in one
-call and cross-tabs by company, contact, source or topic. Rows counted off a
-page are a fact about the page.
+call and cross-tabs by `company`, `person`, `dataSource` or `topic`.
 
 **Rank from groups, quote from insights.** A group's `customerCount` is the
 basis for "most" and "biggest"; pass its `id` to `search_insights` as
 `supportingGroupId` for the words underneath. Group ids are handles for this
 conversation only — never write one into a document or a scheduled job.
 
-**`ask` takes the user's question close to verbatim**, routes it server-side,
-and says in `interpretation` how it answered — read that before narrating.
+**`ask` is not on every connection — check your tool list.** Where present, it
+takes the user's question close to verbatim, routes it server-side, and says in
+`interpretation` how it answered — read that before narrating.
 
 **`find_similar_insights` probes a hypothesis** from one strong hit:
 `relationship.kind: 'shared_group'` is Format's own analysis, a finding;
@@ -89,66 +92,62 @@ and says in `interpretation` how it answered — read that before narrating.
 ## 4. Narrow — don't page deep
 
 Ranking and superlative questions are answered from the first page; everything
-else is better served by narrowing on topic, company, date or keyword. Searches
-refuse to serve past offset 1000 — depth is a sign the filter needed
-tightening.
+else is better narrowed on topic, company, date or keyword. Searches refuse to
+serve past offset 1000 — depth is a sign the filter needed tightening.
 
-When you do page, **`hasMore` says whether to page on, and `limit` is what you
-add to `offset`.** A page can come back shorter than `limit` — rows restating a
-row already on it are folded away — so advancing by `count` skips the fold.
+When you do page, **`nextOffset` is the next page's offset, or `null` when there
+is no next page.** Never compute it from `count`: a page can come back shorter
+than `limit`, because rows restating a row already on it are folded away.
 
 ## 5. Verify the claim you are about to make
 
 Before a number goes into an answer, ask the surface for it. "Twelve customers
-want this" → a group's `customerCount` or
-`count_insights({ breakdownBy: "company" })`, never your tally of a page.
-"Nobody mentions X" → one `count_insights` over the widest range before you
-call it silence.
+want this" → a group's `customerCount`, or
+`count_insights({ breakdownBy: "company" })` — read `breakdownBucketCount`, the
+bucket count; `count` is insight rows. "Nobody mentions X" → one
+`count_insights` over the widest range before calling it silence.
 
 An empty result names its own cause: `emptyReason` is `filtered_out` (data
-exists; your filter missed it), `no_groups_yet` (nothing gathered into themes)
-or `empty_org` (no data at all) — only the last means there is nothing to say.
-A failure likewise names what was invalid, what is valid and which call comes
-next; read it rather than retrying or guessing.
+exists; your filter missed it), `no_groups_yet` or `empty_org` — only the last
+means there is nothing to say. A failure likewise names what was invalid, what
+is valid and which call comes next; read it rather than retrying or guessing.
 
 ## 6. Evidence hygiene
 
-- **Quote the customer's words** from the insight — never a paraphrase dressed
-  as a quote, never one you composed.
+- **Quote the customer's words** from the insight, never a paraphrase dressed
+  as a quote.
 - **Carry the ids as you gather**: insight `id`, `company.id`, `person.id`,
-  `record.id`. Going back for them later is the step people skip, and skipping
-  it is what makes an answer uncitable.
+  `record.id`. Going back for them later is what makes an answer uncitable.
 - **One voice is not a theme.** "A customer said" for one insight; "customers
   say" only when several distinct customers did — and say how many.
 - **Hedge inferred attribution.** `company.source` is `linked` when Format
   knows the customer, `inferred` when the name was only read out of the
   conversation — an inferred one has a `null` id and spelling variants, so
-  count those by normalised name.
+  count by normalised name.
 - **Say what you could not see**: the window, the unattributed share, the
   topics that were not listening. A stated limit makes the rest trustworthy.
 
 ## The six ways to be confidently wrong
 
-Each is explained in full by the parameter or field beside it — read that, not
-this line.
+Each is explained in full by the parameter or field beside it.
 
-- **Paging** — advance `offset` by `limit`, never by `count`; short pages are
-  normal, `hasMore` is the signal.
+- **Paging** — `nextOffset` is the next page's offset, or `null` when there is
+  no next page; never compute it from `count`.
 - **Counting across topics** — one statement is counted once per topic it was
   filed under, so topic buckets never add up to distinct things said;
   `count_insights` states what its total counts.
 - **`isAiRejected`** — `false` includes insights never judged, `true` includes
-  the undecided; neither half reads the way the name suggests.
+  the undecided.
 - **`lifecycleStates`** — how active a theme is now, not how important; leave
   it unset for ranking questions.
 - **`valueAt: "atConversation"`** — matches only conversations with an
   observation at or before them, so read it as a lower bound.
-- **`hasResolutionClaim: true`** — somebody promised it was handled; a promise
-  leaves the need open.
+- **`hasResolutionClaim: true`** — somebody promised it was handled; the need
+  stays open.
 
 ## Handing off
 
-Writing the analysis up as a Format report is its own craft:
-`format-report-authoring`, read before your first authoring write; if it is not
-installed, point at the Format skill gallery and work inline. And when this
-surface fails you, `send_feedback` reaches the team that builds it.
+Writing the analysis up as a Format report is its own craft: read
+`format-report-authoring` before your first authoring write —
+`get_skill('format-report-authoring')` serves it, the gallery otherwise. And
+when this surface fails you, `send_feedback` reaches the team that builds it.

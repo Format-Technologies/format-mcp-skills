@@ -68,8 +68,8 @@ frontmatter; CI rejects PRs where they're out of sync with the skills.
   (and not the skill itself) — cross-skill references are a checked contract,
   so renaming or removing a skill breaks CI until references are updated. A
   skill body that names a related skill must still degrade gracefully when
-  that skill isn't installed (suggest it if available; otherwise do the work
-  inline and point at the gallery).
+  that skill isn't installed (suggest it if available; otherwise point at
+  `get_skill` on the MCP connection, or the gallery, and do the work inline).
 
 ## Org-scoped skills (`orgs/`)
 

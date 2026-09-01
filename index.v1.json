@@ -12,7 +12,7 @@
     {
       "id": "format-analysis",
       "title": "Analysis Method",
-      "description": "Use before answering anything from Format's customer-conversation data, and alongside whatever you are producing from it — a brief, a ticket write-up, a report. The method: form the question, orient once with describe_org, pick the altitude (search_insight_groups for themes, search_insights for evidence, count_insights for magnitude, find_similar_insights to probe, ask for a routed question), narrow the filter instead of paging deep, verify every number with a count, read a failure body before retrying, and keep evidence honest — customers' own words, ids carried, one voice never reported as a theme. Skipping it ships counts taken off a page, demand inflated by counting one remark under every topic it was filed under, and quotes that misread the verdict and resolution flags they carry. Triggers on 'what are customers saying about…', 'how many customers asked for…', 'is X a real theme or one loud account', and on any Format search you are about to summarise for a human.",
+      "description": "Use before answering anything from Format's customer-conversation data, and alongside whatever you are producing from it — a brief, a ticket write-up, a report. The method: form the question, orient once with describe_org, pick the altitude (search_insight_groups for themes, search_insights for evidence, count_insights for magnitude, find_similar_insights to probe, ask where the connection has it), narrow the filter instead of paging deep, verify every number with a count, read a failure body before retrying, and keep evidence honest — customers' own words, ids carried, one voice never reported as a theme. Skipping it ships counts taken off a page, demand inflated by counting one remark under every topic it was filed under, and quotes that misread the verdict and resolution flags they carry. Triggers on 'what are customers saying about…', 'how many customers asked for…', 'is X a real theme or one loud account', and on any Format search you are about to summarise for a human.",
       "personas": [
         "customer-success",
         "sales",
@@ -38,7 +38,7 @@
       ],
       "frontmatter": {
         "name": "format-analysis",
-        "description": "Use before answering anything from Format's customer-conversation data, and alongside whatever you are producing from it — a brief, a ticket write-up, a report. The method: form the question, orient once with describe_org, pick the altitude (search_insight_groups for themes, search_insights for evidence, count_insights for magnitude, find_similar_insights to probe, ask for a routed question), narrow the filter instead of paging deep, verify every number with a count, read a failure body before retrying, and keep evidence honest — customers' own words, ids carried, one voice never reported as a theme. Skipping it ships counts taken off a page, demand inflated by counting one remark under every topic it was filed under, and quotes that misread the verdict and resolution flags they carry. Triggers on 'what are customers saying about…', 'how many customers asked for…', 'is X a real theme or one loud account', and on any Format search you are about to summarise for a human.",
+        "description": "Use before answering anything from Format's customer-conversation data, and alongside whatever you are producing from it — a brief, a ticket write-up, a report. The method: form the question, orient once with describe_org, pick the altitude (search_insight_groups for themes, search_insights for evidence, count_insights for magnitude, find_similar_insights to probe, ask where the connection has it), narrow the filter instead of paging deep, verify every number with a count, read a failure body before retrying, and keep evidence honest — customers' own words, ids carried, one voice never reported as a theme. Skipping it ships counts taken off a page, demand inflated by counting one remark under every topic it was filed under, and quotes that misread the verdict and resolution flags they carry. Triggers on 'what are customers saying about…', 'how many customers asked for…', 'is X a real theme or one loud account', and on any Format search you are about to summarise for a human.",
         "metadata": {
           "display_order": 5,
           "version": "1.0.0",
@@ -67,8 +67,8 @@
       "resources": [
         {
           "path": "skills/format-analysis/SKILL.md",
-          "sha256": "0b48248ab44a6b383a19770e289c72661797bbd33bf176f44a3e4d09bd8f428b",
-          "bytes": 8260,
+          "sha256": "042ee249dd49ef0c6fb62b5dda35c2c8ac4535fbf9822364ee4370f4b0d2d759",
+          "bytes": 8271,
           "mediaType": "text/markdown"
         },
         {
@@ -256,8 +256,8 @@
       "resources": [
         {
           "path": "skills/format-roadmap-check/SKILL.md",
-          "sha256": "ae2f45bec9a9e32dafae39dc40bb256dc3bc57103aa5200880501ac12ae51ff1",
-          "bytes": 33985,
+          "sha256": "ab4323017aafea19b16261f6bd035cef2c511b5522e3ec224f784407d7ca55e4",
+          "bytes": 33994,
           "mediaType": "text/markdown"
         },
         {
@@ -809,8 +809,8 @@
       "resources": [
         {
           "path": "skills/format-report-authoring/SKILL.md",
-          "sha256": "1c07f102efc796d22d2c07809bb2a85657043dea09285454fda2f78b669484ed",
-          "bytes": 20293,
+          "sha256": "57f1a7362b7e6d8ceb28375f5ada94cce0a2b8add68298b1df11cf930dbaa4e2",
+          "bytes": 20321,
           "mediaType": "text/markdown"
         },
         {

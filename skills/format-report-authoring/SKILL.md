@@ -38,7 +38,8 @@ field.
 
 **Read `format-analysis` alongside this one** — it is the method for gathering
 the evidence a report is written from, and this skill assumes what you bring is
-already sound. If it is not installed, the Format skill gallery has it.
+already sound. `get_skill('format-analysis')` serves it; the Format skill
+gallery has it otherwise.
 
 ## The five laws
 

@@ -349,12 +349,8 @@ a revision. Same-title re-creates inside 15 minutes are rejected with a pointer
 to the original; a fresh `idempotencyKey` is the deliberate override if you
 really did mean a new report.
 
-Three useful extras on the write:
+Two useful extras on the write:
 
-- `skillsFollowed: ["format-report-authoring"]` — say you read this guide, plus
-  any other skill ids you actually read. It is recorded with the write and never
-  acted on; it is how we learn whether this guide reaches the reports it was
-  written for.
 - `validateOnly: true` checks the whole document — refs, mentions, caps —
   without persisting. Worth it before a large first create.
 - `handoff` carries the research behind the report as markdown: what you

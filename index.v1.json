@@ -809,8 +809,8 @@
       "resources": [
         {
           "path": "skills/format-report-authoring/SKILL.md",
-          "sha256": "57f1a7362b7e6d8ceb28375f5ada94cce0a2b8add68298b1df11cf930dbaa4e2",
-          "bytes": 20321,
+          "sha256": "800e23bc56f7189db67b3d43338674203b8a153da5bfec4a32d4275641d39ed9",
+          "bytes": 20578,
           "mediaType": "text/markdown"
         },
         {

@@ -9,6 +9,12 @@
   },
   "plugins": [
     {
+      "name": "format-analysis",
+      "description": "Get true answers out of your customer conversations rather than plausible ones. This is the method behind every other Format skill: how to frame the question, pick the right altitude, keep the numbers honest, and cite real customers instead of a paraphrase. Read it alongside whatever you are producing.",
+      "source": "./skills/format-analysis",
+      "strict": false
+    },
+    {
       "name": "format-company-context",
       "description": "Stop re-explaining your company in every chat. One run distills what customers actually say — who you serve, what they struggle with, the words they use — into a context doc your team's AI works from, every claim quote-backed. It won't invent your strategy or pricing; it flags those for you to fill.",
       "source": "./skills/format-company-context",

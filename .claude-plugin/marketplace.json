@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "format-analysis",
-      "description": "Get true answers out of your customer conversations rather than plausible ones. This is the method behind every other Format skill: how to frame the question, pick the right altitude, keep the numbers honest, and cite real customers instead of a paraphrase. Read it alongside whatever you are producing.",
+      "description": "A guide to using Format's MCP well: how to navigate the tools, how to query, when to use what, and what to be careful of — so the answers you get out are truthful, reliable and reproducible. The method under every other Format skill.",
       "source": "./skills/format-analysis",
       "strict": false
     },

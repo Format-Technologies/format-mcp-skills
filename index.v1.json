@@ -11,8 +11,8 @@
   "skills": [
     {
       "id": "format-analysis",
-      "title": "Analysis Method",
-      "description": "Use before answering anything from Format's customer-conversation data, and alongside whatever you are producing from it — a brief, a ticket write-up, a report. The method: form the question, orient once with describe_org, pick the altitude (search_insight_groups for themes, search_insights for evidence, count_insights for magnitude, find_similar_insights to probe, ask where the connection has it), narrow the filter instead of paging deep, verify every number with a count, read a failure body before retrying, and keep evidence honest — customers' own words, ids carried, one voice never reported as a theme. Skipping it ships counts taken off a page, demand inflated by counting one remark under every topic it was filed under, and quotes that misread the verdict and resolution flags they carry. Triggers on 'what are customers saying about…', 'how many customers asked for…', 'is X a real theme or one loud account', and on any Format search you are about to summarise for a human.",
+      "title": "Using the Format MCP",
+      "description": "A guide for agents querying customer conversations through the Format MCP: how to navigate its tools, how to query, when to use what, what to be careful of, and the practices that keep an answer truthful, reliable and reproducible. Orient with describe_org first — its analysisGuide carries the reading rules and each tool description carries its own traps; this guide holds what they cannot: which sequence of calls answers which question, the traps that live between calls, and how to state a result so it can be re-run. Skipping it produces confident answers that do not survive checking. Use it on any Format search, and on 'what are customers saying about…', 'how many customers asked for…', 'is X a real theme or one loud account', 'is there evidence for this roadmap item', 'what has [account] been saying', and on any Format result about to be summarised for a person. It produces no document of its own; writing one up is format-report-authoring.",
       "personas": [
         "customer-success",
         "sales",
@@ -22,12 +22,13 @@
         "research"
       ],
       "image": "skills/format-analysis/card.jpg",
-      "useCase": "Get true answers out of your customer conversations rather than plausible ones. This is the method behind every other Format skill: how to frame the question, pick the right altitude, keep the numbers honest, and cite real customers instead of a paraphrase. Read it alongside whatever you are producing.",
-      "limitations": "A method, not an output — it produces no document of its own. Needs a Format connection with read access. It will not invent what a workspace does not hold; where the data is thin it says so rather than filling the gap.",
+      "useCase": "A guide to using Format's MCP well: how to navigate the tools, how to query, when to use what, and what to be careful of — so the answers you get out are truthful, reliable and reproducible. The method under every other Format skill.",
+      "limitations": "A guide, not an output — it produces no document of its own. Needs a Format connection with read access. It will not invent what a workspace does not hold; where the data is thin it says so rather than filling the gap.",
       "prompts": [
-        "Using the Format analysis method, what are customers saying about onboarding in the last 90 days?",
+        "What are customers saying about onboarding in the last 90 days?",
         "How many distinct customers have asked for bulk export? Show your working.",
-        "Is pricing confusion a real theme in our conversations, or one loud account?"
+        "Is pricing confusion a real theme in our conversations, or one loud account?",
+        "Is there evidence for this roadmap item, and which accounts are asking?"
       ],
       "related": [
         "format-report-authoring"
@@ -38,11 +39,11 @@
       ],
       "frontmatter": {
         "name": "format-analysis",
-        "description": "Use before answering anything from Format's customer-conversation data, and alongside whatever you are producing from it — a brief, a ticket write-up, a report. The method: form the question, orient once with describe_org, pick the altitude (search_insight_groups for themes, search_insights for evidence, count_insights for magnitude, find_similar_insights to probe, ask where the connection has it), narrow the filter instead of paging deep, verify every number with a count, read a failure body before retrying, and keep evidence honest — customers' own words, ids carried, one voice never reported as a theme. Skipping it ships counts taken off a page, demand inflated by counting one remark under every topic it was filed under, and quotes that misread the verdict and resolution flags they carry. Triggers on 'what are customers saying about…', 'how many customers asked for…', 'is X a real theme or one loud account', and on any Format search you are about to summarise for a human.",
+        "description": "A guide for agents querying customer conversations through the Format MCP: how to navigate its tools, how to query, when to use what, what to be careful of, and the practices that keep an answer truthful, reliable and reproducible. Orient with describe_org first — its analysisGuide carries the reading rules and each tool description carries its own traps; this guide holds what they cannot: which sequence of calls answers which question, the traps that live between calls, and how to state a result so it can be re-run. Skipping it produces confident answers that do not survive checking. Use it on any Format search, and on 'what are customers saying about…', 'how many customers asked for…', 'is X a real theme or one loud account', 'is there evidence for this roadmap item', 'what has [account] been saying', and on any Format result about to be summarised for a person. It produces no document of its own; writing one up is format-report-authoring.",
         "metadata": {
           "display_order": 5,
-          "version": "1.0.0",
-          "title": "Analysis Method",
+          "version": "2.0.0",
+          "title": "Using the Format MCP",
           "personas": [
             "customer-success",
             "sales",
@@ -55,26 +56,27 @@
           "related": [
             "format-report-authoring"
           ],
-          "use_case": "Get true answers out of your customer conversations rather than plausible ones. This is the method behind every other Format skill: how to frame the question, pick the right altitude, keep the numbers honest, and cite real customers instead of a paraphrase. Read it alongside whatever you are producing.",
-          "limitations": "A method, not an output — it produces no document of its own. Needs a Format connection with read access. It will not invent what a workspace does not hold; where the data is thin it says so rather than filling the gap.",
+          "use_case": "A guide to using Format's MCP well: how to navigate the tools, how to query, when to use what, and what to be careful of — so the answers you get out are truthful, reliable and reproducible. The method under every other Format skill.",
+          "limitations": "A guide, not an output — it produces no document of its own. Needs a Format connection with read access. It will not invent what a workspace does not hold; where the data is thin it says so rather than filling the gap.",
           "prompts": [
-            "Using the Format analysis method, what are customers saying about onboarding in the last 90 days?",
+            "What are customers saying about onboarding in the last 90 days?",
             "How many distinct customers have asked for bulk export? Show your working.",
-            "Is pricing confusion a real theme in our conversations, or one loud account?"
+            "Is pricing confusion a real theme in our conversations, or one loud account?",
+            "Is there evidence for this roadmap item, and which accounts are asking?"
           ]
         }
       },
       "resources": [
         {
           "path": "skills/format-analysis/SKILL.md",
-          "sha256": "042ee249dd49ef0c6fb62b5dda35c2c8ac4535fbf9822364ee4370f4b0d2d759",
-          "bytes": 8271,
+          "sha256": "3cf0848f6f40fcfbc6e8fc335d0510dd0dc576d0f13d57ad9ee0dc03f7858e4b",
+          "bytes": 7770,
           "mediaType": "text/markdown"
         },
         {
           "path": "skills/format-analysis/card.jpg",
-          "sha256": "d76cadb19079fb457fd7d02553e16a626eb842a1f7d4b8467e86dec4f18ecbd8",
-          "bytes": 442519,
+          "sha256": "2e4e286ff9e8d53196db4f57f622e82401d60003973d7c8fe06f6ecd9f902052",
+          "bytes": 254982,
           "mediaType": "image/jpeg"
         }
       ]

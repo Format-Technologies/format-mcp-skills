@@ -60,6 +60,66 @@
         }
       ]
     },
+    "org_ihnn39kmj6yrxpuhnugmf462": {
+      "slug": "edgetier",
+      "skills": [
+        {
+          "id": "edgetier-triage-enrichment",
+          "title": "Triage Enrichment for EdgeTier",
+          "description": "Enrich Linear triage tickets with customer evidence from Format before the Monday product meeting. Use this whenever the user asks to run the triage enrichment, enrich triage, enrich a ticket, prep triage for the Monday meeting, add customer evidence to Linear, check what customers have said about a feature request, or pastes a Linear ticket URL and wants evidence pulled in. Trigger even if they don't say \"skill\" — phrases like \"run the Monday prep\", \"pull evidence for this ticket\", or \"what have customers said about the tickets in triage\" all mean this skill. Requires the Linear and Format connectors.",
+          "personas": [
+            "product",
+            "customer-success"
+          ],
+          "image": "orgs/edgetier/edgetier-triage-enrichment/card.jpg",
+          "useCase": "Before the Monday product meeting, pull every Linear triage ticket and attach verifiable customer evidence from Format: verbatim quotes, who said them and when, a count of companies and people asking, and a link to every insight. You approve each ticket before anything is written.",
+          "limitations": "Only exact-match evidence is written to a ticket; related-but-different asks are surfaced in chat for you to judge. Never estimates effort or complexity. Needs the Linear and Format connectors, and only attaches customers that already exist in your Linear Customers list.",
+          "prompts": [
+            "Run the triage enrichment for Monday.",
+            "Pull customer evidence for this ticket: [paste Linear URL]",
+            "What have customers said about the tickets in triage over the last 6 months?"
+          ],
+          "related": [],
+          "bodyPath": "orgs/edgetier/edgetier-triage-enrichment/SKILL.md",
+          "files": [
+            "orgs/edgetier/edgetier-triage-enrichment/SKILL.md"
+          ],
+          "frontmatter": {
+            "name": "edgetier-triage-enrichment",
+            "description": "Enrich Linear triage tickets with customer evidence from Format before the Monday product meeting. Use this whenever the user asks to run the triage enrichment, enrich triage, enrich a ticket, prep triage for the Monday meeting, add customer evidence to Linear, check what customers have said about a feature request, or pastes a Linear ticket URL and wants evidence pulled in. Trigger even if they don't say \"skill\" — phrases like \"run the Monday prep\", \"pull evidence for this ticket\", or \"what have customers said about the tickets in triage\" all mean this skill. Requires the Linear and Format connectors.",
+            "metadata": {
+              "title": "Triage Enrichment for EdgeTier",
+              "personas": [
+                "product",
+                "customer-success"
+              ],
+              "image": "card.jpg",
+              "use_case": "Before the Monday product meeting, pull every Linear triage ticket and attach verifiable customer evidence from Format: verbatim quotes, who said them and when, a count of companies and people asking, and a link to every insight. You approve each ticket before anything is written.",
+              "limitations": "Only exact-match evidence is written to a ticket; related-but-different asks are surfaced in chat for you to judge. Never estimates effort or complexity. Needs the Linear and Format connectors, and only attaches customers that already exist in your Linear Customers list.",
+              "prompts": [
+                "Run the triage enrichment for Monday.",
+                "Pull customer evidence for this ticket: [paste Linear URL]",
+                "What have customers said about the tickets in triage over the last 6 months?"
+              ]
+            }
+          },
+          "resources": [
+            {
+              "path": "orgs/edgetier/edgetier-triage-enrichment/SKILL.md",
+              "sha256": "5fad970b3fde58d72fdf838f351923d19c9a2d90ea801fcb0a771fa3452393c0",
+              "bytes": 12317,
+              "mediaType": "text/markdown"
+            },
+            {
+              "path": "orgs/edgetier/edgetier-triage-enrichment/card.jpg",
+              "sha256": "d76cadb19079fb457fd7d02553e16a626eb842a1f7d4b8467e86dec4f18ecbd8",
+              "bytes": 442519,
+              "mediaType": "image/jpeg"
+            }
+          ]
+        }
+      ]
+    },
     "org_umm63nqtab3qr2potjccs8sh": {
       "slug": "cube",
       "skills": [

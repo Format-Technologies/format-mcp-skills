@@ -9,6 +9,12 @@
   },
   "plugins": [
     {
+      "name": "format-analysis",
+      "description": "A guide to using Format's MCP well: how to navigate the tools, how to query, when to use what, and what to be careful of — so the answers you get out are truthful, reliable and reproducible. The method under every other Format skill.",
+      "source": "./skills/format-analysis",
+      "strict": false
+    },
+    {
       "name": "format-company-context",
       "description": "Stop re-explaining your company in every chat. One run distills what customers actually say — who you serve, what they struggle with, the words they use — into a context doc your team's AI works from, every claim quote-backed. It won't invent your strategy or pricing; it flags those for you to fill.",
       "source": "./skills/format-company-context",

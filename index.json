@@ -10,6 +10,78 @@
   ],
   "skills": [
     {
+      "id": "format-analysis",
+      "title": "Using the Format MCP",
+      "description": "A guide for agents querying customer conversations through the Format MCP: how to navigate its tools, how to query, when to use what, what to be careful of, and the practices that keep an answer truthful, reliable and reproducible. Orient with describe_org first — its analysisGuide carries the reading rules and each tool description carries its own traps; this guide holds what they cannot: which sequence of calls answers which question, the traps that live between calls, and how to state a result so it can be re-run. Skipping it produces confident answers that do not survive checking. Use it on any Format search, and on 'what are customers saying about…', 'how many customers asked for…', 'is X a real theme or one loud account', 'is there evidence for this roadmap item', 'what has [account] been saying', and on any Format result about to be summarised for a person. It produces no document of its own; writing one up is format-report-authoring.",
+      "personas": [
+        "customer-success",
+        "sales",
+        "marketing",
+        "product",
+        "leadership",
+        "research"
+      ],
+      "image": "skills/format-analysis/card.jpg",
+      "useCase": "A guide to using Format's MCP well: how to navigate the tools, how to query, when to use what, and what to be careful of — so the answers you get out are truthful, reliable and reproducible. The method under every other Format skill.",
+      "limitations": "A guide, not an output — it produces no document of its own. Needs a Format connection with read access. It will not invent what a workspace does not hold; where the data is thin it says so rather than filling the gap.",
+      "prompts": [
+        "What are customers saying about onboarding in the last 90 days?",
+        "How many distinct customers have asked for bulk export? Show your working.",
+        "Is pricing confusion a real theme in our conversations, or one loud account?",
+        "Is there evidence for this roadmap item, and which accounts are asking?"
+      ],
+      "related": [
+        "format-report-authoring"
+      ],
+      "bodyPath": "skills/format-analysis/SKILL.md",
+      "files": [
+        "skills/format-analysis/SKILL.md"
+      ],
+      "frontmatter": {
+        "name": "format-analysis",
+        "description": "A guide for agents querying customer conversations through the Format MCP: how to navigate its tools, how to query, when to use what, what to be careful of, and the practices that keep an answer truthful, reliable and reproducible. Orient with describe_org first — its analysisGuide carries the reading rules and each tool description carries its own traps; this guide holds what they cannot: which sequence of calls answers which question, the traps that live between calls, and how to state a result so it can be re-run. Skipping it produces confident answers that do not survive checking. Use it on any Format search, and on 'what are customers saying about…', 'how many customers asked for…', 'is X a real theme or one loud account', 'is there evidence for this roadmap item', 'what has [account] been saying', and on any Format result about to be summarised for a person. It produces no document of its own; writing one up is format-report-authoring.",
+        "metadata": {
+          "display_order": 5,
+          "version": "2.0.0",
+          "title": "Using the Format MCP",
+          "personas": [
+            "customer-success",
+            "sales",
+            "marketing",
+            "product",
+            "leadership",
+            "research"
+          ],
+          "image": "card.jpg",
+          "related": [
+            "format-report-authoring"
+          ],
+          "use_case": "A guide to using Format's MCP well: how to navigate the tools, how to query, when to use what, and what to be careful of — so the answers you get out are truthful, reliable and reproducible. The method under every other Format skill.",
+          "limitations": "A guide, not an output — it produces no document of its own. Needs a Format connection with read access. It will not invent what a workspace does not hold; where the data is thin it says so rather than filling the gap.",
+          "prompts": [
+            "What are customers saying about onboarding in the last 90 days?",
+            "How many distinct customers have asked for bulk export? Show your working.",
+            "Is pricing confusion a real theme in our conversations, or one loud account?",
+            "Is there evidence for this roadmap item, and which accounts are asking?"
+          ]
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-analysis/SKILL.md",
+          "sha256": "3cf0848f6f40fcfbc6e8fc335d0510dd0dc576d0f13d57ad9ee0dc03f7858e4b",
+          "bytes": 7770,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-analysis/card.jpg",
+          "sha256": "2e4e286ff9e8d53196db4f57f622e82401d60003973d7c8fe06f6ecd9f902052",
+          "bytes": 254982,
+          "mediaType": "image/jpeg"
+        }
+      ]
+    },
+    {
       "id": "format-company-context",
       "title": "Voice-of-Customer Context for AI",
       "description": "Use when a team wants to generate a shared company context document — the foundational brief on their positioning, ICP, personas, voice, and proof points — grounded in real customer conversations from their Format workspace. Trigger phrases include \"build our voice-of-customer doc\", \"build our company context\", \"create a company brief\", \"what's our positioning\", \"extract our brand voice\", \"what do customers say about us\", or \"refresh our positioning doc\". Uses the Format MCP to produce a single markdown document covering product overview, ICP, personas, pain points, competitive landscape, brand voice, and proof points — all backed by verbatim customer quotes. Runs end-to-end in one response; re-run quarterly as the customer base evolves. Not for writing blog posts, emails, ads, or case studies — those are downstream skills that read this context. For a targeting-focused ICP deep-dive (prospect criteria, qualification filters), use format-icp-definition instead.",
@@ -186,8 +258,8 @@
       "resources": [
         {
           "path": "skills/format-roadmap-check/SKILL.md",
-          "sha256": "dfb220b6ddd64a65f5964b5eb71ee7717ed7f27b935843f51b3163072edcd31f",
-          "bytes": 33748,
+          "sha256": "ab4323017aafea19b16261f6bd035cef2c511b5522e3ec224f784407d7ca55e4",
+          "bytes": 33994,
           "mediaType": "text/markdown"
         },
         {
@@ -704,7 +776,9 @@
         "Create a Format report from this analysis, with real quotes and linked companies.",
         "Revise the report you authored — fold in the advisories and republish."
       ],
-      "related": [],
+      "related": [
+        "format-analysis"
+      ],
       "bodyPath": "skills/format-report-authoring/SKILL.md",
       "files": [
         "skills/format-report-authoring/SKILL.md"
@@ -714,11 +788,15 @@
         "description": "Use when you are about to write a report into Format with create_report or replace_report — the craft guide for authoring one well. Read it BEFORE your first authoring write, not after. Covers the block-tree document model and which block does which job, the entity-mention law (companies, people and records are linked chips, never plain text), evidence discipline for quoting real customers, the cover fields (title, scope, conclusion, tldr), the reach-bar chart convention, the image upload handshake, and the draft → publish → send lifecycle. Triggers on 'write this up as a report', 'put this in Format as a report', 'create a report from these findings', and on any revision of a report you authored.",
         "metadata": {
           "display_order": 120,
+          "version": "1.0.0",
           "title": "Report Authoring",
           "personas": [
             "product",
             "research",
             "leadership"
+          ],
+          "related": [
+            "format-analysis"
           ],
           "prompts": [
             "Write these findings up as a report in Format.",
@@ -733,8 +811,8 @@
       "resources": [
         {
           "path": "skills/format-report-authoring/SKILL.md",
-          "sha256": "60731f1799be695da537406d6ed068479cd2dcfc6355ea54cbe5a47e1624b07b",
-          "bytes": 19990,
+          "sha256": "57f1a7362b7e6d8ceb28375f5ada94cce0a2b8add68298b1df11cf930dbaa4e2",
+          "bytes": 20321,
           "mediaType": "text/markdown"
         },
         {

@@ -3,7 +3,7 @@ name: format-analysis
 description: "A guide for agents querying customer conversations through the Format MCP: how to navigate its tools, how to query, when to use what, what to be careful of, and the practices that keep an answer truthful, reliable and reproducible. Orient with describe_org first — its analysisGuide carries the reading rules and each tool description carries its own traps; this guide holds what they cannot: which sequence of calls answers which question, the traps that live between calls, and how to state a result so it can be re-run. Skipping it produces confident answers that do not survive checking. Use it on any Format search, and on 'what are customers saying about…', 'how many customers asked for…', 'is X a real theme or one loud account', 'is there evidence for this roadmap item', 'what has [account] been saying', and on any Format result about to be summarised for a person. It produces no document of its own; writing one up is format-report-authoring."
 metadata:
   display_order: 5
-  version: '2.0.0'
+  version: '2.1.0'
   title: Using the Format MCP
   personas: [customer-success, sales, marketing, product, leadership, research]
   image: card.jpg
@@ -54,7 +54,7 @@ Nothing on the wire says which *order* to call these in.
 
 | The question | The sequence |
 | --- | --- |
-| A real theme, or one loud account? | the group's `customerCount`, then `count_insights({ breakdownBy: 'company' })` — one big bucket is one account |
+| A real theme, or one loud account? | the group's `companyCount`, then `count_insights({ breakdownBy: 'company' })` — one big bucket is one account |
 | Is there evidence for this roadmap item? | `describe_org` (is a topic even listening?) → `search_insight_groups` → `count_insights` for the floor |
 | What has this account been saying? | `list_companies({ nameSearch })` for the id → `search_insights({ companyIds, dateRange })` |
 | Why does this account look at risk? | that, plus `get_company` — whose `signals` are never repeated back to that customer |
@@ -70,10 +70,10 @@ Nothing on the wire says which *order* to call these in.
   once per topic it answers. On a `search_insights` page, `count + restatementCount` is
   what the same filter returns unfolded — and no call returns a distinct-statement
   count for a population.
-- **Never sum `customerCount`.** To de-overlap, walk to the insights and count distinct
+- **Never sum `companyCount`.** To de-overlap, walk to the insights and count distinct
   companies.
 - **Never ratio two differently-derived numbers.** "5 of 98 companies" — the 5 from a
-  group's `customerCount`, the 98 from a `count_insights` breakdown — invents a
+  group's `companyCount`, the 98 from a `count_insights` breakdown — invents a
   proportion neither supports.
 - **A group's numbers and an insight count are different populations**: the group side
   drops insights a reviewer rejected, the insight side keeps them.

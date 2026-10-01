@@ -75,7 +75,7 @@ Format synthesizes insights across all your customer conversations — calls, em
 
 4. Format MCP → search_insight_groups     (when hasGroups)
    The themes running across all your customers,
-   each sized by customerCount. A candidate whose
+   each sized by companyCount. A candidate whose
    story sits inside a big theme is a candidate
    whose story will land with prospects.
    search_insights({ supportingGroupId }) then

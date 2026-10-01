@@ -107,11 +107,11 @@ Skip any topic that doesn't exist or runs thin — better 3 strong categories th
 
 ### Step 2b: Let Format's own clustering pick the angles (1 call, when it can)
 
-Clustering what customers said into themes is the work of angle-finding — and where the workspace has been through Format's analysis, it is already done. `search_insight_groups({ limit: 20 })` returns the themes running across this org's customers, each with a `title`, a one-line `subtitle`, and a `customerCount` — how many distinct customers contributed. Rank angles by that number; it is the right basis for "biggest".
+Clustering what customers said into themes is the work of angle-finding — and where the workspace has been through Format's analysis, it is already done. `search_insight_groups({ limit: 20 })` returns the themes running across this org's customers, each with a `title`, a one-line `subtitle`, a `companyCount` and a `personCount` — how many distinct companies and people contributed. Rank angles by `companyCount`; it is the right basis for "biggest".
 
-**Rank with `customerCount`, never sum it.** Groups nest, and a customer counted in a narrow theme is counted again in every broader theme above it — adding the numbers across rows double-counts people.
+**Rank with `companyCount`, never sum it.** Groups nest, and a company counted in a narrow theme is counted again in every broader theme above it — adding the numbers across rows double-counts.
 
-Then take the anchor straight from the theme: `search_insights({ supportingGroupId: "<group id>", limit: 10 })` returns every insight gathered under it, and the strongest one is your anchor. Note the group `id`s are handles for this conversation only — Format re-clusters, so never write one into the deliverable or a saved file.
+Then take the anchor straight from the theme: `search_insights({ supportingGroupId: "<group id>", limit: 10 })` returns every insight gathered under it, and the strongest one is your anchor. Note the group `id`s are handles for this conversation only — Format re-clusters, so never write one into the deliverable or a saved file; use the group's `platformUrl` for a link a reader can open.
 
 If `search_insight_groups` comes back empty, `emptyReason` says why: `no_groups_yet` means this workspace hasn't been through the analysis (skip this step, cluster the insights yourself — the run is otherwise identical), `filtered_out` means loosen the filter, `empty_org` means there is no customer data to write from at all.
 

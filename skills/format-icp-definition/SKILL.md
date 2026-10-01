@@ -198,7 +198,7 @@ search_insight_groups(
   limit: 20
 )
 ```
-Where Format has gathered these conversations into insight groups, each group is a theme across customers with a `customerCount` — how many distinct customers raised it. That is the honest basis for the "where it shows up" column: rank alternatives by it, and never add the column up (nested themes count the same customer more than once). `search_insights({ supportingGroupId: "<id>" })` returns the words underneath any theme you want to evidence.
+Where Format has gathered these conversations into insight groups, each group is a theme across customers with a `companyCount` — how many distinct companies raised it. That is the honest basis for the "where it shows up" column: rank alternatives by it, and never add the column up (nested themes count the same company more than once). `search_insights({ supportingGroupId: "<id>" })` returns the words underneath any theme you want to evidence.
 
 Every insight sits under exactly one topic, so a topic-scoped pull only ever returns the topics you thought to name — and pre-purchase language is often filed under one you didn't. One unscoped semantic sweep alongside the topic pulls keeps the language bank from reading only what you guessed at.
 

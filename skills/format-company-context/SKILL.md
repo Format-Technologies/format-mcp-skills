@@ -96,7 +96,7 @@ Tight sequence. Target: 12–16 tool calls total.
 
 **Themes first, words second.** Format has two retrieval verbs, and the one you call is the altitude you get:
 
-- `search_insight_groups` — **what customers collectively say.** An insight group is a theme: many similar insights, from different customers in different conversations, gathered under one label, carrying `customerCount` (how many distinct customers contributed), `mentions`, a first/last-seen span, and a `lifecycleState`. These become the document's messaging pillars and section structure directly.
+- `search_insight_groups` — **what customers collectively say.** An insight group is a theme: many similar insights, from different customers in different conversations, gathered under one label, carrying `companyCount` and `personCount` (how many distinct companies and people contributed), `mentions`, a first/last-seen span, and a `lifecycleState`. These become the document's messaging pillars and section structure directly.
 - `search_insights` — **what one person said, once, in their own words.** This is the evidence under every claim: `text`, who said it, which company, which conversation, when, and a durable `shareUrl`.
 
 Lead with groups where the workspace has them, then drill to the words. Never re-cluster what Format already clustered.
@@ -162,13 +162,13 @@ search_insight_groups(topicNames: [use cases topic, if available], limit: 20)
   → Personas, Target Audience, Product Overview
 ```
 
-How to read a group: `title` is the theme label, `subtitle` is the claim it makes, `customerCount` and `mentions` size it, `lifecycleState` (Emerging / Growing / Mature / Cooling / Dormant / Extinct) says where it sits in its life and whether it's growing or fading, and `childCount` says whether narrower themes sit beneath it.
+How to read a group: `title` is the theme label, `subtitle` is the claim it makes, `companyCount`, `personCount` and `mentions` size it, `lifecycleState` (Emerging / Growing / Mature / Cooling / Dormant / Extinct) says where it sits in its life and whether it's growing or fading, and `childCount` says whether narrower themes sit beneath it.
 
 Three things about these numbers:
 
-- **`customerCount` ranks; it never sums.** A customer counted in a narrow theme is counted again in every broader theme above it, so adding the column produces a number that double-counts people. Use it to order pillars, never to claim a total.
+- **`companyCount` ranks; it never sums.** A company counted in a narrow theme is counted again in every broader theme above it, so adding the column produces a number that double-counts. Use it to order pillars, never to claim a total.
 - **A page can be shorter than its `limit`.** Where themes nest, the page carries the broadest of each nest rather than both — so `count` is what came back and `hasMore` is whether the database had more.
-- **Group `id`s are handles for this conversation only.** Format re-clusters, and an id does not survive it — never write one into the document, a saved file, or a scheduled job.
+- **Group `id`s are handles for this conversation only.** Format re-clusters, and an id does not survive it — never write one into the document, a saved file, or a scheduled job. Use the group's `platformUrl` for a link a reader can open.
 
 **When `hasGroups` was false**, skip this step's shape and run the same four pulls as `search_insights(topicNames: [...], limit: 50)` instead. `emptyReason` on any empty page tells you which case you're in: `no_groups_yet` (nothing gathered into groups here — go to insights), `filtered_out` (the filter matched nothing — loosen it), `empty_org` (no customer data at all — stop).
 
@@ -334,7 +334,7 @@ Enrichment content is secondary to customer data. Where they conflict, customer 
 **Don't** re-cluster what Format already clustered — insight groups ARE the themes; drill them with `supportingGroupId` for evidence instead.
 **Don't** treat an empty `search_insight_groups` as "no data" — read `emptyReason`, and answer from `search_insights` when it says `no_groups_yet`.
 **Don't** filter by `lifecycleStates` — lifecycle is context for the prose, not a precondition. Dormant themes are real.
-**Don't** sum `customerCount` across themes — it ranks, it never totals; nested themes count the same customer more than once.
+**Don't** sum `companyCount` across themes — it ranks, it never totals; nested themes count the same company more than once.
 **Don't** invent parameters. Tool schemas are strict: an unrecognised key fails the call by name instead of being quietly dropped, so a mistyped filter is loud rather than silently unfiltered.
 **Don't** auto-fetch the website on the first run — only fetch in enrichment mode when the user explicitly shares a URL.
 **Don't** re-ask for the org ID or any config — the Format MCP defaults to the user's primary workspace.

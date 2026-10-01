@@ -92,13 +92,13 @@ seconds rather than the run.
 
 `search_insight_groups` on the topic returns the trigger patterns already
 clustered across customers. That is the spine of the report and the fastest
-route to a real answer — a handful of archetypes with `customerCount` on
+route to a real answer — a handful of archetypes with `companyCount` on
 each, ranked by reach.
 
 Two rules that keep the numbers honest:
 
-- **`customerCount` is the ranking basis, and it never sums.** Groups nest. A
-  customer inside a narrow group is counted again in every broader group
+- **`companyCount` is the ranking basis, and it never sums.** Groups nest. A
+  company inside a narrow group is counted again in every broader group
   above it, so adding the counts produces a number that means nothing. Rank
   with them; never total them.
 - **Drill before you trust.** `search_insights({ supportingGroupId })` reads
@@ -197,7 +197,7 @@ wearing the same clothes. Where the org maps a lifecycle attribute, use
 - **Trend words are numbers in disguise.** "Most", "a surge", "increasingly" —
   compute the count or cut the sentence.
 - **Never put two differently-derived counts into one ratio.** A group's
-  `customerCount` and a filtered `count_insights` breakdown do not share a
+  `companyCount` and a filtered `count_insights` breakdown do not share a
   base, so "5 of 98 companies" invents a proportion neither number supports.
   Report them as separate figures, or derive both sides the same way first.
   This is the easiest sentence in the report to challenge and the easiest to

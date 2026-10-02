@@ -27,6 +27,12 @@
       "strict": false
     },
     {
+      "name": "format-discovery-brief",
+      "description": "Start a discovery from what the calls already hold instead of from scratch. Name an area in your own words and get back the problems customers describe in it, each ranked by how many companies raised it, with every quote linked and, for the biggest problems, how it happens on the ground and what people do about it today.",
+      "source": "./skills/format-discovery-brief",
+      "strict": false
+    },
+    {
       "name": "format-roadmap-check",
       "description": "Hold your roadmap up against what customers have actually said. Paste a roadmap (or point at a tracker project) and get an evidence board: what customers have said about each item with links to every supporting quote, and the things they keep raising that map to nothing you're building.",
       "source": "./skills/format-roadmap-check",

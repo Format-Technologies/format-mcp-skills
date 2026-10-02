@@ -210,6 +210,71 @@
       ]
     },
     {
+      "id": "format-discovery-brief",
+      "title": "Discovery Brief",
+      "description": "Use when a product manager is about to start discovery on one product area, feature or phase of the user's work and wants what customers have already said about it, before any interviews. Takes the area in the PM's own words (\"exporting data\", \"onboarding a new client\", \"permissions and roles\"), searches the conversations in Format by meaning, clusters what came back into problems in the customer's own terms, ranks them by how many distinct companies raised each with a customer and prospect split, reads the calls behind the biggest problems for the moment it bit, the workaround and the cost, and writes it all up as a Format report the PM can share and iterate on. Triggers on \"discovery brief for [area]\", \"what do customers say about [feature]\", \"problems behind [area]\", \"brief me on [area] before we build\", \"pain points for [phase of the work]\". Produces evidence, ranked; it never recommends what to build.\n",
+      "personas": [
+        "product"
+      ],
+      "image": "skills/format-discovery-brief/card.jpg",
+      "useCase": "Start a discovery from what the calls already hold instead of from scratch. Name an area in your own words and get back the problems customers describe in it, each ranked by how many companies raised it, with every quote linked and, for the biggest problems, how it happens on the ground and what people do about it today.",
+      "limitations": "Ranks evidence; it does not recommend what to build or score demand. One area per run. The customer-versus-prospect split needs a CRM status field synced into Format and is only as complete as that field. Coverage is whatever sources are connected, and the brief says which ones were and were not searched. Needs report authoring enabled on the connection to write the report; without it the brief is delivered in chat.",
+      "prompts": [
+        "Discovery brief for exporting data.",
+        "What problems do customers describe around onboarding a new client? Run the discovery brief.",
+        "Brief me on permissions and roles before we plan the next quarter."
+      ],
+      "related": [
+        "format-ticket-research",
+        "format-roadmap-check",
+        "format-report-authoring",
+        "format-analysis"
+      ],
+      "bodyPath": "skills/format-discovery-brief/SKILL.md",
+      "files": [
+        "skills/format-discovery-brief/SKILL.md"
+      ],
+      "frontmatter": {
+        "name": "format-discovery-brief",
+        "description": "Use when a product manager is about to start discovery on one product area, feature or phase of the user's work and wants what customers have already said about it, before any interviews. Takes the area in the PM's own words (\"exporting data\", \"onboarding a new client\", \"permissions and roles\"), searches the conversations in Format by meaning, clusters what came back into problems in the customer's own terms, ranks them by how many distinct companies raised each with a customer and prospect split, reads the calls behind the biggest problems for the moment it bit, the workaround and the cost, and writes it all up as a Format report the PM can share and iterate on. Triggers on \"discovery brief for [area]\", \"what do customers say about [feature]\", \"problems behind [area]\", \"brief me on [area] before we build\", \"pain points for [phase of the work]\". Produces evidence, ranked; it never recommends what to build.\n",
+        "metadata": {
+          "display_order": 22,
+          "title": "Discovery Brief",
+          "personas": [
+            "product"
+          ],
+          "image": "card.jpg",
+          "related": [
+            "format-ticket-research",
+            "format-roadmap-check",
+            "format-report-authoring",
+            "format-analysis"
+          ],
+          "use_case": "Start a discovery from what the calls already hold instead of from scratch. Name an area in your own words and get back the problems customers describe in it, each ranked by how many companies raised it, with every quote linked and, for the biggest problems, how it happens on the ground and what people do about it today.",
+          "limitations": "Ranks evidence; it does not recommend what to build or score demand. One area per run. The customer-versus-prospect split needs a CRM status field synced into Format and is only as complete as that field. Coverage is whatever sources are connected, and the brief says which ones were and were not searched. Needs report authoring enabled on the connection to write the report; without it the brief is delivered in chat.",
+          "prompts": [
+            "Discovery brief for exporting data.",
+            "What problems do customers describe around onboarding a new client? Run the discovery brief.",
+            "Brief me on permissions and roles before we plan the next quarter."
+          ]
+        }
+      },
+      "resources": [
+        {
+          "path": "skills/format-discovery-brief/SKILL.md",
+          "sha256": "0c8e8b9f3ba0600ddb57a211e93330b3a796c7778b7dd70c214e465e320027f3",
+          "bytes": 17958,
+          "mediaType": "text/markdown"
+        },
+        {
+          "path": "skills/format-discovery-brief/card.jpg",
+          "sha256": "04f8ecbb533aa6ee25d17729add0c88657f4a86924528a28fe7e05342f2c39c9",
+          "bytes": 233079,
+          "mediaType": "image/jpeg"
+        }
+      ]
+    },
+    {
       "id": "format-roadmap-check",
       "title": "Roadmap Check",
       "description": "Use when a product manager or leader wants to check a roadmap against real customer evidence using Format MCP — answering 'are customers asking for what we're building?' and the inverse, 'what are customers asking for that we're not building?'. Canonical invocation: 'using the Format MCP and the format-roadmap-check skill, check this roadmap' followed by a pasted list of roadmap items or a reference to a tracker project/epic. Also triggers on 'validate this roadmap against customer feedback', 'is there evidence for these roadmap items', 'what are customers asking for that isn't on the roadmap', 'roadmap evidence check', 'gap analysis on our roadmap'. Produces an evidence board: per-item customer evidence with links to every quote, plus the demand themes no roadmap item covers. It presents evidence and context rather than scoring items or recommending what to build or cut.",
